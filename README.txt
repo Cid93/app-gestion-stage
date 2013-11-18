@@ -1,8 +1,3 @@
-bdStage.sql
-entreprise
-entreprise.json
-entreprise.sql
-gestionStage
 manage.py
 README.txt
 rebuild.py
