@@ -1,10 +1,8 @@
 bdStage.sql
-entreprise
+entreprise (ajout)
 entreprise.json
-entreprise.sql
+entreprise(avec un s c'est mieu).sql
 gestionStage
 manage.py
-README.txt
-rebuild.py
 rebuild.sh
 stage
