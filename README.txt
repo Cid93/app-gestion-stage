@@ -1,4 +1,4 @@
-manage.py
+>>TADA
 README.txt
 rebuild.py
 rebuild.sh
