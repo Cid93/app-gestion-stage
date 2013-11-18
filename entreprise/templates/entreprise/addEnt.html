@@ -1,0 +1,17 @@
+ <!doctype html>
+<html>
+	<head>
+		<title>App de gestion des entreprises</title>
+	</head>
+	<body>
+		<form action="{% url 'entreprise.views.addEnt' %}" method="post">{% csrf_token %}
+			{{ entreprise_form.as_p  }}
+			<input type="submit" value="Submit" />
+		</form>
+
+
+
+	
+	</body>
+
+</html>

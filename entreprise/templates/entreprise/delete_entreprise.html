@@ -1,0 +1,17 @@
+ <!doctype html>
+<html>
+	<head>
+		<title>App de gestion des entreprises</title>
+	</head>
+	<body>
+		<form action="" method="post">{% csrf_token %}
+			{{ delete_entreprise.as_p  }}
+			<input type="submit" value="Supprimer" /><p>Cette action entrainera la suppression de cette entreprise</p>
+		</form>
+
+
+
+	
+	</body>
+
+</html>

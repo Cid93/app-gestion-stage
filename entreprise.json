@@ -1,0 +1,27 @@
+[ 
+  	{"nom": "Atos",
+     "adresse": "Venelle du Champ Saint-Marc",
+     "codePostal": "45000",
+     "ville": "Orléans",
+     "pays": "France",
+     "telephone": "0173260000",
+     "fax": "0124589624"},
+
+
+	{"nom": "EasyFlyers",
+     "adresse": "21 rue de la Fonderie",
+     "codePostal": "45000",
+     "ville": "Orléans",
+     "pays": "France",
+     "telephone": "0238561454",
+     "fax":"0169556624"},
+
+     {"nom": "Kiwik",
+     "adresse": "16 Rue Léonard de Vinci",
+     "codePostal": "45074",
+     "ville": "Orléans",
+     "pays": "France",
+     "telephone": "0238698013",
+     "fax":"0187496214"}
+
+]
