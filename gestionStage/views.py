@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, HttpResponseRedirect, HttpRespo
 from django.forms import ModelForm
 from django.template import RequestContext
 
-def show_stages(request):
+def show_main(request):
 	return render_to_response(
-		"stages/stage.html",
+		"gestionStage/main.html",
 		{})

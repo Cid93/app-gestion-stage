@@ -1,17 +1,20 @@
-<!doctype html>
-<html>
-	<head>
-		<title>App de gestion des entreprises | Entreprises</title>
-	</head>
-	<body>
-		<h1>Les entreprises</h1>
-		<ul>
-			{% for e in liste_entreprise %}
-			<li><a href="/company/{{ e.pk }}">{{ e }}</a><a href="/delete/{{ e.pk }}">Supprimer</a></li>
-			{% endfor %}
-		</ul>
-		<a href="/addEnt">Ajouter une entreprise</a>
-		<a href="/">Acceuil</a>
-	</body>
-
-</html>
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Entreprises {% endblock %}
+{% block heading %}Entreprises{% endblock %}
+{% block main %}
+	<h1>Les entreprises</h1>
+	<br/>
+	
+	<ul>
+		{% for e in liste_entreprise %}
+			<li><a href="/company/{{ e.pk }}">{{ e }}</a><a href="/company/delete/{{ e.pk }}">Supprimer</a></li>
+		{% endfor %}
+	</ul>
+{% endblock %}
+{%block nav%}
+	<li>||</li>
+	<li id="tab-ajouter">
+		<a href="/company/addEnt">Ajouter une entreprise</a>
+	</li>
+{% endblock %}
+{% block js %}active_tab="#tab-company"{% endblock %}

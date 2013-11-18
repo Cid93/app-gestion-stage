@@ -17,12 +17,12 @@ def show_entreprise(request):
 
 def show_detail_entreprise(request, pk):
 	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		form = EntrepriseForm(request.POST,instance=Entreprise.objects.get(pk=pk))
+		form = EntrepriseForm(request.POST,instance=Entreprise.objects.all()[int(pk)-1])
 		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
 			form.save()
 			return HttpResponseRedirect('/company')
 	else: # Si ce n'est pas du POST, c'est probablement une requête GET
-		form = EntrepriseForm(instance=Entreprise.objects.get(pk=pk))
+		form = EntrepriseForm(instance=Entreprise.objects.all()[int(pk)-1])
 		print("Error")
 		  # Nous créons un formulaire vide	
 	return render_to_response('entreprise/detail_entreprise.html', {'detail_entreprise' : form}, context_instance=RequestContext(request))
@@ -47,7 +47,6 @@ def addEnt(request):
     return render_to_response('entreprise/addEnt.html', {'entreprise_form' : form}, context_instance=RequestContext(request))
     #return render(request, 'addEnt.html', locals())
 
-
 def delEnt(request,pk):
 	if request.method == 'POST':  # S'il s'agit d'une requête POST
 		form = EntrepriseForm(request.POST,instance=Entreprise.objects.get(pk=pk))
@@ -58,6 +57,4 @@ def delEnt(request,pk):
 		form = EntrepriseForm(instance=Entreprise.objects.get(pk=pk)) 
 		# Nous créons un formulaire vide	
 	return render_to_response('entreprise/delete_entreprise.html', {'delete_entreprise' : form}, context_instance=RequestContext(request))
-    
 
-    

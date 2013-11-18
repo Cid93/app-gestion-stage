@@ -1,0 +1,17 @@
+h1.heading{
+	color:lightgrey;
+	padding-left: 3em;	
+}
+
+div.main{
+	padding-top:3em;
+	width:1000px;
+	margin: auto;
+	
+}
+
+#tab-ajouter a{
+	font-size: 13px;
+	color:red;
+
+}

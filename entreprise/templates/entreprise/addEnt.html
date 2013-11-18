@@ -1,17 +1,15 @@
- <!doctype html>
-<html>
-	<head>
-		<title>App de gestion des entreprises</title>
-	</head>
-	<body>
-		<form action="{% url 'entreprise.views.addEnt' %}" method="post">{% csrf_token %}
-			{{ entreprise_form.as_p  }}
-			<input type="submit" value="Submit" />
-		</form>
-
-
-
-	
-	</body>
-
-</html>
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Ajouter {% endblock %}
+{% block heading %}Entreprises | Ajouter{% endblock %}
+{% block main %}
+	<form action="{% url 'entreprise.views.addEnt' %}" method="post">{% csrf_token %}
+		{{ entreprise_form.as_p  }}
+		<input type="submit" value="Submit" />
+	</form>
+{% endblock %}
+{%block nav%}
+	<li id="tab-ajouter">
+		<a href="/company/addEnt">Ajouter une entreprise</a>
+	</li>
+{% endblock %}
+{% block js %}active_tab="#tab-ajouter"{% endblock %}

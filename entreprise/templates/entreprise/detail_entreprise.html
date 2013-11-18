@@ -1,17 +1,16 @@
- <!doctype html>
-<html>
-	<head>
-		<title>App de gestion des entreprises</title>
-	</head>
-	<body>
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Détail {% endblock %}
+{% block heading %}Entreprises | Détail{% endblock %}
+{% block main %}
 		<form action="" method="post">{% csrf_token %}
 			{{ detail_entreprise.as_p  }}
 			<input type="submit" value="Modifier" />
 		</form>
-
-
-
-	
-	</body>
-
-</html>
+{% endblock %}
+{%block nav%}
+	<li>||</li>
+	<li id="tab-ajouter">
+		<a href="/company/addEnt">Ajouter une entreprise</a>
+	</li>
+{% endblock %}
+{% block js %}active_tab="#tab-company"{% endblock %}
