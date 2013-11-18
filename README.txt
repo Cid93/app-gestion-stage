@@ -1,4 +1,10 @@
-
+>>TADA
+README.txt
+rebuild.py
+rebuild.sh
+stage
+dcbzibcibauiab
+cxazjkcuibaukcb
 cilancuiobnauiobcfabc
 acuhauib
 acnjkzbc
