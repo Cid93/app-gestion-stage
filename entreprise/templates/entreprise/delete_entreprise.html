@@ -1,17 +1,16 @@
- <!doctype html>
-<html>
-	<head>
-		<title>App de gestion des entreprises</title>
-	</head>
-	<body>
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Ajouter {% endblock %}
+{% block heading %}Entreprises | Ajouter{% endblock %}
+{% block main %}
 		<form action="" method="post">{% csrf_token %}
 			{{ delete_entreprise.as_p  }}
-			<input type="submit" value="Supprimer" /><p>Cette action entrainera la suppression de cette entreprise</p>
+			<p>Cette action entrainera la suppression de cette entreprise !</p><br/>
+			<input class="btn btn-success" type="submit" value="Supprimer" />
 		</form>
-
-
-
-	
-	</body>
-
-</html>
+{% endblock %}
+{%block nav%}
+	<li id="tab-ajouter">
+		<a href="/company/addEnt">Ajouter une entreprise</a>
+	</li>
+{% endblock %}
+{% block js %}active_tab="#tab-ajouter"{% endblock %}
