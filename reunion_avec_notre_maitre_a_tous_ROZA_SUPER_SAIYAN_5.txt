@@ -1,0 +1,46 @@
+Api google maps :
+-obtain an api key
+-Mettre une adresse ip (à la place d'un url) pour l'instant pour que l'api communique avec l'extérieur
+-by default the key can be used on any sites
+	fontion de base:
+	-mettre une adresse départ et arrivée -> dessine le trajet
+	-itinéraire entre iut et entreprise
+	-itinéraire entre un point (donné par un tel par ex) et l'entr.
+
+App Django:
+-il faudra se brancher sur l'autre pour les utilisateurs
+-créer 5 utilisateurs dans l'admin : étudiant, enseignant, enseignant resp. stage, chef département, administrateur -> 5 niveaux d'utilisateurs
+-apps spécifiques : entreprises, stages, étudiants
+-permissions : rôle différents pour les étudiants et enseignants
+-pour l'instant : un models où tout est ouvert, ttlm voit tt les pages, un menu admin qui contient tout (ajouter/suppr stage pour admin et proposer mon stage pour étu)
+-page home dans le dossier templates de gestionstages/gestionstages
+-on peut créer les utilisateurs en json
+-compatible smartphone avec bootstrap
+-intégration bootstrap présentante dans l'appli django roza ns a donné
+
+Relations en Django :
+-dans GSM : models dans maquette
+une classe promo : faire référence à l'entité diplôme -> models.foreignkey (diplôme,related name="promo" -> un diplome contient des promos)
+-pour les utilisateurs : dejà une entité User qui existe en Django dc pr créer un utilisateur on le fait hérité de User 
+	-> class enseignant(User):, class étudiant(User): [..] foreignkey vers promo
+	-> créer les utils à la main pour faire les tests
+-User : Django s'occupe des authentifications (locale, par ldap, par kerberos)
+-pour faire référence à d'autres models : from maquette.models import diplome , ..
+
+BD:
+-récup les models de l'appli django existante
+-étudiant : tout reprendre, garder une seule adresse, un num, un mail étu, un mail perso, promo
+-promo : a quel promo l'étu est rattaché -> intitulé, année
+-entreprise : pas géré ds l'app django existante, reprendre les données de la base sql 
+	-> à l'intérieur maître de stage, personne à qui transmettre convention (peut ê la mê pers.), contact privilégié (personne à appeller)
+-enseignant resp. d'un stagiaire qui est dans une entreprise
+-stage_entreprise : nom, adresse, code postal, ville, contact, tuteur
+-stage_ê_responsable :un enseignant un stage, valide_resp. (ok pour l'enseignant à le stage), priorité_reservation (liste de choix : un entier par ex)
+	-> lien entre l'enseigant et le stage (juste à rajouter dans le models un enseigant à 1 a n)
+-stage_stages : sujet (512 car), intitulé(50 car),  contact de l'entreprise (risque de redondances contact en doubles) nom prénom tel maitre stage (lien avec stage_entreprise ou table contact), date début, date fin
+	-> creer une entité contact en django, ils seront utilisés soit dans les stages soit dans les entr.
+-stages_utilisés : logiciel utilisés (facultatif)
+	-> plus pertinant de mettre des thèmes prédéfinis, des tags, mots clés (réseau, branlette, ..) 
+	-> libre de faire ce que l'on veut pour rattaché un thème à un stage : soit on cherche des mots clés dans le titre ou dans la description, soit on créer un ensemble de thèmes par default avec un thème autre, l'admin peut en rajouter, sujet de stage rajouté dans ce thème
+	-> ptit moteur de recherche avec like dans les titre ou sujet de stage
+-json pour faire les tests	
