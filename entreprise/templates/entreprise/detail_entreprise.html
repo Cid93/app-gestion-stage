@@ -11,6 +11,8 @@
 	<p>Téléphone : {{ entreprise.telephone }}</p><br/>
 	<p>Fax : {{ entreprise.fax }}</p><br/>
 
+	<a class="label label-primary" href="/company/modif/{{ entreprise.pk }}">Modifier</a>
+
 {% endblock %}
 
 {%block nav%}
