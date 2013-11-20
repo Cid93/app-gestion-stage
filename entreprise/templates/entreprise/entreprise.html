@@ -7,9 +7,10 @@
 	
 	<ul>
 		{% for e in liste_entreprise %}
-			<li><a href="/company/{{ e.pk }}">{{ e }}</a> - <a class="label label-danger" href="/company/delete/{{ e.pk }}">Supprimer</a></li><br/>
+			<li><a href="/company/{{ e.pk }}">{{ e }}</a></li><br/>
 		{% endfor %}
 	</ul>
+	<a class="label label-danger" href="/company/delete/0">Supprimer</a>
 {% endblock %}
 {%block nav%}
 	<li id="tab-ajouter">
