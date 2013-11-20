@@ -1,15 +1,22 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} | Détail {% endblock %}
-{% block heading %}Entreprises | Détails{% endblock %}
+{% block heading %}Entreprise {{ entreprise.nom }} | Détails{% endblock %}
 {% block main %}
-		<form action="" method="post">{% csrf_token %}
-			{{ detail_entreprise.as_p  }}
-			<input class="btn btn-success" type="submit" value="Modifier" />
-		</form>
+
+	<p>Nom : {{ entreprise.nom }}</p><br/>
+	<p>Adresse : {{ entreprise.adresse }}</p><br/>
+	<p>Code postal : {{ entreprise.codePostal }}</p><br/>
+	<p>Ville : {{ entreprise.ville }}</p><br/>
+	<p>Pays : {{ entreprise.pays }}</p><br/>
+	<p>Téléphone : {{ entreprise.telephone }}</p><br/>
+	<p>Fax : {{ entreprise.fax }}</p><br/>
+
 {% endblock %}
+
 {%block nav%}
 	<li id="tab-ajouter">
-		<a href="/company/addEnt">Ajouter une entreprise</a>
+		<a href="/company/add">Ajouter une entreprise</a>
 	</li>
 {% endblock %}
+
 {% block js %}active_tab="#tab-company"{% endblock %}

@@ -20,18 +20,6 @@ def show_detail_entreprise(request, pk):
 		"entreprise/detail_entreprise.html",
 		{"entreprise": Entreprise.objects.get(pk=pk)})
 
-def modifEnt(request, pk):
-	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		form = EntrepriseForm(request.POST,instance=Entreprise.objects.get(pk=pk))
-		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
-			form.save()
-			return HttpResponseRedirect('/company')
-	else: # Si ce n'est pas du POST, c'est probablement une requête GET
-		form = EntrepriseForm(instance=Entreprise.objects.get(pk=pk))
-		print("Error")
-		  # Nous créons un formulaire vide	
-	return render_to_response('entreprise/modif_entreprise.html', {'modif' : form}, context_instance=RequestContext(request))
-
 
 def addEnt(request):
 

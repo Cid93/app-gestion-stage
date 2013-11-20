@@ -4,3 +4,5 @@ from entreprise.models import Entreprise
 class EntrepriseForm(ModelForm):
     class Meta:
         model = Entreprise
+
+
