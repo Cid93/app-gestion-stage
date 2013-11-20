@@ -3,7 +3,7 @@
 {% block heading %}Entreprises | Ajouter{% endblock %}
 {% block main %}
 		<form action="" method="post">{% csrf_token %}
-			{{ delete_entreprise.as_p  }}
+			{{ supprimeentrepriseform.as_p  }}
 			<p>Cette action entrainera la suppression de cette entreprise !</p><br/>
 			<input class="btn btn-success" type="submit" value="Supprimer" />
 		</form>
