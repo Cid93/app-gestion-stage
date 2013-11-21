@@ -1,11 +1,1 @@
-README.txt
-rebuild.py
-rebuild.sh
-stage
-dcbzibcibauiab
-cxazjkcuibaukcb
-cilancuiobnauiobcfabc
-acuhauib
-entreprise(avec un s c'est mieu).sql
-acnjkzbc
-tototo
+Application de gestion des stages pour le département informatique de l'IUT d'Orléans
