@@ -12,14 +12,13 @@ urlpatterns = patterns('',
 
     # Uncomment the admin/doc line below to enable admin documentation:
    
+	# Entreprises
     url(r'^/?$',"entreprise.views.show_entreprise"),
 
-    url(r'^add/$',"entreprise.views.addEnt"),
-    
+    # Manipulation Entreprise
     url(r'^(\d+)$',"entreprise.views.show_detail_entreprise"),
-
-    url(r'^delete/(\d+)$',"entreprise.views.delEnt"),
-
+    url(r'^add/$',"entreprise.views.addEnt"),
+    url(r'^delete/$',"entreprise.views.delEnt"),
     url(r'^modif/(\d+)$',"entreprise.views.modifEnt"),
 
 )

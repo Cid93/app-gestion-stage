@@ -10,11 +10,7 @@
 			<li><a href="/company/{{ e.pk }}">{{ e }}</a></li><br/>
 		{% endfor %}
 	</ul>
-	<a class="label label-danger" href="/company/delete/0">Supprimer</a>
-{% endblock %}
-{%block nav%}
-	<li id="tab-ajouter">
-		<a href="/company/add">Ajouter une entreprise</a>
-	</li>
+	<a class="label label-primary" href="/company/add/">Ajouter</a>
+	<a class="label label-danger" href="/company/delete/">Supprimer</a>
 {% endblock %}
 {% block js %}active_tab="#tab-company"{% endblock %}
