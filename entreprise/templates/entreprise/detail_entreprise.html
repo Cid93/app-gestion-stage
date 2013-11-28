@@ -3,21 +3,44 @@
 {% block heading %}Entreprise {{ entreprise.nom }} | Détails{% endblock %}
 {% block main %}
 
-  <p>Nom : {{ entreprise.nom }}</p><br/>
-  <p>Adresse : {{ entreprise.adresse }}</p><br/>
-  <p>Code postal : {{ entreprise.codePostal }}</p><br/>
-  <p>Ville : {{ entreprise.ville }}</p><br/>
-  <p>Pays : {{ entreprise.pays }}</p><br/>
-  <p>Téléphone : {{ entreprise.telephone }}</p><br/>
-  <p>Fax : {{ entreprise.fax }}</p><br/>
+<div class="row">
 
-  <a class="label label-primary" href="/company/modif/{{ entreprise.pk }}">Modifier</a>
-  <a class="label label-primary" href="#" id="init" onclick="afficherCarte();">Carte</a>
-  <a class="label label-primary" href="#" id="itineraire" onclick="afficherItineraire(0);">Itineraire</a>
-  <a class="label label-primary" href="#" id="AR" onclick="afficherItineraire(1);">Reverse Itineraire</a>
-  <a class="label label-primary" href="#" id="cacher" onclick="cacherCarte();">Cacher</a>
-  <div id="map_canvas" style="width: 600px; height: 400px"></div>
-  <div id="EmplacementItineraireTexte" style="height: 50%"></div>
+  <div id="detail" class="col-xs-12 col-sm-5">
+
+    <p>Nom : {{ entreprise.nom }}</p><br/>
+    <p>Adresse : {{ entreprise.adresse }}</p><br/>
+    <p>Code postal : {{ entreprise.codePostal }}</p><br/>
+    <p>Ville : {{ entreprise.ville }}</p><br/>
+    <p>Pays : {{ entreprise.pays }}</p><br/>
+    <p>Téléphone : {{ entreprise.telephone }}</p><br/>
+    <p>Fax : {{ entreprise.fax }}</p><br/>
+    <a class="label label-primary" href="/company/modif/{{ entreprise.pk }}">Modifier</a>
+    <a class="label label-primary" href="#" id="init" onclick="afficherCarte();">Carte</a>
+
+  </div>
+
+  <div id="map" class="col-xs-6 col-sm-7">
+    
+    
+    <a class="label label-primary" href="#" id="itineraire" onclick="afficherItineraire(0);">Itineraire</a>
+    <a class="label label-primary" href="#" id="AR" onclick="afficherItineraire(1);">Reverse Itineraire</a>
+    <a class="label label-primary" href="#" id="cacher" onclick="cacherCarte();">Cacher</a>
+    
+
+
+    <div id="map_canvas" style="width: 600px; height: 400px"></div>
+    
+
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+      <div id="EmplacementItineraireTexte" style="height: 100%"></div>
+  </div>
+</div>
+
 
 {% endblock %}
 
@@ -129,6 +152,7 @@
       $('#cacher').show();
       $('#itineraire').show();
       $('#AR').show();
+      $('#map').prepend($('#init'));
 
 
     }
@@ -141,6 +165,7 @@
       $('#AR').hide();
       $('#EmplacementItineraireTexte').hide();
       $('#map_canvas').hide();
+      $('#detail').append($('#init'));
     }
     
     function afficherItineraire(type)
