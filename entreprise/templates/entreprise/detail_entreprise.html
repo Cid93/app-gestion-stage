@@ -3,81 +3,164 @@
 {% block heading %}Entreprise {{ entreprise.nom }} | Détails{% endblock %}
 {% block main %}
 
-	<p>Nom : {{ entreprise.nom }}</p><br/>
-	<p>Adresse : {{ entreprise.adresse }}</p><br/>
-	<p>Code postal : {{ entreprise.codePostal }}</p><br/>
-	<p>Ville : {{ entreprise.ville }}</p><br/>
-	<p>Pays : {{ entreprise.pays }}</p><br/>
-	<p>Téléphone : {{ entreprise.telephone }}</p><br/>
-	<p>Fax : {{ entreprise.fax }}</p><br/>
+  <p>Nom : {{ entreprise.nom }}</p><br/>
+  <p>Adresse : {{ entreprise.adresse }}</p><br/>
+  <p>Code postal : {{ entreprise.codePostal }}</p><br/>
+  <p>Ville : {{ entreprise.ville }}</p><br/>
+  <p>Pays : {{ entreprise.pays }}</p><br/>
+  <p>Téléphone : {{ entreprise.telephone }}</p><br/>
+  <p>Fax : {{ entreprise.fax }}</p><br/>
 
-	<a class="label label-primary" href="/company/modif/{{ entreprise.pk }}">Modifier</a>
-	<button onclick="afficherAdresse();">Afficher/cacher</button>
-    <div id="map_canvas" style="width: 600px; height: 500px"></div>
+  <a class="label label-primary" href="/company/modif/{{ entreprise.pk }}">Modifier</a>
+  <a class="label label-primary" href="#" id="init" onclick="afficherCarte();">Carte</a>
+  <a class="label label-primary" href="#" id="itineraire" onclick="afficherItineraire(0);">Itineraire</a>
+  <a class="label label-primary" href="#" id="AR" onclick="afficherItineraire(1);">Reverse Itineraire</a>
+  <a class="label label-primary" href="#" id="cacher" onclick="cacherCarte();">Cacher</a>
+  <div id="map_canvas" style="width: 600px; height: 400px"></div>
+  <div id="EmplacementItineraireTexte" style="height: 50%"></div>
 
 {% endblock %}
 
-{%block nav%}
-	<li id="tab-ajouter">
-		<a href="/company/add">Ajouter une entreprise</a>
-	</li>
-{% endblock %}
 
 {% block libraries %}{{ block.super }}
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyClLs2VYw0M6qwQOFf5odeRDhpSIJlADS0"
-      type="text/javascript"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyClLs2VYw0M6qwQOFf5odeRDhpSIJlADS0&sensor=false"></script>
+
+    
 {% endblock %}
 
 {% block js %}
-var mappp= document.getElementById("map_canvas");
-console.log(mappp);
-active_tab="#tab-company";
-    var map = null;
-    var geocoder = null;
+    active_tab="#tab-company";
+    $('#cacher').hide();
+    $('#itineraire').hide();
+    $('#AR').hide();
+    var map;
+    var geocoder;
 
-    function initialize(adresse) {
-      if (GBrowserIsCompatible()) {
-        map = new GMap2(document.getElementById("map_canvas"));
-        map.setCenter(new GLatLng(37.4419, -122.1419), 1);
-        map.setUIToDefault();
-        geocoder = new GClientGeocoder();
-       	showAddress(adresse);
-       	$('#map_canvas').hide();
+    function initialize() {
+      geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(47.873416,1.912208);
+      var mapOptions = {
+        zoom: 15,
+        //center: latlng
       }
-    }
-
-    function showAddress(address) {
-      if (geocoder) {
-        geocoder.getLatLng(
-          address,
-          function(point) {
-            if (!point) {
-              alert(address + " not found");
-            } else {
-              map.setCenter(point, 16);
-              var marker = new GMarker(point, {draggable: true});
-              map.addOverlay(marker);
-              GEvent.addListener(marker, "dragend", function() {
-                marker.openInfoWindowHtml(marker.getLatLng().toUrlValue(6));
-              });
-              GEvent.addListener(marker, "click", function() {
-                marker.openInfoWindowHtml(marker.getLatLng().toUrlValue(6));
-              });
-        GEvent.trigger(marker, "click");
-            }
-          }
-        );
-      }
-    }
-
-
-    function afficherAdresse()
-    {
+      map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
       
-      $("#map_canvas").toggle();
+    }
+
+
+
+    function codeAddress(address) {
+      
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          map.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location
+          });
+          var infowindow = new google.maps.InfoWindow({
+              content:address
+          });
+
+          infowindow.open(map,marker);
+          
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+
+    
+    function initializeItineraire(type) {
+        if(type===1)
+        {
+          orign="IUT Orléans rue d'issoudun FR";
+          adr="{{entreprise.adresse}}, {{entreprise.ville}} {{entreprise.codePostal}}, {{entreprise.pays}}";
+        }
+        else
+        {
+          adr="IUT Orléans rue d'issoudun FR";
+          orign="{{entreprise.adresse}}, {{entreprise.ville}} {{entreprise.codePostal}}, {{entreprise.pays}}";
+        }
+
+        $('#EmplacementItineraireTexte').empty();
+        //var centreCarte = new google.maps.LatLng(47.873416,1.912208);
+        var optionsCarte = {
+          zoom: 8,
+          //center: centreCarte,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var itineraireCarte = new google.maps.Map(document.getElementById("map_canvas"), optionsCarte);
+        
+        var optionsItineraireAffichage = {
+          map: itineraireCarte,
+          panel: document.getElementById("EmplacementItineraireTexte")
+        }
+        var itineraireAffichage = new google.maps.DirectionsRenderer(optionsItineraireAffichage);
+        
+        var itineraireService = new google.maps.DirectionsService();
+        
+         var itineraireRequete = {
+          origin: orign,
+          destination: adr,
+          travelMode: google.maps.TravelMode.DRIVING
+        }
+       
+        itineraireService.route(itineraireRequete, function(itineraireResultat, itineraireCodeStatut) {
+         
+          if (itineraireCodeStatut === google.maps.DirectionsStatus.OK) {
+             itineraireAffichage.setDirections(itineraireResultat);
+          
+          }else{
+            alert('Erreur : ' + itineraireCodeStatut);
+          }
+        });
 
     }
     
-    $('body').attr('onload',initialize('{{entreprise.adresse}} {{entreprise.ville}} {{entreprise.codePostal}} {{entreprise.pays}}'));
-    $('body').attr('onunload',GUnload());
+
+    function afficherCarte()
+    {
+      $('#map_canvas').empty();
+      $('#map_canvas').show();
+      initialize();
+      codeAddress('{{entreprise.adresse}}, {{entreprise.codePostal}} {{entreprise.ville}}, {{entreprise.pays}}');
+      $('#EmplacementItineraireTexte').hide();
+      $('#cacher').show();
+      $('#itineraire').show();
+      $('#AR').show();
+
+
+    }
+
+    function cacherCarte()
+    {
+      $('#map_canvas').empty();
+      $('#cacher').hide();
+      $('#itineraire').hide();
+      $('#AR').hide();
+      $('#EmplacementItineraireTexte').hide();
+      $('#map_canvas').hide();
+    }
+    
+    function afficherItineraire(type)
+    {
+      $('#map_canvas').empty();
+      initializeItineraire(type);
+      $('#EmplacementItineraireTexte').show();
+
+    } 
+
+
+
+
+    
     {% endblock %}
+
+
+
+
+
+
+
+
