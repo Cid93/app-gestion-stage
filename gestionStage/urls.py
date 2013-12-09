@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 
     url(r'^/?$',"gestionStage.views.show_main"),
 
-    url(r'^company/', include('entreprise.urls')),
+    url(r'^entreprise/', include('entreprise.urls')),
 
-    url(r'^stages/', include('stage.urls')),
+    url(r'^stage/', include('stage.urls')),
 )

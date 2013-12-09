@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Create your views here.
 from entreprise.models import Entreprise
 from entreprise.forms import EntrepriseForm
@@ -33,7 +34,7 @@ def addEnt(request):
 
 		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
 			form.save()
-			return HttpResponseRedirect('/company')
+			return HttpResponseRedirect('/entreprise')
 
 	form = EntrepriseForm()  # Nous créons un formulaire vide
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
@@ -48,7 +49,7 @@ def modifEnt(request, pk):
 		form = EntrepriseForm(request.POST,instance=Entreprise.objects.get(pk=pk))
 		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
 			form.save()
-			return HttpResponseRedirect('/company')
+			return HttpResponseRedirect('/entreprise')
 	else: # Si ce n'est pas du POST, c'est probablement une requête GET
 		form = EntrepriseForm(instance=Entreprise.objects.get(pk=pk))
 		print("Error")
@@ -69,7 +70,7 @@ def delEnt(request):
 		con = {'form': supprimeentrepriseform}
 		if supprimeentrepriseform.is_valid():   
 			supprimeentrepriseform.save()
-			return HttpResponseRedirect("/company/")
+			return HttpResponseRedirect("/entreprise/")
 	else:
 		return render_to_response('entreprise/forms.html',
 								con,

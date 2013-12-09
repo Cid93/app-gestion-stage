@@ -1,6 +1,6 @@
 h1.heading{
 	color:lightgrey;
-	padding-left: 3em;	
+	padding-left: 2em;	
 }
 
 div.main{
@@ -8,10 +8,4 @@ div.main{
 	width:1000px;
 	margin: auto;
 	
-}
-
-#tab-ajouter a{
-	font-size: 13px;
-	color:red;
-
 }

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ block.super }} | Détail {% endblock %}
+{% block title %}{{ block.super }} | Détails {% endblock %}
 {% block heading %}Entreprise {{ entreprise.nom }} | Détails{% endblock %}
 {% block main %}
 
@@ -14,7 +14,7 @@
     <p>Pays : {{ entreprise.pays }}</p><br/>
     <p>Téléphone : {{ entreprise.telephone }}</p><br/>
     <p>Fax : {{ entreprise.fax }}</p><br/>
-    <a class="btn btn-primary" href="/company/modif/{{ entreprise.pk }}">Modifier</a>
+    <a class="btn btn-primary" href="/entreprise/modifier/{{ entreprise.pk }}">Modifier</a>
     <a class="btn btn-success" href="#" id="init" onclick="afficherCarte();">Carte</a>
 
   </div>
@@ -52,7 +52,7 @@
 {% endblock %}
 
 {% block js %}
-    active_tab="#tab-company";
+    active_tab="#tab-entreprise";
     $('#cacher').hide();
     $('#itineraire').hide();
     $('#AR').hide();

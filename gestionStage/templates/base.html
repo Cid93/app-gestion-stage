@@ -2,6 +2,7 @@
 <html>
 	<head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="/static/gestionStage.css">
 	<title>{% block title %} Application des stages {% endblock %}</title>	
@@ -21,13 +22,13 @@
 					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
 							<li id="tab-home">
-								<a href="/">Home</a>
+								<a href="/">Accueil</a>
 							</li>
-							<li id="tab-company">
-								<a href="/company">Entreprises</a>
+							<li id="tab-entreprise">
+								<a href="/entreprise">Entreprises</a>
 							</li>
-							<li id="tab-stages">
-								<a href="/stages">Stages</a>
+							<li id="tab-stage">
+								<a href="/stage">Stages</a>
 							</li>
 							{%block nav%}{% endblock %}
 						</ul>
