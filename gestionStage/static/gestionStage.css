@@ -1,11 +1,17 @@
 h1.heading{
-	color:lightgrey;
-	padding-left: 2em;	
+	color:white;
+	padding-left: 1em;	
 }
 
-div.main{
-	padding-top:3em;
-	width:1000px;
-	margin: auto;
-	
+.jumbotron {
+	text-align: center;
+}
+
+#map_canvas {
+	height: 400px;
+}
+
+#EmplacementItineraireTexte {
+	padding-top: 10px;
+	clear: both;
 }

@@ -3,7 +3,9 @@
 {% block heading %}Entreprises | {{ actionAFaire }}{% endblock %}
 {% block main %}
 	<form action="" method="post">{% csrf_token %}
-		{{ form.as_p  }}
+	<table>
+		{{ form.as_p }}
+		</table>
 		<input class="btn btn-success" type="submit" value="{{ actionAFaire }}" />
 	</form>
 {% endblock %}

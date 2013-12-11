@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} | Accueil {% endblock %}
 {% block heading %}Accueil{% endblock %}
-{% block main %}Bienvenue sur le nouveau GSM !{% endblock %}
+{% block main %}
+<div class="jumbotron">
+	<h1>
+		Bienvenue
+    </h1><p class="lead">
+      Voici le nouveau site web pour l'application de gestion des stages.<br/><br/>
+      <a class="btn btn-lg btn-success" role="button" href="#">Se connecter</a>
+    </p>
+</div>
+{% endblock %}
 {% block js %}active_tab="#tab-home"{% endblock %}
