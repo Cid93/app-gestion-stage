@@ -12,24 +12,17 @@
   <p><b>Pays :</b> {{ entreprise.pays }}</p><br/>
   <p><b>Téléphone :</b> {{ entreprise.telephone }}</p><br/>
   <p><b>Fax :</b> {{ entreprise.fax }}</p><br/>
+  <p><b>Contact :</b> {{ entreprise.contact }}</p><br/>
+  <p><b>Convention :</b> {{ entreprise.persConvention }}</p><br/>
   <a class="btn btn-primary" href="/entreprise/modifier/{{ entreprise.pk }}">Modifier</a>
-  <a class="btn btn-success" href="#" id="init" onclick="afficherCarte();">Carte</a>
-
 </div>
 
 <div id="map" class="col-xs-12 col-md-9 col-lg-9">
 
 
-  <a class="btn btn-success" href="#" id="itineraire" onclick="afficherItineraire(0);">Itineraire</a>
-  <a class="btn btn-success" href="#" id="AR" onclick="afficherItineraire(1);">Reverse Itineraire</a>
-  <a class="btn btn-success" href="#" id="cacher" onclick="cacherCarte();">Cacher</a>
-
-
-  <div id="map_canvas"></div>
+  <div id="map_canvas_details"></div>
 
 </div>
-
-<div id="EmplacementItineraireTexte" class="col-xs-12 col-md-12 col-lg-12"></div>
 
 
 {% endblock %}
@@ -43,11 +36,11 @@
 
 {% block js %}
 active_tab="#tab-entreprise";
-$('#cacher').hide();
-$('#itineraire').hide();
-$('#AR').hide();
 var map;
 var geocoder;
+$(document).ready(function() {
+      afficherCarte();
+});
 
 function initialize() {
 geocoder = new google.maps.Geocoder();
@@ -56,7 +49,7 @@ var mapOptions = {
 zoom: 15,
 //center: latlng
 }
-map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+map = new google.maps.Map(document.getElementById('map_canvas_details'), mapOptions);
 
 }
 
@@ -86,32 +79,14 @@ alert('Geocode was not successful for the following reason: ' + status);
 
 
 
+
 function afficherCarte()
 {
-  $('#map_canvas').empty();
-  $('#map_canvas').show();
+  $('#map_canvas_details').empty();
+  $('#map_canvas_details').show();
   initialize();
   codeAddress('{{entreprise.adresse}}, {{entreprise.codePostal}} {{entreprise.ville}}, {{entreprise.pays}}');
-  $('#EmplacementItineraireTexte').hide();
-  $('#cacher').show();
-  $('#itineraire').show();
-  $('#AR').show();
-  $('#map').prepend($('#init'));
 }
-
-function cacherCarte()
-{
-  $('#map_canvas').empty();
-  $('#cacher').hide();
-  $('#itineraire').hide();
-  $('#AR').hide();
-  $('#EmplacementItineraireTexte').hide();
-  $('#map_canvas').hide();
-  $('#detail').append($('#init'));
-}
-
-
-
 
 
 {% endblock %}
