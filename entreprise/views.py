@@ -24,6 +24,11 @@ def show_detail_entreprise(request, pk):
 		"entreprise/detail_entreprise.html",
 		{"entreprise": Entreprise.objects.get(pk=pk)})
 
+def show_visiter(request):
+	return render_to_response(
+		"entreprise/visite_entreprise.html",
+		{"liste_entreprise": Entreprise.objects.order_by("nom")})
+
 # Manipulation Entreprise
 def addEnt(request):
 	#entreprise_form = EntrepriseForm()

@@ -21,4 +21,6 @@ urlpatterns = patterns('',
     url(r'^entreprise/', include('entreprise.urls')),
 
     url(r'^stage/', include('stage.urls')),
+
+    url(r'^visiter/$',"entreprise.views.show_visiter",name="visiter"),
 )
