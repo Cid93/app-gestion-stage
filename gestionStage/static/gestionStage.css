@@ -1,8 +1,18 @@
-h1.heading{
-	color:white;
-	padding-left: 1em;	
+.navbar-default .navbar-brand {
+    color: rgb(0, 0, 0);
 }
 
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    color: rgb(0, 0, 0);
+}
+
+nav .btn-group {
+	padding-top: 7px;
+}
+
+.dropdown-menu p {
+	margin-left: 10px;
+}
 .jumbotron {
 	text-align: center;
 }

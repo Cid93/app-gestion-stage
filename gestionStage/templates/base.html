@@ -1,55 +1,67 @@
 <!DOCTYPE html>
 <html>
-	<head>
+<head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="/static/gestionStage.css">
 	<title>{% block title %} Application des stages {% endblock %}</title>	
-	</head>
-	<body>
-		<div class="navbar navbar-inverse navbar-top">
-			<h1 class="heading">{% block heading %}Tutoriel{% endblock %}</h1>
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Application des stages</a>
-					</div>
-					<div class="collapse navbar-collapse">
-						<ul class="nav navbar-nav">
-							<li id="tab-home">
-								<a href="/">Accueil</a>
-							</li>
-							<li id="tab-entreprise">
-								<a href="/entreprise">Entreprises</a>
-							</li>
-							<li id="tab-stage">
-								<a href="/stage">Stages</a>
-							</li>
-							{%block nav%}{% endblock %}
-						</ul>
-					</div>
-				
-			</div>
-		</div>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-top">
 		<div class="container">
-			<div class="row">
-				{% block main %}{% endblock %}
-			</div>			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<span class="navbar-brand">Application des stages</span>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li id="tab-home">
+						<a href="/">Accueil</a>
+					</li>
+					<li id="tab-entreprise">
+						<a href="/entreprise">Entreprises</a>
+					</li>
+					<li id="tab-stage">
+						<a href="/stage">Stages</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
+				        <ul class="dropdown-menu">
+				    <li><p><b>Profil</b></p></li>
+				    <li><a href="#">Se deconnecter</a></li>
+				    <li><a href="#">Mon Stage</a></li>
+				    <li class="divider"></li>
+				    <li><p><b>Page</b></p></li>
+				    <li><a href="#">Afficher carte</a></li>
+				    
+				        </ul>
+				      </li>
+				     </ul>
+			</div>	
 		</div>
-		{% block libraries %}
-			<script type="text/javascript" src="/static/js/jquery-2.0.3.min.js"></script>
-			<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-		{% endblock %}
-		<script type="text/javascript">
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			{% block main %}{% endblock %}
+		</div>			
+	</div>
+	{% block libraries %}
+	<script type="text/javascript" src="/static/js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+	{% endblock %}
+	<script type="text/javascript">
 		var active_tab='#tab-NONE';
 		{% block js %}
 		{% endblock %}
 		$(active_tab).addClass('active');
-		</script>
-	</body>
+	</script>
+</body>
 </html>
