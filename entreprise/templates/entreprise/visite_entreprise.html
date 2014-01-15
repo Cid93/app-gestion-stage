@@ -3,7 +3,48 @@
 {% block heading %}Entreprise {{ entreprise.nom }} | Détails{% endblock %}
 {% block main %}
 
+<div id="visite" class="col-xs-12 col-md-3 col-lg-3">
+ 
+   <label>Départ</label><input type="text" id="origin" value="563 rue de champdoux, saint denis en val france"/></br>
+ 
+   <div id="etapes">
+     <div id="listEtapeAjoutee">
+     </div>
+ 
+    <label>Etape</label><input type="text" id="etape" value="23 rue des pensées orleans france"/>
+    <p>or</p>
 
+    <select id="listeEntreprises">
+      {% for e in liste_entreprise %}
+      <option value={{ e.pk }}>{{ e }}</option>
+      {% endfor %}
+
+    </select></br>
+
+    <button id="addEtape" onclick="addWaypoint();" >Ajouter étape</button></br>
+
+   
+   </div>
+ 
+   <label>Destination</label><input type="text" id="destination" value="IUT rue d'issoudun orleans france"/></br>
+   <a class="btn btn-success" href="#" id="init" onclick="afficherItineraire(0);">Itineraire</a>
+ 
+ </div>
+ 
+ <div id="map" class="col-xs-12 col-md-7 col-lg-7">
+ 
+ 
+   
+   <a class="btn btn-success" href="#" id="AR" onclick="afficherItineraire(1);">Reverse Itineraire</a>
+   <a class="btn btn-success" href="#" id="cacher" onclick="cacherCarte();">Cacher</a>
+ 
+ 
+   <div id="map_canvas"></div>
+ 
+ </div>
+ 
+ <div id="EmplacementItineraireTexte" class="col-xs-12 col-md-10 col-lg-10"></div>
+ 
 
 {% endblock %}
 
@@ -13,3 +54,164 @@
 
 
 {% endblock %}
+
+
+{% block js %}
+ active_tab="#tab-entreprise";
+ $('#cacher').hide();
+ $('#itineraire').hide();
+ $('#AR').hide();
+ var map;
+ var geocoder;
+ var etape;
+ var markers = [];
+ var waypoints = [];
+ var nbEtape="etape";
+ 
+ function initialize() {
+ geocoder = new google.maps.Geocoder();
+ var latlng = new google.maps.LatLng(47.873416,1.912208);
+ var mapOptions = {
+ zoom: 15,
+ //center: latlng
+ }
+ map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+ 
+ }
+ 
+ 
+ 
+ 
+ function initializeItineraire(type) {
+ $('#map_canvas').empty();
+ $('#map_canvas').show();
+ $('#EmplacementItineraireTexte').hide();
+ $('#cacher').show();
+ $('#itineraire').show();
+ $('#AR').show();
+ $('#map').prepend($('#init'));
+ 
+
+ if(type===0)
+ {
+   orign=$("#origin").val();
+   adr=$("#destination").val();
+ }
+ else
+ {
+   orign=$("#destination").val();
+   adr=$("#origin").val();
+ }
+ 
+ 
+ 
+ $('#EmplacementItineraireTexte').empty();
+ var optionsCarte = {
+ zoom: 8,
+ 
+ mapTypeId: google.maps.MapTypeId.ROADMAP
+ }
+ var itineraireCarte = new google.maps.Map(document.getElementById("map_canvas"), optionsCarte);
+ 
+ var optionsItineraireAffichage = {
+ map: itineraireCarte,
+ panel: document.getElementById("EmplacementItineraireTexte")
+ }
+ var itineraireAffichage = new google.maps.DirectionsRenderer(optionsItineraireAffichage);
+ 
+ var itineraireService = new google.maps.DirectionsService();
+ 
+ var itineraireRequete = {
+ origin: orign,
+ destination: adr,
+ waypoints: waypoints,
+ travelMode: google.maps.TravelMode.DRIVING
+ }
+ 
+ itineraireService.route(itineraireRequete, function(itineraireResultat, itineraireCodeStatut) {
+ 
+ if (itineraireCodeStatut === google.maps.DirectionsStatus.OK) {
+ itineraireAffichage.setDirections(itineraireResultat);
+ 
+ }else{
+ alert('Erreur : ' + itineraireCodeStatut);
+ }
+ });
+ 
+ directionsVisible = true;
+ 
+ }
+ 
+ 
+ 
+ 
+ 
+ function cacherCarte()
+ {
+   $('#map_canvas').empty();
+   $('#cacher').hide();
+   $('#itineraire').hide();
+   $('#AR').hide();
+   $('#EmplacementItineraireTexte').hide();
+   $('#map_canvas').hide();
+   $('#visite').append($('#init'));
+ }
+ 
+ function afficherItineraire(type)
+ {
+   $('#map_canvas').empty();
+   initializeItineraire(type);
+   $('#EmplacementItineraireTexte').show();
+ 
+ } 
+ 
+ 
+ function clearWaypoints() {
+     markers = [];
+     orign = null;
+     etape = null;
+     adr=null;
+     waypoints = [];
+     directionsVisible = false;
+   }
+ 
+ function addWaypoint()
+ { 
+  if($("#etape").val()=="")
+  {
+  
+    var liste = document.getElementById("listeEntreprises");
+    var tabEntreprise = [];
+    {% for e in liste_entreprise %}
+      tabEntreprise.push('{{e.adresse}} {{e.codePostal}} {{e.ville}} {{e.pays}}');
+    {% endfor %}
+
+    
+    
+
+    for (var i=0;i < liste.options.length;i++)
+    { 
+      
+      if(liste.options[i].selected===true)
+      { 
+
+        etape=tabEntreprise[i];
+      }
+    }
+    
+  }
+  else
+  {
+   etape=$("#etape").val();
+  }
+   waypoints.push({location: etape, stopover: true});
+   $("#listEtapeAjoutee").append("<p>"+etape+"</p>");
+   $("#etape").val("");
+ }
+ 
+ 
+ //563 rue de champdoux, saint denis en val france
+ //23 rue des pensées orleans france
+ //IUT rue d'issoudun orleans france
+ //321 rue de l'orme tiseau trainou france
+ {% endblock %}
