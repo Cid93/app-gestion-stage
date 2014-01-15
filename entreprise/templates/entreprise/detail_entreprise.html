@@ -84,52 +84,6 @@ alert('Geocode was not successful for the following reason: ' + status);
 }
 
 
-function initializeItineraire(type) {
-if(type===1)
-{
-  orign="IUT Orléans rue d'issoudun FR";
-  adr="{{entreprise.adresse}}, {{entreprise.ville}} {{entreprise.codePostal}}, {{entreprise.pays}}";
-}
-else
-{
-  adr="IUT Orléans rue d'issoudun FR";
-  orign="{{entreprise.adresse}}, {{entreprise.ville}} {{entreprise.codePostal}}, {{entreprise.pays}}";
-}
-
-$('#EmplacementItineraireTexte').empty();
-//var centreCarte = new google.maps.LatLng(47.873416,1.912208);
-var optionsCarte = {
-zoom: 8,
-//center: centreCarte,
-mapTypeId: google.maps.MapTypeId.ROADMAP
-}
-var itineraireCarte = new google.maps.Map(document.getElementById("map_canvas"), optionsCarte);
-
-var optionsItineraireAffichage = {
-map: itineraireCarte,
-panel: document.getElementById("EmplacementItineraireTexte")
-}
-var itineraireAffichage = new google.maps.DirectionsRenderer(optionsItineraireAffichage);
-
-var itineraireService = new google.maps.DirectionsService();
-
-var itineraireRequete = {
-origin: orign,
-destination: adr,
-travelMode: google.maps.TravelMode.DRIVING
-}
-
-itineraireService.route(itineraireRequete, function(itineraireResultat, itineraireCodeStatut) {
-
-if (itineraireCodeStatut === google.maps.DirectionsStatus.OK) {
-itineraireAffichage.setDirections(itineraireResultat);
-
-}else{
-alert('Erreur : ' + itineraireCodeStatut);
-}
-});
-
-}
 
 
 function afficherCarte()
@@ -143,8 +97,6 @@ function afficherCarte()
   $('#itineraire').show();
   $('#AR').show();
   $('#map').prepend($('#init'));
-
-
 }
 
 function cacherCarte()
@@ -157,14 +109,6 @@ function cacherCarte()
   $('#map_canvas').hide();
   $('#detail').append($('#init'));
 }
-
-function afficherItineraire(type)
-{
-  $('#map_canvas').empty();
-  initializeItineraire(type);
-  $('#EmplacementItineraireTexte').show();
-
-} 
 
 
 
