@@ -56,3 +56,35 @@ class Enseignant(Personne):
     departement = models.CharField(max_length=80)
     #numEns = models.IntegerField(primary_key=True)
     #grade = models.CharField(max_length=50)
+
+
+class Stage(models.Model):
+    etudiant=models.ForeignKey(Etudiant, related_name="etudiant")
+    intitule=models.CharField(max_length=100)
+    sujet = models.CharField(max_length=512)
+    dateDebut=models.DateTimeField(null=True, blank=True)
+    dateFin=models.DateTimeField(null=True, blank=True)
+    entreprise=models.ForeignKey(Entreprise, related_name="entreprise")
+
+    class Meta:
+        ordering = ('intitule',)
+
+    def __str__(self):
+        return self.intitule
+
+class logiciel(models.Model):
+    nomLog = models.CharField(max_length=50)
+    theme = models.CharField(max_length=50)
+
+class Stage_logiciel(models.Model):
+    stage = models.ForeignKey(Stage)
+    nomLogiciel=models.ManyToManyField(logiciel)
+
+
+
+
+
+class EnseignantResp(Enseignant):        
+    stage = models.ManyToManyField(Stage)
+    priorite_reservation= models.IntegerField(max_length=2)
+    validation_resp=models.IntegerField(max_length=1)
