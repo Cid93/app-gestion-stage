@@ -38,3 +38,33 @@ def addStage(request):
 							con,
 							context_instance=RequestContext(request))
 	#return render(request, 'addEnt.html', locals())
+
+def modifStage(request, pk):
+	if request.method == 'POST':  # S'il s'agit d'une requête POST
+		form = StageForm(request.POST,instance=Stage.objects.get(pk=pk))
+		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+			form.save()
+			return HttpResponseRedirect('/stage')
+	else: # Si ce n'est pas du POST, c'est probablement une requête GET
+		form = StageForm(instance=Stage.objects.get(pk=pk))
+		print("Error")
+		  # Nous créons un formulaire vide
+
+	return render_to_response('stage/forms.html', 
+							{ 'actionAFaire' : 'Modifier', 'form' : form},
+							context_instance=RequestContext(request))
+
+
+def delStage(request):
+ 
+    supprimestageform = supprimeStageForm()
+    con ={'form': supprimestageform, 'actionAFaire' : 'Supprimer'}
+    con.update(csrf(request))
+    if len(request.POST) > 0:
+        supprimestageform =supprimeStageForm(request.POST)
+        con = {'form': supprimestageform}
+        if supprimestageform.is_valid():  
+            supprimestageform.save()
+            return HttpResponseRedirect("/stage/")
+    else:
+        return render_to_response('stage/forms.html', con, context_instance=RequestContext(request))
