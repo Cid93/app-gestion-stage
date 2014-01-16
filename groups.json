@@ -1,0 +1,11 @@
+[
+	{
+	"name": "etudiants", 
+	"permissions": ["ajouter_entreprise", "ajouter_personne", "ajouter_stage", "ajouter_stage_logiciel", "ajouter_stage_entreprise"]
+	},
+
+	{
+	"name": "enseignants", 
+	"permissions": ["ajouter_entreprise", "changer_entreprise", "ajouter_personne", "changer_personne", "ajouter_stage", "changer_stage", "ajouter_stage_logiciel", "changer_stage_logiciel", "ajouter_stage_entreprise", "changer_stage_entreprise"]
+	}
+]
