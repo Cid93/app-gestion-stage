@@ -12,5 +12,9 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
    
     url(r'^/?$',"stage.views.show_stages"),
+    url(r'^(\d+)$',"stage.views.show_detail_stage",name="Stage"),
+    url(r'^modifier/(\d+)$',"stage.views.modifStage",name="modifStage"),
+    url(r'^ajouter/$',"stage.views.addStage",name="addStage"),
+    url(r'^supprimer/$',"stage.views.delStage",name="delStage")
 
 )
