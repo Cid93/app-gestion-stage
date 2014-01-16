@@ -1,27 +1,34 @@
 [ 
-  	{"nom": "Atos",
+     {"nom": "Atos",
      "adresse": "Venelle du Champ Saint-Marc",
      "codePostal": "45000",
      "ville": "Orléans",
      "pays": "France",
      "telephone": "0173260000",
-     "fax": "0124589624"},
+     "fax": "0124589624",
+     "contact": {"nom":"duchier","prenom":"denys","emailPerso":"duchier@gmail.com","civilite":"M","telephone":"0200220202"},
+     "persConvention": {"nom":"chabin","prenom":"jacques","emailPerso":"duchier@gmail.com","civilite":"M","telephone":"0200220202"},
+     "maitreStage": {"nom":"roza","prenom":"gerard","emailPerso":"duchier@gmail.com","civilite":"M","telephone":"0200220202"}
+     },
 
-
-	{"nom": "EasyFlyers",
-     "adresse": "21 rue de la Fonderie",
-     "codePostal": "45000",
-     "ville": "Orléans",
+     {"nom": "Polytech orleans",
+     "adresse": "12 Rue de Blois",
+     "codePostal": "45067",
+     "ville": "Orleans",
      "pays": "France",
-     "telephone": "0238561454",
-     "fax":"0169556624"},
-
-     {"nom": "Kiwik",
-     "adresse": "16 Rue Léonard de Vinci",
-     "codePostal": "45074",
-     "ville": "Orléans",
-     "pays": "France",
-     "telephone": "0238698013",
-     "fax":"0187496214"}
+     "telephone": "0173260000",
+     "fax": "0124589624",
+     "contact": {"nom":"Dussart","prenom":"remi","emailPerso":"dussart@gmail.com","civilite":"M","telephone":"0200220222"},
+     "persConvention": {"nom":"Cadorel","prenom":"jean-yves","emailPerso":"cadorel@gmail.com","civilite":"M","telephone":"0200220202"},
+     "maitreStage": {"nom":"Cadorel","prenom":"jean-yves","emailPerso":"cadorel@gmail.com","civilite":"M","telephone":"0200220202"}
+     }
 
 ]
+
+
+
+
+
+          
+
+   
