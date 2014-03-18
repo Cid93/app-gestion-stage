@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from entreprise.models import Entreprise
 # Create your models here..
 
@@ -43,7 +43,10 @@ class Personne(models.Model):
     def __str__(self):
         return self.prenom +" "+ self.nom
 
-class Etudiant(Personne):
+class PersonneInterne(Personne):
+    username=models.ForeignKey(User, related_name="personneInterne_username")
+
+class Etudiant(PersonneInterne):
     numEtu = models.IntegerField(primary_key=True)
     dateNaissance = models.DateField(verbose_name="Date de naissance")
     emailEtu = models.EmailField(max_length=80)
@@ -51,7 +54,7 @@ class Etudiant(Personne):
     cp = models.IntegerField(max_length=5)
     ville = models.CharField(max_length=50)
 
-class Enseignant(Personne):
+class Enseignant(PersonneInterne):
     idEnseignant = models.AutoField(primary_key=True)
     emailEns = models.EmailField(max_length=80)
     departement = models.CharField(max_length=80) # peut-être à séparer dans une classe département ?

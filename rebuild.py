@@ -7,17 +7,74 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gestionStage.settings")
 from django.forms import ModelForm
 from entreprise.models import Entreprise
-from stage.models import Personne, PersonneExterieure, Diplome, Promotion, Etudiant, Enseignant, Stage, Logiciel
+from stage.models import Personne, PersonneExterieure, PersonneInterne, Diplome, Promotion, Etudiant, Enseignant, Stage, Logiciel
 from pprint import pprint
 
 import json
 
-entreprise = json.load(open("json/entreprise.json")) 	#encoding='utf-8'
+
+
+
+
+#charger les permissions
+from django.contrib.auth.models import Permission, User, Group
+from django.contrib.contenttypes.models import ContentType
+
+personne_interne_content_type = ContentType.objects.get_for_model(PersonneInterne)
+perms= json.load(open("json/permissions.json"))
+PERMS = {}
+
+for p in perms:
+	perm=Permission.objects.create(
+		codename=p["codename"],
+		name=p["name"],
+		content_type=personne_interne_content_type
+	)
+	perm.save()
+	PERMS[p["codename"]] = perm
+
+
+#charger les groupes
+groups=json.load(open("json/groups.json"))
+GROUPS={}
+for g in groups:
+	group=Group.objects.create(name=g["name"])
+	group.save()
+	for p in g["permissions"]:
+		group.permissions.add(PERMS[p])
+	group.save()
+	GROUPS[g["name"]]=group
+
+
+#charger les utilisateurs
+users=json.load(open("json/users.json"))
+USERS={}
+for u in users:
+	user=User.objects.create_user(
+		username=u["username"],
+		password=u["password"],
+		first_name=u["first_name"],
+		last_name=u["last_name"],
+		email=u["email"]
+	)
+	user.save()
+
+	for g in u["groups"]:
+		user.groups.add(GROUPS[g])
+	user.save()
+	USERS[u["username"]]=user
+
+
+
+
+
+
+entreprise = json.load(open("json/entreprise.json")) 				#encoding='utf-8'
 logiciels = json.load(open("json/logiciels.json"))	 	#encoding='utf-8'
 stage = json.load(open("json/stage.json")) 				#encoding='utf-8'
 enseignants = json.load(open("json/enseignants.json")) 	#encoding='utf-8'
 etudiants = json.load(open("json/etudiants.json")) 		#encoding='utf-8'
-personnesExt = json.load(open("json/personnes_exterieures.json")) #encoding='utf-8'
+personnesExt = json.load(open("json/personnes_exterieures.json")) 	#encoding='utf-8'
 promotions = json.load(open("json/promotions.json")) 	#encoding='utf-8'
 diplomes = json.load(open("json/diplomes.json")) 		#encoding='utf-8'
 
@@ -46,6 +103,7 @@ for e in enseignants:
 		idEnseignant=e["idEnseignant"],
 		nom=e["nom"],
 		prenom=e["prenom"],
+		username=User.objects.get(username=e["username"]),
 		emailPerso=e["emailPerso"],
 		civilite=e["civilite"],
 		telephone=e["telephone"],
@@ -58,6 +116,7 @@ for e in etudiants:
 		numEtu=e["numEtu"], #PRIMARY KEY
 		nom=e["nom"],
 		prenom=e["prenom"],
+		username=User.objects.get(username=e["username"]),
 		emailPerso=e["emailPerso"],
 		civilite=e["civilite"],
 		telephone=e["telephone"],
@@ -114,52 +173,6 @@ for s in stage:
 
 
 
-# #charger les permissions
-# from django.contrib.auth.models import Permission, User, Group
-# from django.contrib.contenttypes.models import ContentType
 
-# personne_content_type = ContentType.objects.get_for_model(Personne)
-# perms= json.load(open("permissions.json"))
-# PERMS = {}
-
-# for p in perms:
-# 	perm=Permission.objects.create(
-# 		codename=p["codename"],
-# 		name=p["name"],
-# 		content_type=personne_content_type
-# 	)
-# 	perm.save()
-# 	PERMS[p["codename"]] = perm
-
-
-# #charger les groupes
-# groups=json.load(open("groups.json"))
-# GROUPS={}
-# for g in groups:
-# 	group=Group.objects.create(name=g["name"])
-# 	group.save()
-# 	for p in g["permissions"]:
-# 		group.permissions.add(PERMS[p])
-# 	group.save()
-# 	GROUPS[g["name"]]=group
-
-
-# #charger les utilisateurs
-# users=json.load(open("users.json"))
-# USERS={}
-# for u in users:
-# 	user=User.objects.create_user(
-# 		username=u["username"],
-# 		password=u["password"],
-# 		first_name=u["first_name"],
-# 		last_name=u["last_name"],
-# 		email=u["email"]
-# 	)
-# 	user.save()
-
-# 	for g in u["groups"]:
-# 		user.groups.add(GROUPS[g])
-# 	user.save()
-# 	USERS[u["username"]]=user
 
 
