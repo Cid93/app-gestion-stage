@@ -44,7 +44,7 @@ def modifStage(request, pk):
 		form = StageForm(request.POST,instance=Stage.objects.get(pk=pk))
 		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
 			form.save()
-			return HttpResponseRedirect('/stage')
+			return HttpResponseRedirect('/stage/' + pk)
 	else: # Si ce n'est pas du POST, c'est probablement une requête GET
 		form = StageForm(instance=Stage.objects.get(pk=pk))
 		print("Error")

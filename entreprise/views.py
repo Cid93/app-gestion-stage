@@ -54,7 +54,7 @@ def modifEnt(request, pk):
 		form = EntrepriseForm(request.POST,instance=Entreprise.objects.get(pk=pk))
 		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
 			form.save()
-			return HttpResponseRedirect('/entreprise')
+			return HttpResponseRedirect('/entreprise/' + pk)
 	else: # Si ce n'est pas du POST, c'est probablement une requête GET
 		form = EntrepriseForm(instance=Entreprise.objects.get(pk=pk))
 		print("Error")
