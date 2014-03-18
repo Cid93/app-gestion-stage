@@ -10,7 +10,14 @@
 
 	<tr><td><b>Promotion :</b></td><td> {{ stage.promotion }}</td></tr> 
 	<tr><td><b>Intitulé :</b></td><td> {{ stage.intitule }}</td></tr> 
-	<tr><td><b>Sujet :</b></td><td> {{ stage.sujet }}</td></tr> 
+	<tr><td><b>Sujet :</b></td><td> {{ stage.sujet }}</td></tr>
+	<tr><td><b>Logiciel :</b></td>
+		<td><ul>
+		{% for log in stage.nomLogiciels.all %}
+			<li>{{ log }}</li>
+		{% endfor %}
+		</ul></td>
+	</tr>
 	<tr><td><b>date de début :</b></td><td> {{ stage.dateDebut }}</td></tr> 
 	<tr><td><b>date de fin :</b></td><td> {{ stage.dateFin }}</td></tr>
 	<tr><td><b>Etudiant :</b></td><td> {{ stage.etudiant }}</td></tr> 

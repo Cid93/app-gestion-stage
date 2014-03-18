@@ -51,7 +51,6 @@ class Etudiant(Personne):
     cp = models.IntegerField(max_length=5)
     ville = models.CharField(max_length=50)
 
-
 class Enseignant(Personne):
     idEnseignant = models.AutoField(primary_key=True)
     emailEns = models.EmailField(max_length=80)
@@ -64,6 +63,16 @@ class PersonneExterieure(Personne):
     emailPro = models.EmailField(max_length=80)
     entreprise=models.ForeignKey(Entreprise, related_name="personneExterieure_entreprise")
 
+class Logiciel(models.Model):
+    nomLog = models.CharField(primary_key=True, max_length=50)
+    theme = models.CharField(max_length=50)
+    description = models.CharField(max_length=400)
+
+    class Meta:
+        ordering = ('nomLog',)
+
+    def __str__(self):
+        return self.nomLog
 
 class Stage(models.Model):
     idStage = models.AutoField(primary_key=True)
@@ -72,13 +81,14 @@ class Stage(models.Model):
     sujet = models.CharField(max_length=512)
     dateDebut=models.DateTimeField(null=True, blank=True)
     dateFin=models.DateTimeField(null=True, blank=True)
-    entreprise=models.ForeignKey(Entreprise, related_name="stage_entreprise")
     # on stocke l'entreprise ici au cas où le tuteur de stage (personne ext) change d'entreprise
+    entreprise=models.ForeignKey(Entreprise, related_name="stage_entreprise")
     persConvention=models.ForeignKey(PersonneExterieure, related_name="stage_persConvention")
     maitreStage=models.ForeignKey(PersonneExterieure, related_name="stage_maitreStage")
     enseignantTuteur=models.ForeignKey(Enseignant, related_name="stage_enseignantTuteur")
-    promotion = models.ForeignKey(Promotion)
     # Un étudiant peut changer de promotion donc on préfère stocker la promotion dans le stage
+    promotion = models.ForeignKey(Promotion)
+    nomLogiciels = models.ManyToManyField(Logiciel)
 
     class Meta:
         ordering = ('intitule',)
@@ -86,21 +96,11 @@ class Stage(models.Model):
     def __str__(self):
         return self.intitule
 
-class logiciel(models.Model):
-    nomLog = models.CharField(max_length=50)
-    theme = models.CharField(max_length=50)
-
-class Stage_logiciel(models.Model):
-    stage = models.ForeignKey(Stage)
-    nomLogiciel = models.ManyToManyField(logiciel)
-
-
-
 class EnseignantResp(models.Model):
     enseignant = models.ForeignKey(Stage,related_name="EnseignantResp_enseignant")
     stage = models.ManyToManyField(Stage)
     priorite_reservation = models.IntegerField(max_length=2)
-    validation_resp=models.IntegerField(max_length=1)
+    validation_resp=models.BooleanField(default=False)
 
 
 

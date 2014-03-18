@@ -7,18 +7,19 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gestionStage.settings")
 from django.forms import ModelForm
 from entreprise.models import Entreprise
-from stage.models import Personne, PersonneExterieure, Diplome, Promotion, Etudiant, Enseignant, Stage
+from stage.models import Personne, PersonneExterieure, Diplome, Promotion, Etudiant, Enseignant, Stage, Logiciel
 from pprint import pprint
 
 import json
 
-entreprise = json.load(open("entreprise.json")) 	#encoding='utf-8'
-stage = json.load(open("stage.json")) 				#encoding='utf-8'
-enseignants = json.load(open("enseignants.json")) 	#encoding='utf-8'
-etudiants = json.load(open("etudiants.json")) 		#encoding='utf-8'
-personnesExt = json.load(open("personnes_exterieures.json")) #encoding='utf-8'
-promotions = json.load(open("promotions.json")) #encoding='utf-8'
-diplomes = json.load(open("diplomes.json")) #encoding='utf-8'
+entreprise = json.load(open("json/entreprise.json")) 	#encoding='utf-8'
+logiciels = json.load(open("json/logiciels.json"))	 	#encoding='utf-8'
+stage = json.load(open("json/stage.json")) 				#encoding='utf-8'
+enseignants = json.load(open("json/enseignants.json")) 	#encoding='utf-8'
+etudiants = json.load(open("json/etudiants.json")) 		#encoding='utf-8'
+personnesExt = json.load(open("json/personnes_exterieures.json")) #encoding='utf-8'
+promotions = json.load(open("json/promotions.json")) 	#encoding='utf-8'
+diplomes = json.load(open("json/diplomes.json")) 		#encoding='utf-8'
 
 
 for e in entreprise:
@@ -31,6 +32,13 @@ for e in entreprise:
 		pays=e["pays"],
 		telephone=e["telephone"],
 		fax=e["fax"]
+	).save()
+
+for l in logiciels:
+	Logiciel(
+		nomLog=l["nomLog"],
+		theme=l["theme"],
+		description=l["description"]
 	).save()
 
 for e in enseignants:
