@@ -2,6 +2,7 @@
 from django.forms import ModelForm
 from django import forms
 from stage.models import Stage
+from django.shortcuts import render
 
 class StageForm(ModelForm):
     class Meta:

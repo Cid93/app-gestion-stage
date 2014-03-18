@@ -2,30 +2,36 @@
 # Create your views here.
 from entreprise.models import Entreprise
 from entreprise.forms import EntrepriseForm
-from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse
+from django.shortcuts import HttpResponseRedirect, HttpResponse
+from gestionStage.shortcuts import render
 from django.forms import ModelForm
 from django.template import RequestContext
 from django.core.context_processors import csrf
 from entreprise.forms import supprimeEntrepriseForm
 
+
 # Shows
 def show_main(request):
-	return render_to_response(
+	return render(
+		request,
 		"entreprise/main.html",
 		{})
 
 def show_entreprise(request):
-	return render_to_response(
+	return render(
+		request,
 		"entreprise/entreprise.html",
 		{"liste_entreprise": Entreprise.objects.order_by("nom")})
 
 def show_detail_entreprise(request, pk):
-	return render_to_response(
+	return render(
+		request,
 		"entreprise/detail_entreprise.html",
 		{"entreprise": Entreprise.objects.get(pk=pk)})
 
 def show_visiter(request):
-	return render_to_response(
+	return render(
+		request,
 		"entreprise/visite_entreprise.html",
 		{"liste_entreprise": Entreprise.objects.order_by("nom")})
 
@@ -44,7 +50,7 @@ def addEnt(request):
 	form = EntrepriseForm()  # Nous créons un formulaire vide
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
-	return render_to_response('entreprise/forms.html',
+	return render(request,'entreprise/forms.html',
 							con,
 							context_instance=RequestContext(request))
 	#return render(request, 'addEnt.html', locals())
@@ -60,7 +66,7 @@ def modifEnt(request, pk):
 		print("Error")
 		  # Nous créons un formulaire vide
 
-	return render_to_response('entreprise/forms.html', 
+	return render(request,'entreprise/forms.html', 
 							{ 'actionAFaire' : 'Modifier', 'form' : form},
 							context_instance=RequestContext(request))
 
@@ -77,6 +83,6 @@ def delEnt(request):
 			supprimeentrepriseform.save()
 			return HttpResponseRedirect("/entreprise/")
 	else:
-		return render_to_response('entreprise/forms.html',
+		return render(request,'entreprise/forms.html',
 								con,
 								context_instance=RequestContext(request))

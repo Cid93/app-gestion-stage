@@ -19,10 +19,13 @@
 				<span class="navbar-brand">Application des stages</span>
 			</div>
 			<div class="collapse navbar-collapse">
+				{% if user.is_authenticated %}
+
 				<ul class="nav navbar-nav">
 					<li id="tab-home">
 						<a href="/">Accueil</a>
 					</li>
+
 					<li id="tab-entreprise">
 						<a href="/entreprise">Entreprises</a>
 					</li>
@@ -32,24 +35,27 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
-				        <ul class="dropdown-menu">
-				    <li><p><b>Profil</b></p></li>
-				    <li><a href="#">Se deconnecter</a></li>
-				    <li><a href="#">Mon stage</a></li>
-				    <li class="divider"></li>
-				    <li><p><b>Page</b></p></li>
-				    <li><a href="/visiter">Visiter entreprise(s)</a></li>
-				        </ul>
-				      </li>
-				     </ul>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><p><b><span class="username">{{ user }}</span></b></p></li>
+							<li><a href="/logout">Se deconnecter</a></li>
+							<li><a href="#">Mon stage</a></li>
+							<li class="divider"></li>
+							<li><p><b>Page</b></p></li>
+							<li><a href="/visiter">Visiter entreprise(s)</a></li>
+						</ul>
+					</li>
+				</ul>
+				{% endif %} 
 			</div>	
 		</div>
 	</nav>
 
 	<div class="container">
 		<div class="row">
+			
 			{% block main %}{% endblock %}
+			
 		</div>			
 	</div>
 	{% block libraries %}

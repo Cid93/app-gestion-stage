@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %} {{ block.super }} | Login{% endblock %}
+{% block heading %}Login{% endblock %}
+{% block main %}
+<div class="jumbotron col-xs-12 col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
+	<h1>
+		Bienvenue
+	</h1>
+
+	<p class="lead">
+		Voici le nouveau site web pour l'application de gestion des stages.<br/><br/>
+		<form href="/login" method="POST">{% csrf_token %}
+			<table class="form">
+				{{ form.as_table }}
+			</table>
+			<input type="submit" value="Se connecter" class="btn btn-lg btn-success" />
+		</form>
+		{% if errmsg %}
+		<p class="text-danger">{{ errmsg }}</p>
+		{% endif %}
+		
+	</p>
+</div>
+{% endblock %}

@@ -23,4 +23,10 @@ urlpatterns = patterns('',
     url(r'^stage/', include('stage.urls')),
 
     url(r'^visiter/$',"entreprise.views.show_visiter",name="visiter"),
+
+    url(r'^login/$',"gestionStage.forms.login_page"),
+
+    url(r'^logout/$',"gestionStage.forms.logout_action"),
+
+
 )

@@ -5,10 +5,17 @@
 <div class="jumbotron col-xs-12 col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
 	<h1>
 		Bienvenue
-    </h1><p class="lead">
-      Voici le nouveau site web pour l'application de gestion des stages.<br/><br/>
-      <a class="btn btn-lg btn-success" role="button" href="#">Se connecter</a>
-    </p>
+	</h1>
+
+	<p class="lead">
+		Voici le nouveau site web pour l'application de gestion des stages.<br/><br/>
+		{% if not user.is_authenticated %}
+		<a class="btn btn-lg btn-success" role="button" href="/login">Se connecter</a>
+		{% endif %}
+	</p>
+
+
+
 </div>
 {% endblock %}
 {% block js %}active_tab="#tab-home"{% endblock %}

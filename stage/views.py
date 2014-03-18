@@ -2,19 +2,22 @@
 # Create your views here.
 from stage.models import Stage
 from stage.forms import StageForm, supprimeStageForm
-from django.shortcuts import render_to_response, HttpResponseRedirect, HttpResponse
+from django.shortcuts import HttpResponseRedirect, HttpResponse
+from gestionStage.shortcuts import render
 from django.forms import ModelForm
 from django.template import RequestContext
 from django.core.context_processors import csrf
 #from stage.forms import supprimeStageForm
 
 def show_stages(request):
-	return render_to_response(
+	return render(
+		request,
 		"stage/stage.html",
 		{"liste_stage": Stage.objects.order_by("intitule")})
 
 def show_detail_stage(request, pk):
-	return render_to_response(
+	return render(
+		request,
 		"stage/detail_stage.html",
 		{"stage": Stage.objects.get(pk=pk)}
 		)
@@ -34,7 +37,7 @@ def addStage(request):
 	form = StageForm()  # Nous créons un formulaire vide
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
-	return render_to_response('stage/forms.html',
+	return render(request,'stage/forms.html',
 							con,
 							context_instance=RequestContext(request))
 	#return render(request, 'addEnt.html', locals())
@@ -50,7 +53,7 @@ def modifStage(request, pk):
 		print("Error")
 		  # Nous créons un formulaire vide
 
-	return render_to_response('stage/forms.html', 
+	return render(request,'stage/forms.html', 
 							{ 'actionAFaire' : 'Modifier', 'form' : form},
 							context_instance=RequestContext(request))
 
@@ -67,4 +70,4 @@ def delStage(request):
             supprimestageform.save()
             return HttpResponseRedirect("/stage/")
     else:
-        return render_to_response('stage/forms.html', con, context_instance=RequestContext(request))
+        return render(request,'stage/forms.html', con, context_instance=RequestContext(request))
