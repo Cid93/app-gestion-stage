@@ -1,6 +1,6 @@
 [
 	{
-	"username": "barbosa", 
+	"username": "qbarbosa", 
 	"first_name": "Quentin", 
 	"last_name": "Barbosa", 
 	"groups": ["etudiants"], 
@@ -18,7 +18,7 @@
 	},
 
 	{
-	"username": "roza", 
+	"username": "groza", 
 	"first_name": "Gerard", 
 	"last_name": "Rozsavolgyi", 
 	"groups": ["enseignants"],

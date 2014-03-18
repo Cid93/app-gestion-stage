@@ -1,0 +1,47 @@
+[
+
+	{
+		"idPersonneExt":1,
+		"nom":"Dussart",
+		"prenom":"remi",
+		"emailPerso":"dussart@yahoo.com",
+		"civilite":"M",
+		"telephone":"0200220222",
+		"emailPro":"remi.dussart@gmail.com",
+		"entreprise":2
+	},
+
+	{
+		"idPersonneExt":2,
+		"nom":"Cadorel",
+		"prenom":"jean-yves",
+		"emailPerso":"cadorel@gmail.com",
+		"civilite":"M",
+		"telephone":"0200220202",
+		"emailPro":"j-y.cadorel@gmail.com",
+		"entreprise":2
+	},
+
+	{
+		"idPersonneExt":3,
+		"nom":"Portos",
+		"prenom":"Hervé",
+		"emailPerso":"herve.portos@gmail.com",
+		"civilite":"M",
+		"telephone":"0256874563",
+		"emailPro":"herve.portos@atos.fr",
+		"entreprise":1
+	},
+
+	{
+		"idPersonneExt":4,
+		"nom":"Aramis",
+		"prenom":"Corine",
+		"emailPerso":"caramis@gmail.com",
+		"civilite":"Mme",
+		"telephone":"0258741236",
+		"emailPro":"corine.aramis@atos.fr",
+		"entreprise":1
+	}
+
+]

@@ -1,0 +1,22 @@
+[
+	{
+		"pk":1,
+		"diplome":1,
+		"intitule":"1A",
+		"annee":"2013-2014"
+	},
+
+	{
+		"pk":2,
+		"diplome":1,
+		"intitule":"2A",
+		"annee":"2013-2014"
+	},
+
+	{
+		"pk":3,
+		"diplome":2,
+		"intitule":"LP",
+		"annee":"2013-2014"
+	}
+]

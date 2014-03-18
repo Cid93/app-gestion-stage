@@ -1,36 +1,16 @@
 [
 
-	{"etudiant" : 
-		{"promo" : 
-			{"diplome": 
-				{
-					"nom":"Licence professionnelle",
-					"specialite":"Resaux et telecommunications dev web et mobile"
-				},
-			
-			"intitule":"Lp22",
-			"annee":"2014"
-		},
-
-		"nom":"roux",
-		"prenom":"william",
-		"emailPerso":"willroux44@gmail.com",
-		"civilite":"M",
-		"telephone":"0677355615",
-		
-		"numEtud":"2112474",
-		"dateNaissance":"1900-01-01",
-		"emailEtu":"william.roux@etu.univ-orleans.fr",
-		"adresse":"Mars",
-		"cp":"44444",
-		"ville":"MarsCity"
-	},
-
-	"intitule" : "Dematerialisation portfolio Polytech",
-	"sujet" : "Le but de mon stage est de dématérialiser le portfolio de l'étudiant de Polytech Orleans avec ASP.NET, C# et MSSQL",
-	"dateDebut" : "2014-02-17",
-	"dateFin" : "2014-06-25"
-
+	{
+		"etudiant" : 111111,
+		"intitule" : "Dematerialisation portfolio Polytech",
+		"sujet" : "Le but de mon stage est de dématérialiser le portfolio de l'étudiant de Polytech Orleans avec ASP.NET, C# et MSSQL",
+		"dateDebut" : "2014-02-17",
+		"dateFin" : "2014-06-25",
+		"persConvention": 2,
+		"maitreStage": 1,
+		"enseignantTuteur": 1,
+		"promotion": 1,
+		"entreprise": 1
 	}
 ]
 

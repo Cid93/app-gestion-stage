@@ -1,0 +1,35 @@
+[
+	{
+		"idEnseignant":1,
+		"nom":"duchier",
+		"prenom":"denys",
+		"emailPerso":"duchier@gmail.com",
+		"civilite":"M",
+		"telephone":"0200220202",
+		"emailEns":"duchier@univ-orleans.com",
+		"departement":"informatique"
+	},
+
+	{
+		"idEnseignant":2,
+		"nom":"Chabin",
+		"prenom":"Jacques",
+		"emailPerso":"jacques.chabin@gmail.com",
+		"civilite":"M",
+		"telephone":"0200220202",
+		"emailEns":"chabin@univ-orleans.com",
+		"departement":"informatique"
+    },
+
+    {
+    	"idEnseignant":3,
+		"nom":"Roszavolgyi",
+		"prenom":"Gérard",
+		"emailPerso":"roza@univ-orleans.fr",
+		"civilite":"M",
+		"telephone":"0245896545",
+		"emailEns":"roza@univ-orleans.com",
+		"departement":"informatique"
+	}
+
+]

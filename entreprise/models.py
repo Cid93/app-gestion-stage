@@ -1,9 +1,10 @@
 from django.db import models
 #from django.contrib.auth.models import User
-#from stage.models import Personne
+#from stage.models import PersonneExterieure
 # Create your models here.
 
 class Entreprise(models.Model):
+	idEntreprise = models.AutoField(primary_key=True)
 	nom=models.CharField(max_length=100)
 	adresse=models.CharField(max_length=250)
 	codePostal=models.BigIntegerField(max_length=10)
@@ -11,9 +12,6 @@ class Entreprise(models.Model):
 	pays=models.CharField(max_length=30)
 	telephone=models.BigIntegerField(max_length=22)
 	fax=models.BigIntegerField(max_length=14)
-	contact=models.ForeignKey('stage.Personne', related_name="contact")
-	persConvention=models.ForeignKey('stage.Personne', related_name="persConvention")
-	maitreStage=models.ForeignKey('stage.Personne', related_name="maitreStage")
 
 	def __str__(self):
 		return "%s" % (self.nom)

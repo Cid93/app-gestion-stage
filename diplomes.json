@@ -1,0 +1,19 @@
+[
+	{
+		"idDiplome":1,
+		"nom":"DUT",
+		"specialite":"informatique"
+	},
+
+	{
+		"idDiplome":2,
+		"nom":"LP",
+		"specialite":"Réseaux & Télécoms option web"
+	},
+
+	{
+		"idDiplome":3,
+		"nom":"DUT",
+		"specialite":"GEA"
+	}
+]

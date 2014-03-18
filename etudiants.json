@@ -1,0 +1,44 @@
+[
+	{
+		"numEtu":111111,
+		"nom":"Roux",
+		"prenom":"William",
+		"emailPerso":"wroux@gmail.com",
+		"civilite":"M",
+		"telephone":"0666666666",
+		"dateNaissance":"1900-01-01",
+		"emailEtu":"william.roux@etu.univ-orleans.fr",
+		"adresse":"Mars",
+		"cp":"44444",
+		"ville":"MarsCity"
+	},
+
+	{
+		"numEtu":222222,
+		"nom":"Ait-Maamar",
+		"prenom":"Yacine",
+		"emailPerso":"yacine.ait-maamar@gmail.com",
+		"civilite":"M",
+		"telephone":"0254334455",
+		"dateNaissance":"1988-01-01",
+		"emailEtu":"yacine.ait-maamar@etu.univ-orleans.fr",
+		"adresse":"Namekseijin",
+		"cp":"55666",
+		"ville":"Namek"
+    },
+
+    {
+		"numEtu":333333,
+		"nom":"Outreville",
+		"prenom":"Cédric",
+		"emailPerso":"cedric.outreville@gmail.com",
+		"civilite":"M",
+		"telephone":"0644596295",
+		"dateNaissance":"1988-05-01",
+		"emailEtu":"cedric.outreville@etu.univ-orleans.fr",
+		"adresse":"zbra",
+		"cp":"98752",
+		"ville":"Pluton"
+	}
+
+]

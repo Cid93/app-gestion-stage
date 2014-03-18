@@ -7,6 +7,7 @@ from entreprise.models import Entreprise
 
 
 class Diplome(models.Model):
+    idDiplome = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=20)
     specialite = models.CharField(max_length=80)
 
@@ -17,6 +18,7 @@ class Diplome(models.Model):
         return self.nom
 
 class Promotion(models.Model):
+    idPromotion = models.AutoField(primary_key=True)
     intitule = models.CharField(max_length=20)
     annee = models.CharField(max_length=10)
     diplome = models.ForeignKey(Diplome)
@@ -42,8 +44,7 @@ class Personne(models.Model):
         return self.prenom +" "+ self.nom
 
 class Etudiant(Personne):
-    promo = models.ForeignKey(Promotion)
-    numEtud = models.IntegerField(primary_key=True)
+    numEtu = models.IntegerField(primary_key=True)
     dateNaissance = models.DateField(verbose_name="Date de naissance")
     emailEtu = models.EmailField(max_length=80)
     adresse = models.CharField(max_length=100)
@@ -52,19 +53,32 @@ class Etudiant(Personne):
 
 
 class Enseignant(Personne):
+    idEnseignant = models.AutoField(primary_key=True)
     emailEns = models.EmailField(max_length=80)
-    departement = models.CharField(max_length=80)
+    departement = models.CharField(max_length=80) # peut-être à séparer dans une classe département ?
     #numEns = models.IntegerField(primary_key=True)
     #grade = models.CharField(max_length=50)
 
+class PersonneExterieure(Personne):
+    idPersonneExt = models.AutoField(primary_key=True)
+    emailPro = models.EmailField(max_length=80)
+    entreprise=models.ForeignKey(Entreprise, related_name="personneExterieure_entreprise")
+
 
 class Stage(models.Model):
-    etudiant=models.ForeignKey(Etudiant, related_name="etudiant")
+    idStage = models.AutoField(primary_key=True)
+    etudiant=models.ForeignKey(Etudiant, related_name="stage_etudiant")
     intitule=models.CharField(max_length=100)
     sujet = models.CharField(max_length=512)
     dateDebut=models.DateTimeField(null=True, blank=True)
     dateFin=models.DateTimeField(null=True, blank=True)
-    entreprise=models.ForeignKey(Entreprise, related_name="entreprise")
+    entreprise=models.ForeignKey(Entreprise, related_name="stage_entreprise")
+    # on stocke l'entreprise ici au cas où le tuteur de stage (personne ext) change d'entreprise
+    persConvention=models.ForeignKey(PersonneExterieure, related_name="stage_persConvention")
+    maitreStage=models.ForeignKey(PersonneExterieure, related_name="stage_maitreStage")
+    enseignantTuteur=models.ForeignKey(Enseignant, related_name="stage_enseignantTuteur")
+    promotion = models.ForeignKey(Promotion)
+    # Un étudiant peut changer de promotion donc on préfère stocker la promotion dans le stage
 
     class Meta:
         ordering = ('intitule',)
@@ -78,13 +92,16 @@ class logiciel(models.Model):
 
 class Stage_logiciel(models.Model):
     stage = models.ForeignKey(Stage)
-    nomLogiciel=models.ManyToManyField(logiciel)
+    nomLogiciel = models.ManyToManyField(logiciel)
 
 
 
-
-
-class EnseignantResp(Enseignant):        
+class EnseignantResp(models.Model):
+    enseignant = models.ForeignKey(Stage,related_name="EnseignantResp_enseignant")
     stage = models.ManyToManyField(Stage)
-    priorite_reservation= models.IntegerField(max_length=2)
+    priorite_reservation = models.IntegerField(max_length=2)
     validation_resp=models.IntegerField(max_length=1)
+
+
+
+
