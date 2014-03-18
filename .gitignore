@@ -1,0 +1,5 @@
+*.pyc
+.nfs*
+*/*.pyc
+*/.nfs*
+*/__pycache__
