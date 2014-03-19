@@ -2,7 +2,9 @@
 from django.forms import ModelForm
 from django import forms
 from entreprise.models import Entreprise
-from django.shortcuts import render
+from django.shortcuts import HttpResponseRedirect, HttpResponse
+#from django.shortcuts import render
+from gestionStage.shortcuts import render
 
 class EntrepriseForm(ModelForm):
     class Meta:

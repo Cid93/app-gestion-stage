@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
 from django import forms
-from stage.models import Stage
+from stage.models import Stage, PersonneExterieure
 from django.shortcuts import render
 
 class StageForm(ModelForm):
     class Meta:
         model = Stage
+
 
 class supprimeStageForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -15,7 +16,6 @@ class supprimeStageForm(forms.Form):
     # You can change the queryset in the __init__ method, but this should be a nice basis
         
     stageslots = forms.ModelMultipleChoiceField(queryset=Stage.objects.all(), widget=forms.CheckboxSelectMultiple(),required=False)
-
 
     def save(self):
         # make sure you do a form.is_valid() before trying to save()
@@ -28,3 +28,9 @@ class supprimeStageForm(forms.Form):
     class Meta:
         model = Stage
         fields ='stageslots'
+
+
+class PersonneExtForm(ModelForm):
+    class Meta:
+        model = PersonneExterieure
+        

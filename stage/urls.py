@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^modifier/(?P<pk>\d+)$',"stage.views.modifStage", name="modifStage"),
     url(r'^monStage/?$',"stage.views.monStage", name="theStage"),
     url(r'^ajouter/?$',"stage.views.addStage", name="addStage"),
-    url(r'^supprimer/?$',"stage.views.delStage", name="delStage")
+    url(r'^supprimer/?$',"stage.views.delStage", name="delStage"),
+    url(r'^personne-ext/$',"stage.views.addPersonneExt",name="addPersonneExt")
 
 )
