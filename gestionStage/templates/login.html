@@ -1,24 +1,114 @@
-{% extends "base.html" %}
-{% block title %} {{ block.super }} | Login{% endblock %}
-{% block heading %}Login{% endblock %}
-{% block main %}
-<div class="jumbotron col-xs-12 col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
-	<h1>
-		Bienvenue
-	</h1>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/static/gestionStage.css">
+	<title>{% block title %} Application des stages {% endblock %}</title>	
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<span class="navbar-brand">Application des stages</span>
+			</div>
+			<div class="collapse navbar-collapse">
+				{% if user.is_authenticated %}
 
-	<p class="lead">
-		Voici le nouveau site web pour l'application de gestion des stages.<br/><br/>
-		<form href="/login" method="POST">{% csrf_token %}
-			<table class="form">
-				{{ form.as_table }}
-			</table>
-			<input type="submit" value="Se connecter" class="btn btn-lg btn-success" />
-		</form>
-		{% if errmsg %}
-		<p class="text-danger">{{ errmsg }}</p>
-		{% endif %}
-		
-	</p>
-</div>
-{% endblock %}
+				<ul class="nav navbar-nav">
+					<li id="tab-home">
+						<a href="/">Accueil</a>
+					</li>
+
+					<li id="tab-entreprise">
+						<a href="/entreprise">Entreprises</a>
+					</li>
+					<li id="tab-stage">
+						<a href="/stage">Stages</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><p><b><span class="username">{{ user }}</span></b></p></li>
+							<li><a href="/logout">Se deconnecter</a></li>
+							<li><a href="#">Mon stage</a></li>
+							<li class="divider"></li>
+							<li><p><b>Page</b></p></li>
+							<li><a href="/visiter">Visiter entreprise(s)</a></li>
+						</ul>
+					</li>
+				</ul>
+				{% endif %} 
+			</div>	
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			{% if user.is_authenticated %}
+			<div class="jumbotron col-xs-12 col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
+				<h1>
+					Au revoir
+				</h1>
+
+				<p class="lead">
+					Merci d'avoir utilisé le nouveau site web pour l'application de gestion des stages.<br/><br/>
+					
+					<a href="/logout" class="btn btn-lg btn-success">Se Deconnecter</a>
+					
+
+				</p>
+			</div>
+			{% else %}
+
+			<div class="jumbotron col-xs-12 col-lg-offset-3 col-md-offset-3 col-md-6 col-lg-6">
+				<h1>
+					Bienvenue
+				</h1>
+
+				<p class="lead">
+					Voici le nouveau site web pour l'application de gestion des stages.<br/><br/>
+					<form href="/login" method="POST">{% csrf_token %}
+						<table class="form">
+							{{ form.as_table }}
+						</table>
+						<input type="submit" value="Se connecter" class="btn btn-lg btn-success" />
+					</form>
+					{% if errmsg %}
+					<p class="text-danger">{{ errmsg }}</p>
+					{% endif %}
+
+				</p>
+			</div>
+			
+			{% endif %}
+			
+		</div>			
+	</div>
+	{% block libraries %}
+	<script type="text/javascript" src="/static/js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+	{% endblock %}
+	<script type="text/javascript">
+		var active_tab='#tab-NONE';
+		{% block js %}
+		{% endblock %}
+		$(active_tab).addClass('active');
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
