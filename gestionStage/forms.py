@@ -36,8 +36,6 @@ def login_page(request):
     context["form"] = form
     return render(request, "login.html", context)
 
-        
-
 def logout_action(request):
     if request.user.is_authenticated():
         logout(request)

@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
-<<<<<<< HEAD
-from stage.models import Stage, Etudiant
-from stage.forms import StageForm, supprimeStageForm
-=======
-from stage.models import Stage, PersonneExterieure
+from stage.models import Stage, PersonneExterieure, Etudiant
 from stage.forms import StageForm, supprimeStageForm, PersonneExtForm
->>>>>>> origin
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from gestionStage.shortcuts import render
 from django.forms import ModelForm
