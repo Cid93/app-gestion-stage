@@ -38,8 +38,7 @@ def addStage(request):
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
 	return render(request,'stage/forms.html',
-							con,
-							context_instance=RequestContext(request))
+							con)
 	#return render(request, 'addEnt.html', locals())
 
 def modifStage(request, pk):
@@ -54,8 +53,7 @@ def modifStage(request, pk):
 		  # Nous créons un formulaire vide
 
 	return render(request,'stage/forms.html', 
-							{ 'actionAFaire' : 'Modifier', 'form' : form},
-							context_instance=RequestContext(request))
+							{ 'actionAFaire' : 'Modifier', 'form' : form})
 
 
 def delStage(request):
@@ -70,4 +68,4 @@ def delStage(request):
             supprimestageform.save()
             return HttpResponseRedirect("/stage/")
     else:
-        return render(request,'stage/forms.html', con, context_instance=RequestContext(request))
+        return render(request,'stage/forms.html', con)

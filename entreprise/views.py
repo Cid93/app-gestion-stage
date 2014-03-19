@@ -51,8 +51,7 @@ def addEnt(request):
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
 	return render(request,'entreprise/forms.html',
-							con,
-							context_instance=RequestContext(request))
+							con)
 	#return render(request, 'addEnt.html', locals())
 
 def modifEnt(request, pk):
@@ -67,8 +66,8 @@ def modifEnt(request, pk):
 		  # Nous créons un formulaire vide
 
 	return render(request,'entreprise/forms.html', 
-							{ 'actionAFaire' : 'Modifier', 'form' : form},
-							context_instance=RequestContext(request))
+							{ 'actionAFaire' : 'Modifier', 'form' : form}
+							)
 
 
 def delEnt(request):
@@ -84,5 +83,4 @@ def delEnt(request):
 			return HttpResponseRedirect("/entreprise/")
 	else:
 		return render(request,'entreprise/forms.html',
-								con,
-								context_instance=RequestContext(request))
+								con)
