@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
-from stage.models import Stage
-from stage.forms import StageForm, supprimeStageForm
+from stage.models import Stage, PersonneExterieure
+from stage.forms import StageForm, supprimeStageForm, PersonneExtForm
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from gestionStage.shortcuts import render
 from django.forms import ModelForm
@@ -37,9 +37,10 @@ def addStage(request):
 	form = StageForm()  # Nous créons un formulaire vide
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
-	return render(request,'stage/forms.html',
+	return render(request,'stage/add_stage.html',
 							con)
 	#return render(request, 'addEnt.html', locals())
+
 
 def modifStage(request, pk):
 	if request.method == 'POST':  # S'il s'agit d'une requête POST
@@ -69,3 +70,18 @@ def delStage(request):
             return HttpResponseRedirect("/stage/")
     else:
         return render(request,'stage/forms.html', con)
+
+
+# Manipulation Personnes extérieures
+def addPersonneExt(request):
+	if request.method == 'POST':  				# S'il s'agit d'une requête POST
+		form = PersonneExtForm(request.POST)  	# Nous reprenons les données
+
+		if form.is_valid(): 					# Nous vérifions que les données envoyées sont valides
+			form.save()
+			return HttpResponseRedirect('/stage/ajouter')
+
+	form = PersonneExtForm()  					# Nous créons un formulaire vide
+	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+
+	return render(request,'stage/forms.html', con)
