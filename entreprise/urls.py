@@ -16,9 +16,9 @@ urlpatterns = patterns('',
     url(r'^/?$',"entreprise.views.show_entreprise"),
 
     # Manipulation Entreprise
-    url(r'^(\d+)$',"entreprise.views.show_detail_entreprise",name="Ent"),
+    url(r'^(?P<pk>\d+)$',"entreprise.views.show_detail_entreprise",name="ent"),
     url(r'^ajouter/$',"entreprise.views.addEnt",name="addEnt"),
     url(r'^supprimer/$',"entreprise.views.delEnt",name="delEnt"),
-    url(r'^modifier/(\d+)$',"entreprise.views.modifEnt",name="modifEnt"),
+    url(r'^modifier/(?P<pk>\d+)$',"entreprise.views.modifEnt",name="modifEnt"),
 
 )

@@ -16,17 +16,17 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^/?$',"gestionStage.views.show_main"),
+    url(r'^/?$',"gestionStage.views.show_main", name="accueil"),
 
     url(r'^entreprise/', include('entreprise.urls')),
 
     url(r'^stage/', include('stage.urls')),
 
-    url(r'^visiter/$',"entreprise.views.show_visiter",name="visiter"),
+    url(r'^visiter/$', "entreprise.views.show_visiter", name="visiter"),
 
-    url(r'^login/$',"gestionStage.forms.login_page"),
+    url(r'^login/$', "gestionStage.forms.login_page", name="login"),
 
-    url(r'^logout/$',"gestionStage.forms.logout_action"),
+    url(r'^logout/$', "gestionStage.forms.logout_action", name="logout"),
 
 
 )

@@ -10,7 +10,7 @@
 	<p class="lead">
 		Voici le nouveau site web pour l'application de gestion des stages.<br/><br/>
 		{% if not user.is_authenticated %}
-		<a class="btn btn-lg btn-success" role="button" href="/login">Se connecter</a>
+		<a class="btn btn-lg btn-success" role="button" href="{% url 'login' %}">Se connecter</a>
 		{% endif %}
 	</p>
 
