@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
-from stage.models import Stage
+from stage.models import Stage, Etudiant
 from stage.forms import StageForm, supprimeStageForm
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from gestionStage.shortcuts import render
 from django.forms import ModelForm
 from django.template import RequestContext
 from django.core.context_processors import csrf
+from django.contrib.auth.models import User
 #from stage.forms import supprimeStageForm
 
 def show_stages(request):
@@ -69,3 +70,19 @@ def delStage(request):
             return HttpResponseRedirect("/stage/")
     else:
         return render(request,'stage/forms.html', con)
+
+def monStage(request):
+	try:
+		return render(
+			request,
+			"stage/detail_stage.html",
+			{"stage": Stage.objects.get(
+						etudiant=Etudiant.objects.get(
+							username=User.objects.get(
+								username=request.user.username)))}
+			)
+	except :
+		return render(request,
+			'stage/forms.html',
+			{ 'actionAFaire' : 'Ajouter',
+				'form' : StageForm()})

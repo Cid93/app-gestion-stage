@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm, Form, CharField, PasswordInput, Textarea
 from django import forms
-from stage.models import Stage
+from stage.models import Stage, Etudiant
 from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import User
 
 class LoginForm(Form):
     username = CharField(max_length=100, label="Identifiant")
@@ -25,8 +26,7 @@ def login_page(request):
                 context["errmsg"] = "Echec d'authentification"
             elif user.is_active:
                 login(request, user)
-                url = request.GET.get("next","/")
-                return HttpResponseRedirect(url)
+                return render(request, "gestionStage/main.html", context)
             else:
                 context["errmsg"] = "Compte désactivé"
         else:
