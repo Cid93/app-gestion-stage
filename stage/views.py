@@ -26,15 +26,18 @@ def show_detail_stage(request, pk):
 def addStage(request):
 	#entreprise_form = EntrepriseForm()
 	#form = EntrepriseForm(instance=Entreprise.objects.all()[1])
-
+	
 	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		form = StageForm(request.POST)  # Nous reprenons les données
+		
+		print (request.POST)
+		# form = StageForm(request.POST)  # Nous reprenons les données
 
-		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
-			form.save()
-			return HttpResponseRedirect('/stage')
+		# if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+		# 	form.save()
+		# 	return HttpResponseRedirect('/stage')
 
-	form = StageForm()  # Nous créons un formulaire vide
+
+	form = StageForm(request)  # Nous créons un formulaire vide
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
 	return render(request,'stage/add_stage.html',

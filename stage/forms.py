@@ -1,13 +1,28 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
 from django import forms
-from stage.models import Stage, PersonneExterieure
+from stage.models import Stage, PersonneExterieure, Etudiant
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
 class StageForm(ModelForm):
+    etudiant = forms.CharField(widget=forms.HiddenInput())
+    
     class Meta:
         model = Stage
 
+    def __init__(self, request, *args, **kwargs):
+        super(StageForm, self).__init__(*args, **kwargs)
+        if self.instance:
+            
+            # self.fields['etudiant'].widget.attrs['disabled'] = 'disabled'
+            self.fields['etudiant'].initial = Etudiant.objects.get(
+                username=User.objects.get(
+                    username=request.user.username)).numEtu
+
+
+            
+            
 
 class supprimeStageForm(forms.Form):
     def __init__(self, *args, **kwargs):
