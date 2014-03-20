@@ -6,20 +6,11 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 
 class StageForm(ModelForm):
-    etudiant = forms.CharField(widget=forms.HiddenInput())
-    
+    etudiant = forms.ModelChoiceField(queryset=Etudiant.objects.all(),
+            widget=forms.HiddenInput())
+
     class Meta:
         model = Stage
-
-    def __init__(self, request, *args, **kwargs):
-        super(StageForm, self).__init__(*args, **kwargs)
-        if self.instance:
-            
-            # self.fields['etudiant'].widget.attrs['disabled'] = 'disabled'
-            self.fields['etudiant'].initial = Etudiant.objects.get(
-                username=User.objects.get(
-                    username=request.user.username)).numEtu
-
 
             
             

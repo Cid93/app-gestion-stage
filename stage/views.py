@@ -25,21 +25,21 @@ def show_detail_stage(request, pk):
 
 # Manipulation Entreprise
 def addStage(request):
+	etu = Etudiant.objects.get(username=User.objects.get(username=request.user.username))
 
-	
 	if request.method == 'POST': # Si une requête POST a été passée en paramètre
 		form = StageForm(request.POST) # On récupère les données
-
+		print(request.POST)
 		if form.is_valid(): # Si les données reçues sont valides
 			form.save()
 			return HttpResponseRedirect('/stage')
 		else: # Si les données reçues sont invalides
-			con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+			con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
 			return render(request,'stage/add_stage.html', con)			
 
 	else: #Si pas de requête
-		form = StageForm()  # Nous créons un formulaire vide
-		con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+		form = StageForm(initial={'etudiant':etu})
+		con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
 
 		return render(request,'stage/add_stage.html', con)
 	
