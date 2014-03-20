@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
 from stage.models import Stage, PersonneExterieure, Etudiant
-from stage.forms import StageForm, supprimeStageForm, PersonneExtForm
+from stage.forms import StageForm, StageFormEtu, supprimeStageForm, PersonneExtForm
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from gestionStage.shortcuts import render
 from django.forms import ModelForm
@@ -25,38 +25,92 @@ def show_detail_stage(request, pk):
 
 # Manipulation Entreprise
 def addStage(request):
-	etu = Etudiant.objects.get(username=User.objects.get(username=request.user.username))
+	user = User.objects.get(username=request.user.username)
+	groups = user.groups.all()
+	verifEtu = False
+	for g in groups:
+		if (g.name == "etudiants"):
+			verifEtu = True
 
-	if request.method == 'POST': # Si une requête POST a été passée en paramètre
-		form = StageForm(request.POST) # On récupère les données
-		print(request.POST)
-		if form.is_valid(): # Si les données reçues sont valides
-			form.save()
-			return HttpResponseRedirect('/stage')
-		else: # Si les données reçues sont invalides
+	if (verifEtu == True):
+		etu = Etudiant.objects.get(username=User.objects.get(username=request.user.username))
+
+		if request.method == 'POST': # Si une requête POST a été passée en paramètre
+			form = StageFormEtu(request.POST) # On récupère les données
+			if form.is_valid(): # Si les données reçues sont valides
+				form.save()
+				return HttpResponseRedirect('/stage')
+			else: # Si les données reçues sont invalides
+				con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
+				return render(request,'stage/add_stage.html', con)			
+
+		else: #Si pas de requête
+			form = StageFormEtu(initial={'etudiant':etu})
 			con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
-			return render(request,'stage/add_stage.html', con)			
 
-	else: #Si pas de requête
-		form = StageForm(initial={'etudiant':etu})
-		con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
+			return render(request,'stage/add_stage.html', con)
 
-		return render(request,'stage/add_stage.html', con)
+	else:
+		if request.method == 'POST': # Si une requête POST a été passée en paramètre
+			form = StageForm(request.POST) # On récupère les données
+			
+			if form.is_valid(): # Si les données reçues sont valides
+				form.save()
+				return HttpResponseRedirect('/stage')
+			else: # Si les données reçues sont invalides
+				con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+				return render(request,'stage/add_stage.html', con)			
+
+		else: #Si pas de requête
+			form = StageForm()
+			con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+
+			return render(request,'stage/add_stage.html', con)
 	
 
 def modifStage(request, pk):
-	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		form = StageForm(request.POST,instance=Stage.objects.get(pk=pk))
-		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
-			form.save()
-			return HttpResponseRedirect('/stage/' + pk)
-	else: # Si ce n'est pas du POST, c'est probablement une requête GET
-		form = StageForm(instance=Stage.objects.get(pk=pk))
-		print("Error")
-		  # Nous créons un formulaire vide
+	user = User.objects.get(username=request.user.username)
+	groups = user.groups.all()
+	verifEtu = False
+	for g in groups:
+		if (g.name == "etudiants"):
+			verifEtu = True
 
-	return render(request,'stage/forms.html', 
-							{ 'actionAFaire' : 'Modifier', 'form' : form})
+	if (verifEtu == True):
+		etu = Etudiant.objects.get(username=User.objects.get(username=request.user.username))
+
+		if request.method == 'POST': # Si une requête POST a été passée en paramètre
+			form = StageFormEtu(request.POST,instance=Stage.objects.get(pk=pk)) # On récupère les données
+			if form.is_valid(): # Si les données reçues sont valides
+				form.save()
+				return HttpResponseRedirect('/stage/' + pk)
+			else: # Si les données reçues sont invalides
+				con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
+				return render(request,'stage/add_stage.html', con)			
+
+		else: #Si pas de requête
+			form = StageFormEtu(instance=Stage.objects.get(pk=pk))
+			con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
+
+			return render(request,'stage/add_stage.html', con)
+
+	else:
+		if request.method == 'POST': # Si une requête POST a été passée en paramètre
+			form = StageForm(request.POST, instance=Stage.objects.get(pk=pk)) # On récupère les données
+			
+			if form.is_valid(): # Si les données reçues sont valides
+				form.save()
+				return HttpResponseRedirect('/stage/' + pk)
+			else: # Si les données reçues sont invalides
+				con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+				return render(request,'stage/add_stage.html', con)			
+
+		else: #Si pas de requête
+			form = StageForm(instance=Stage.objects.get(pk=pk))
+			con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+
+			return render(request,'stage/add_stage.html', con)
+
 
 def delStage(request):
  

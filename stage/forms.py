@@ -5,15 +5,18 @@ from stage.models import Stage, PersonneExterieure, Etudiant
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
-class StageForm(ModelForm):
+class StageFormEtu(ModelForm):
     etudiant = forms.ModelChoiceField(queryset=Etudiant.objects.all(),
             widget=forms.HiddenInput())
 
     class Meta:
         model = Stage
 
-            
-            
+
+class StageForm(ModelForm):
+    class Meta:
+        model = Stage
+
 
 class supprimeStageForm(forms.Form):
     def __init__(self, *args, **kwargs):
