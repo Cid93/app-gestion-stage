@@ -39,7 +39,11 @@
 						<ul class="dropdown-menu">
 							<li><p><b><span class="username">{{ user }}</span></b></p></li>
 							<li><a href="{% url 'logout' %}">Se deconnecter</a></li>
-							<li><a href="#">Mon stage</a></li>
+							{% for group in user.groups.all %}
+								{% if group.name == "etudiants" %}
+									<li><a href="{% url 'stage.views.monStage' %}">Mon stage</a></li>
+								{% endif %}
+							{% endfor %}
 							<li class="divider"></li>
 							<li><p><b>Page</b></p></li>
 							<li><a href="{% url 'visiter' %}">Visiter entreprise(s)</a></li>

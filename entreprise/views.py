@@ -37,22 +37,21 @@ def show_visiter(request):
 
 # Manipulation Entreprise
 def addEnt(request):
-	#entreprise_form = EntrepriseForm()
-	#form = EntrepriseForm(instance=Entreprise.objects.all()[1])
-
-	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		form = EntrepriseForm(request.POST)  # Nous reprenons les données
-
-		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+	if request.method == 'POST':  				# Si une requête POST a été passée
+		form = EntrepriseForm(request.POST)  	# On récupère les données
+		
+		if form.is_valid(): 					# Si les données reçues sont valides
 			form.save()
 			return HttpResponseRedirect('/entreprise')
+		else:									# Si les données reçues sont invalides
+			con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+			return render(request,'entreprise/forms.html', con)
 
-	form = EntrepriseForm()  # Nous créons un formulaire vide
-	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+	else: 										# Pas de requête POST
+		form = EntrepriseForm()  				# On crée un formulaire vide
+		con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+		return render(request,'entreprise/forms.html', con)
 
-	return render(request,'entreprise/forms.html',
-							con)
-	#return render(request, 'addEnt.html', locals())
 
 def modifEnt(request, pk):
 	if request.method == 'POST':  # S'il s'agit d'une requête POST

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
-from stage.models import Stage, PersonneExterieure
+from stage.models import Stage, PersonneExterieure, Etudiant
 from stage.forms import StageForm, supprimeStageForm, PersonneExtForm
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from gestionStage.shortcuts import render
 from django.forms import ModelForm
 from django.template import RequestContext
 from django.core.context_processors import csrf
+from django.contrib.auth.models import User
 #from stage.forms import supprimeStageForm
 
 def show_stages(request):
@@ -24,26 +25,24 @@ def show_detail_stage(request, pk):
 
 # Manipulation Entreprise
 def addStage(request):
-	#entreprise_form = EntrepriseForm()
-	#form = EntrepriseForm(instance=Entreprise.objects.all()[1])
+
 	
-	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		
-		print (request.POST)
-		# form = StageForm(request.POST)  # Nous reprenons les données
+	if request.method == 'POST': # Si une requête POST a été passée en paramètre
+		form = StageForm(request.POST) # On récupère les données
 
-		# if form.is_valid(): # Nous vérifions que les données envoyées sont valides
-		# 	form.save()
-		# 	return HttpResponseRedirect('/stage')
+		if form.is_valid(): # Si les données reçues sont valides
+			form.save()
+			return HttpResponseRedirect('/stage')
+		else: # Si les données reçues sont invalides
+			con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+			return render(request,'stage/add_stage.html', con)			
 
+	else: #Si pas de requête
+		form = StageForm()  # Nous créons un formulaire vide
+		con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
-	form = StageForm(request)  # Nous créons un formulaire vide
-	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
-
-	return render(request,'stage/add_stage.html',
-							con)
-	#return render(request, 'addEnt.html', locals())
-
+		return render(request,'stage/add_stage.html', con)
+	
 
 def modifStage(request, pk):
 	if request.method == 'POST':  # S'il s'agit d'une requête POST
@@ -59,7 +58,6 @@ def modifStage(request, pk):
 	return render(request,'stage/forms.html', 
 							{ 'actionAFaire' : 'Modifier', 'form' : form})
 
-
 def delStage(request):
  
     supprimestageform = supprimeStageForm()
@@ -74,6 +72,21 @@ def delStage(request):
     else:
         return render(request,'stage/forms.html', con)
 
+def monStage(request):
+	try:
+		return render(
+			request,
+			"stage/detail_stage.html",
+			{"stage": Stage.objects.get(
+						etudiant=Etudiant.objects.get(
+							username=User.objects.get(
+								username=request.user.username)))}
+			)
+	except :
+		return render(request,
+			'stage/forms.html',
+			{ 'actionAFaire' : 'Ajouter',
+				'form' : StageForm()})
 
 # Manipulation Personnes extérieures
 def addPersonneExt(request):
