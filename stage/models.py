@@ -82,8 +82,8 @@ class Stage(models.Model):
     etudiant=models.ForeignKey(Etudiant, related_name="stage_etudiant")
     intitule=models.CharField(max_length=100)
     sujet = models.CharField(max_length=512)
-    dateDebut=models.DateTimeField(null=True, blank=True)
-    dateFin=models.DateTimeField(null=True, blank=True)
+    dateDebut=models.DateTimeField()
+    dateFin=models.DateTimeField()
     # on stocke l'entreprise ici au cas où le tuteur de stage (personne ext) change d'entreprise
     entreprise=models.ForeignKey(Entreprise, related_name="stage_entreprise")
     persConvention=models.ForeignKey(PersonneExterieure, related_name="stage_persConvention")
@@ -91,7 +91,7 @@ class Stage(models.Model):
     enseignantTuteur=models.ForeignKey(Enseignant, related_name="stage_enseignantTuteur")
     # Un étudiant peut changer de promotion donc on préfère stocker la promotion dans le stage
     promotion = models.ForeignKey(Promotion)
-    nomLogiciels = models.ManyToManyField(Logiciel)
+    nomLogiciels = models.ManyToManyField(Logiciel, null=True, blank=True)
 
     class Meta:
         ordering = ('intitule',)

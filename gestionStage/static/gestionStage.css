@@ -70,3 +70,7 @@ tr {
 	border-radius: 2px;
 	list-style-type: none;
 }
+
+.helptext {
+	display: none;
+}

@@ -11,7 +11,7 @@ class Entreprise(models.Model):
 	ville=models.CharField(max_length=50)
 	pays=models.CharField(max_length=30)
 	telephone=models.BigIntegerField(max_length=22)
-	fax=models.BigIntegerField(max_length=14)
+	fax=models.BigIntegerField(max_length=14, blank=True, null=True)
 
 	def __str__(self):
 		return "%s" % (self.nom)
