@@ -3,7 +3,12 @@
 {% block main %}
 
 <span class="details_etu">
-<h1 class="page-heading">{{ stage.intitule }} <small>{{ stage.etudiant }}</small><a class="pull-right btn btn-primary" href="{% url 'modifStage' pk=stage.pk %}">Modifier</a></h1> 
+<h1 class="page-heading">{{ stage.intitule }}
+	<small>{{ stage.etudiant }}</small>
+	{% if stage.etudiant.username == user or "admin" in user.perms %}
+		<a class="pull-right btn btn-primary" href="{% url 'modifStage' pk=stage.pk %}">Modifier</a>
+	{% endif %}
+</h1> 
 </span><br/>
 
 <table class="table table-striped col-xs-12 col-lg-12">

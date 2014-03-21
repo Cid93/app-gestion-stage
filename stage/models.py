@@ -77,21 +77,25 @@ class Logiciel(models.Model):
     def __str__(self):
         return self.nomLog
 
-class Stage(models.Model):
+
+class OffreStage(models.Model):
+    intitule = models.CharField(max_length=100)
+    sujet = models.CharField(max_length=512)
+    # on stocke l'entreprise ici au cas où le tuteur de stage (personne ext) change d'entreprise
+    entreprise = models.ForeignKey(Entreprise, related_name="stage_entreprise")
+    nomLogiciels = models.ManyToManyField(Logiciel, null=True, blank=True)
+    possibiliteEmbauche = models.NullBooleanField(null=True, default=None)
+
+class Stage(OffreStage):
     idStage = models.AutoField(primary_key=True)
     etudiant=models.ForeignKey(Etudiant, related_name="stage_etudiant")
-    intitule=models.CharField(max_length=100)
-    sujet = models.CharField(max_length=512)
     dateDebut=models.DateTimeField()
     dateFin=models.DateTimeField()
-    # on stocke l'entreprise ici au cas où le tuteur de stage (personne ext) change d'entreprise
-    entreprise=models.ForeignKey(Entreprise, related_name="stage_entreprise")
     persConvention=models.ForeignKey(PersonneExterieure, related_name="stage_persConvention")
     maitreStage=models.ForeignKey(PersonneExterieure, related_name="stage_maitreStage")
     enseignantTuteur=models.ForeignKey(Enseignant, related_name="stage_enseignantTuteur")
     # Un étudiant peut changer de promotion donc on préfère stocker la promotion dans le stage
     promotion = models.ForeignKey(Promotion)
-    nomLogiciels = models.ManyToManyField(Logiciel, null=True, blank=True)
 
     class Meta:
         ordering = ('intitule',)
@@ -104,7 +108,3 @@ class EnseignantResp(models.Model):
     stage = models.ManyToManyField(Stage)
     priorite_reservation = models.IntegerField(max_length=2)
     validation_resp=models.BooleanField(default=False)
-
-
-
-
