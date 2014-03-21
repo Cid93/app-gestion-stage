@@ -9,3 +9,9 @@ def show_main(request):
 		request,
 		"gestionStage/main.html",
 		{})
+
+def oups(request):
+	return render(
+		request,
+		"oups.html",
+		{})

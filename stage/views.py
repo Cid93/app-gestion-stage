@@ -113,18 +113,27 @@ def modifStage(request, pk):
 
 
 def delStage(request):
- 
-    supprimestageform = supprimeStageForm()
-    con ={'form': supprimestageform, 'actionAFaire' : 'Supprimer'}
-    con.update(csrf(request))
-    if len(request.POST) > 0:
-        supprimestageform =supprimeStageForm(request.POST)
-        con = {'form': supprimestageform}
-        if supprimestageform.is_valid():  
-            supprimestageform.save()
-            return HttpResponseRedirect("/stage/")
-    else:
-        return render(request,'stage/forms.html', con)
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("stage.delete_stage" in permissions):
+		supprimestageform = supprimeStageForm()
+		con ={'form': supprimestageform, 'actionAFaire' : 'Supprimer'}
+		con.update(csrf(request))
+		if len(request.POST) > 0:
+		    supprimestageform =supprimeStageForm(request.POST)
+		    con = {'form': supprimestageform}
+		    if supprimestageform.is_valid():  
+		        supprimestageform.save()
+		        return HttpResponseRedirect("/stage/")
+		else:
+		    return render(request,'stage/forms.html', con)
+	else:
+		con = {}
+		return HttpResponseRedirect('/oups/')
+		#return render(request,'stage/oops.html', con)
+		
 
 def monStage(request):
 	try:
