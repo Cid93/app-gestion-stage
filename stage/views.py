@@ -130,7 +130,7 @@ def delStage(request):
         return render(request,'stage/forms.html', con)
 
 def monStage(request):
-
+	try:
 		stgs = Stage.objects.filter(
 			etudiant=Etudiant.objects.get(
 				username=User.objects.get(
@@ -148,6 +148,8 @@ def monStage(request):
 			request,
 			monStg.idStage
 		)
+	except:
+		return addStage(request)
 		
 
 # Manipulation Personnes extérieures
