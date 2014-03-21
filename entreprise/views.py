@@ -72,7 +72,7 @@ def delEnt(request):
 	# Vérification des permissions de l'utilisateur
 	user = User.objects.get(username=request.user.username)
 	permissions = user.get_all_permissions()
-	print(permissions)
+	
 	if ("entreprise.delete_entreprise" in permissions):
 		supprimeentrepriseform = supprimeEntrepriseForm()
 		con ={'form': supprimeentrepriseform, 'actionAFaire' : 'Supprimer'}
