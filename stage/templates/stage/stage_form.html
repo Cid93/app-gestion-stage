@@ -12,14 +12,13 @@
 		</table>
 		<input class="btn btn-success" type="submit" value="{{ actionAFaire }}" />
 	</form>
-
-	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script>
-		$( document ).ready( function() {
-			$('#id_persConvention').parent().append(' <a style="padding:2px 7px;" class="btn btn-default" href="/stage/personne-ext">Ajouter</a>');
-			$('#id_maitreStage').parent().append(' <a style="padding:2px 7px;" class="btn btn-default" href="/stage/personne-ext">Ajouter</a>');
-		});
-	</script>
 {% endblock %}
-{% block js %}active_tab="#tab-stage"{% endblock %}
+{% block js %}
+
+	$( document ).ready( function() {
+		$('#id_persConvention').parent().append(' <a style="padding:2px 7px;" class="btn btn-default" href="/stage/personne-ext">Ajouter</a>');
+		$('#id_maitreStage').parent().append(' <a style="padding:2px 7px;" class="btn btn-default" href="/stage/personne-ext">Ajouter</a>');
+	});
+
+	active_tab="#tab-stage"
+{% endblock %}
