@@ -28,5 +28,7 @@ urlpatterns = patterns('',
 
     url(r'^logout/$', "gestionStage.forms.logout_action", name="logout"),
 
+    url(r'^oups/$',"gestionStage.views.oups",name="oups"),
+
 
 )

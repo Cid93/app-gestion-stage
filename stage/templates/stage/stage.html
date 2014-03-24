@@ -5,7 +5,9 @@
 <br/>
 	<div class="menu col-xs-12 col-sm-2 col-lg-2">
 	<a class="btn btn-primary" href="{% url 'addStage' %}">Ajouter</a><br/>
-	<a class="btn btn-danger" href="{% url 'delStage' %}">Supprimer</a>
+	{% if "stage.delete_stage" in user.get_all_permissions %}
+		<a class="btn btn-danger" href="{% url 'delStage' %}">Supprimer</a>
+	{% endif %}
 	</div>
 	<ul class="col-xs-12 col-sm-offset-1 col-lg-8">
 		{% for s in liste_stage %}

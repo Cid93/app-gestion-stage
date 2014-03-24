@@ -8,6 +8,7 @@ from django.forms import ModelForm
 from django.template import RequestContext
 from django.core.context_processors import csrf
 from entreprise.forms import supprimeEntrepriseForm
+from django.contrib.auth.models import User
 
 
 # Shows
@@ -64,22 +65,27 @@ def modifEnt(request, pk):
 		print("Error")
 		  # Nous créons un formulaire vide
 
-	return render(request,'entreprise/forms.html', 
-							{ 'actionAFaire' : 'Modifier', 'form' : form}
-							)
+	return render(request,'entreprise/forms.html', { 'actionAFaire' : 'Modifier', 'form' : form})
 
 
 def delEnt(request):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("entreprise.delete_entreprise" in permissions):
+		supprimeentrepriseform = supprimeEntrepriseForm()
+		con ={'form': supprimeentrepriseform, 'actionAFaire' : 'Supprimer'}
+		con.update(csrf(request))
+		if len(request.POST) > 0:
+			supprimeentrepriseform =supprimeEntrepriseForm(request.POST)
+			con = {'form': supprimeentrepriseform}
+			if supprimeentrepriseform.is_valid():   
+				supprimeentrepriseform.save()
+				return HttpResponseRedirect("/entreprise/")
+		else:
+			return render(request,'entreprise/forms.html', con)
 
-	supprimeentrepriseform = supprimeEntrepriseForm()
-	con ={'form': supprimeentrepriseform, 'actionAFaire' : 'Supprimer'}
-	con.update(csrf(request))
-	if len(request.POST) > 0:
-		supprimeentrepriseform =supprimeEntrepriseForm(request.POST)
-		con = {'form': supprimeentrepriseform}
-		if supprimeentrepriseform.is_valid():   
-			supprimeentrepriseform.save()
-			return HttpResponseRedirect("/entreprise/")
 	else:
-		return render(request,'entreprise/forms.html',
-								con)
+		con = {}
+		return HttpResponseRedirect('/oups')
