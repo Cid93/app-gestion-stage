@@ -110,7 +110,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'gestionStage.middleware.AutoLogout',
 )
+
+# Réglage du délai de déconnexion automatique
+AUTO_LOGOUT_DELAY = 60  # équivalent à 60 minutes
+
+
 
 ROOT_URLCONF = 'gestionStage.urls'
 
@@ -139,7 +145,11 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+# Ancien systeme de gestion de session
+#SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
+#Handle session is not Json Serializable
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
