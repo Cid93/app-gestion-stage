@@ -12,12 +12,6 @@ from django.contrib.auth.models import User
 
 
 # Shows
-def show_main(request):
-	return render(
-		request,
-		"entreprise/main.html",
-		{})
-
 def show_entreprise(request):
 	return render(
 		request,
