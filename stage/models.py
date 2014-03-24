@@ -54,12 +54,22 @@ class Etudiant(PersonneInterne):
     cp = models.IntegerField(max_length=5)
     ville = models.CharField(max_length=50)
 
+    class Meta:
+        permissions = (
+            ("rechercherconsulter_etudiant", "Peut rechercher et consulter les fiches d'étudiants"),
+        )
+
 class Enseignant(PersonneInterne):
     idEnseignant = models.AutoField(primary_key=True)
     emailEns = models.EmailField(max_length=80)
     departement = models.CharField(max_length=80) # peut-être à séparer dans une classe département ?
     #numEns = models.IntegerField(primary_key=True)
     #grade = models.CharField(max_length=50)
+
+    class Meta:
+        permissions = (
+            ("rechercherconsulter_enseignant", "Peut rechercher et consulter les fiches d'enseignants"),
+        )
 
 class PersonneExterieure(Personne):
     idPersonneExt = models.AutoField(primary_key=True)
@@ -86,6 +96,12 @@ class OffreStage(models.Model):
     nomLogiciels = models.ManyToManyField(Logiciel, null=True, blank=True)
     possibiliteEmbauche = models.NullBooleanField(null=True, default=None)
 
+    class Meta:
+        permissions = (
+            ("valider_offrestage", "Peut valider une offre de stage"),
+            ("postuler_offrestage", "Peut postuler à une offre de stage"),
+        )
+
 class Stage(OffreStage):
     idStage = models.AutoField(primary_key=True)
     etudiant=models.ForeignKey(Etudiant, related_name="stage_etudiant")
@@ -99,6 +115,11 @@ class Stage(OffreStage):
 
     class Meta:
         ordering = ('intitule',)
+        permissions = (
+            ("valider_stage", "Peut valider un stage"),
+            ("genererdocuments_stage", "Peut générer les documents propres à un stage (convention)"),
+            ("noter_stage", "Peut noter un stage"),
+        )
 
     def __str__(self):
         return self.intitule

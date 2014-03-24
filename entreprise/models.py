@@ -13,5 +13,10 @@ class Entreprise(models.Model):
 	telephone=models.BigIntegerField(max_length=22)
 	fax=models.BigIntegerField(max_length=14, blank=True, null=True)
 
+	class Meta:
+		permissions = (
+			("valider_entreprise", "Peut valider une entreprise"),
+		)
+
 	def __str__(self):
 		return "%s" % (self.nom)

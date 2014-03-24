@@ -1,11 +1,88 @@
 [
 	{
-	"name": "etudiants", 
-	"permissions": ["ajouter_entreprise", "ajouter_personne", "ajouter_stage", "ajouter_stage_logiciel", "ajouter_stage_entreprise"]
+		"name": "etudiants", 
+		"permissions": 
+			[
+				"add_offrestage",
+				"postuler_offrestage",
+
+				"add_stage",
+				"change_stage",
+
+				"add_entreprise"
+			]
 	},
 
 	{
-	"name": "enseignants", 
-	"permissions": ["ajouter_entreprise", "changer_entreprise", "ajouter_personne", "changer_personne", "ajouter_stage", "changer_stage", "ajouter_stage_logiciel", "changer_stage_logiciel", "ajouter_stage_entreprise", "changer_stage_entreprise"]
+		"name": "enseignants", 
+		"permissions": 
+			[
+				"add_offrestage",
+				"change_offrestage",
+				"delete_offrestage",
+				"valider_offrestage",
+
+				"change_stage",
+				"noter_stage",
+
+				"add_entreprise",
+				"change_entreprise",
+
+				"rechercherconsulter_etudiant",
+
+				"rechercherconsulter_enseignant"
+			]
+	},
+
+	{
+		"name": "responsables_stages", 
+		"permissions": 
+			[
+				"add_offrestage",
+				"change_offrestage",
+				"delete_offrestage",
+				"valider_offrestage",
+
+				"change_stage",
+				"delete_stage",
+				"genererdocuments_stage",
+				"noter_stage",
+				"valider_stage",
+
+				
+
+				"add_entreprise",
+				"change_entreprise",
+				"delete_entreprise",
+				"valider_entreprise",
+
+				"rechercherconsulter_etudiant",
+
+				"rechercherconsulter_enseignant"
+			]
+	},
+
+	{
+		"name": "secretaires", 
+		"permissions": 
+			[
+				"add_offrestage",
+				"change_offrestage",
+				"delete_offrestage",
+				"valider_offrestage",
+
+				"change_stage",
+				"delete_stage",
+				"genererdocuments_stage",
+				"noter_stage",
+
+				
+
+				"add_entreprise",
+
+				"rechercherconsulter_etudiant",
+
+				"rechercherconsulter_enseignant"
+			]
 	}
 ]
