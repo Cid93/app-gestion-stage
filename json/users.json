@@ -4,7 +4,7 @@
 	"first_name": "Cedric", 
 	"last_name": "Outreville", 
 	"groups": ["etudiants"], 
-	"password": "pbkdf2_sha256$12000$005NjVnhhory$w2i7iQy9Pkta47sJI1KZUUhuHPZayafGfWOqiD3EueQ=", 
+	"password": "", 
 	"email": ""
 	},
 
@@ -13,7 +13,7 @@
 	"first_name": "William", 
 	"last_name": "Roux", 
 	"groups": ["etudiants"], 
-	"password": "pbkdf2_sha256$12000$f7EWei3TTZ1d$jX8okx9QjjxO/NxmlcKAQrVyB4nmueoFEysjBNfIx+Q=", 
+	"password": "a", 
 	"email": ""
 	},
 
@@ -22,7 +22,7 @@
 	"first_name": "Yacine", 
 	"last_name": "Ait-maamar", 
 	"groups": ["etudiants"], 
-	"password": "pbkdf2_sha256$12000$f7EWei3TTZ1d$jX8okx9QjjxO/NxmlcKAQrVyB4nmueoFEysjBNfIx+Q=", 
+	"password": "a", 
 	"email": ""
 	},
 
@@ -31,7 +31,7 @@
 	"first_name": "Gerard", 
 	"last_name": "Rozsavolgyi", 
 	"groups": ["enseignants"],
-	"password": "pbkdf2_sha256$12000$AQktygBt0TkU$RYAiXV0oD6Tda6t3aNzqyqNp/iKo2/C682silJy6U58=", 
+	"password": "a", 
 	"email": ""
 	},
 
@@ -40,7 +40,7 @@
 	"first_name": "Denys", 
 	"last_name": "Duchier", 
 	"groups": ["enseignants"],
-	"password": "pbkdf2_sha256$12000$AQktygBt0TkU$RYAiXV0oD6Tda6t3aNzqyqNp/iKo2/C682silJy6U58=", 
+	"password": "a", 
 	"email": ""
 	},
 
@@ -49,7 +49,7 @@
 	"first_name": "Jacques", 
 	"last_name": "Chabin", 
 	"groups": ["enseignants"],
-	"password": "pbkdf2_sha256$12000$AQktygBt0TkU$RYAiXV0oD6Tda6t3aNzqyqNp/iKo2/C682silJy6U58=", 
+	"password": "a", 
 	"email": ""
 	}
 ]
