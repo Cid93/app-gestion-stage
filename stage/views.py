@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
-from stage.models import Stage, PersonneExterieure, Etudiant
-from stage.forms import StageForm, StageFormEtu, supprimeStageForm, PersonneExtForm
+from stage.models import OffreStage, Stage, PersonneExterieure, Etudiant
+from stage.forms import *
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from gestionStage.shortcuts import render
 from django.forms import ModelForm
@@ -190,3 +190,89 @@ def addPersonneExt(request):
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
 	return render(request,'stage/forms.html', con)
+
+
+
+def showOffres(request):
+	return render(
+		request,
+		"offrestage/offrestage.html",
+		{"liste_offrestage": OffreStage.objects.order_by("intitule")}
+	)
+
+def detailsOffreStage(request, pk):
+	return render(
+		request,
+		"offrestage/details_offrestage.html",
+		{"offrestage": OffreStage.objects.get(pk=pk)}
+	)
+
+def addOffreStage(request):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("stage.add_offrestage" in permissions):
+
+		if request.method == 'POST':  				# Si une requête POST a été passée
+			form = OffreStageForm(request.POST)  	# On récupère les données
+			
+			if form.is_valid(): 					# Si les données reçues sont valides
+				form.save()
+				return HttpResponseRedirect('/stage/offrestage')
+			else:									# Si les données reçues sont invalides
+				con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+				return render(request,'offrestage/forms.html', con)
+
+		else: 										# Pas de requête POST
+			form = OffreStageForm()  				# On crée un formulaire vide
+			con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+			return render(request,'offrestage/forms.html', con)
+
+	else:
+		return HttpResponseRedirect('/oups/')
+
+
+def modifOffreStage(request, pk):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("stage.change_offrestage" in permissions):
+
+		if request.method == 'POST':  # Si on a une requête POST (le formulaire a été posté)
+			form = OffreStageForm(request.POST,instance=OffreStage.objects.get(pk=pk))
+			if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+				form.save()
+				return HttpResponseRedirect('/stage/offrestage/' + pk)
+		else: # Si on a une requête GET, on récupère l'id de l'entreprise à modifier et on affiche le form
+			form = OffreStageForm(instance=OffreStage.objects.get(pk=pk))
+			print("Error")
+			# On crée un formulaire vide
+
+		return render(request,'offrestage/forms.html', { 'actionAFaire' : 'Modifier', 'form' : form})
+
+	else:
+		return HttpResponseRedirect('/oups')
+
+
+def delOffreStage(request):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("stage.delete_offrestage" in permissions):
+		form = supprimeOffreStageForm()
+		con ={'form': form, 'actionAFaire' : 'Supprimer'}
+		con.update(csrf(request))
+		if len(request.POST) > 0:
+			form =supprimeOffreStageForm(request.POST)
+			con = {'form': form}
+			if form.is_valid():   
+				form.save()
+				return HttpResponseRedirect("/stage/offrestage")
+		else:
+			return render(request,'offrestage/forms.html', con)
+
+	else:
+		return HttpResponseRedirect('/oups')

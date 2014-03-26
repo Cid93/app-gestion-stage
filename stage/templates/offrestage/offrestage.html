@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Offres de stages {% endblock %}
+{% block main %}
+<h1>Offres de stage</h1>
+<br/>
+	<div class="menu col-xs-12 col-sm-2 col-lg-2">
+	<a class="btn btn-primary" href="{% url 'addOffreStage' %}">Ajouter</a><br/>
+	{% if "stage.delete_offrestage" in user.get_all_permissions %}
+		<a class="btn btn-danger" href="{% url 'delOffreStage' %}">Supprimer</a>
+	{% endif %}
+	</div>
+	<ul class="col-xs-12 col-sm-offset-1 col-lg-8">
+		{% for o in liste_offrestage %}
+			<li><a href="{% url 'detailsOffreStage' pk=o.pk %}">{{ o }}</a></li><br/>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
+{% block js %}active_tab="#tab-offrestage"{% endblock %}
+
