@@ -61,6 +61,15 @@
 {% endblock %}
 {% block js %}
 
+	const theadTab = "#entete_planning";
+	const bodyTab = "#body_planning";
+	const saveTableau = $(tab).html();
+
+	const tabJ = "#table_planningJ";
+	const theadTabJ = "#entete_planningJ";
+	const bodyTabJ = "#body_planningJ";
+	const saveTableauJ = $(tabJ).html();
+
 	$( document ).ready( function() {
 
 		becomeDatePicker("#id_datePassage");
@@ -90,22 +99,34 @@
 
 			// Modification du tableau par semaine
 			console.log('récupération du range de la semaine');
-			var laDate = $('#id_datePassage').val()
+			const laDate = $('#id_datePassage').val()
 					// recuperation de la date sans l'heure
 					.split('T')[0]
 					// mise en tableau de l'année, mois, jour
 					.split('-');
-			var jour = new Date(laDate[0], laDate[1] - 1, laDate[2]);
-			var curJour = new Date(jour), finSem = new Date(jour);
+			const jour = new Date(laDate[0], laDate[1] - 1, laDate[2]);
+			const curJour = new Date(jour), finSem = new Date(jour);
 			curJour.setDate(parseInt(laDate[2]) - (jour.getDay() - 1));
 			finSem.setDate(parseInt(laDate[2]) + (6 - jour.getDay()));
 			console.log('commence : ' + curJour);
 			console.log('termine : ' + finSem);
 
 			reinitTableaux(bodyTab, saveTableau);
-			addHeaders(tab + ' tr:first-child', curJour, finSem, month);
+			addHeaders(tab + ' tr:first-child', curJour, month, 
+				function(arg){
+					var numDate = arg.html().split(' ')[1];
+					var date = new Date(curJour);
+					for(i = new Date(curJour);
+							i.getDate() != numDate;
+							i.setDate(i.getDate() + 1)){
+						date = i;
+						console.log(i);
+					}
+					$("#id_datePassage").val(date.toLocaleFormat("%Y-%m-%d"));
+					$("#id_datePassage").change();
+				});
 
-			for(var i = curJour; i <= finSem; i.setDate(i.getDate() + 1)){
+			for(var i = new Date(curJour); i <= finSem; i.setDate(i.getDate() + 1)){
 				console.log('range : ' + i);
 				$.ajax({
 					url: '{% url 'find_planning' %}',

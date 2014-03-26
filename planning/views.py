@@ -95,10 +95,4 @@ def find_planning(request):
 		use_natural_keys=True
 	)
 
-	# for itemStage in res:
-		# itemStage['fields']['stage'] = serializers.serialize(
-		# 	"json",
-		# 	Stage.objects.get(pk=itemStage['fields']['stage'])
-		# )
-
 	return HttpResponse(res, mimetype="application/json")

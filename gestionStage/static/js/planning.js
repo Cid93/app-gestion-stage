@@ -1,14 +1,5 @@
 const tab = "#table_planning";
-const theadTab = "#entete_planning";
-const bodyTab = "#body_planning";
-const saveTableau = $(tab).html();
-
-const tabJ = "#table_planningJ";
-const theadTabJ = "#entete_planningJ";
-const bodyTabJ = "#body_planningJ";
-const saveTableauJ = $(tabJ).html();
-
-const  month=new Array();
+const month=new Array();
 month[0]="Janvier";
 month[1]="Février";
 month[2]="Mars";
@@ -51,13 +42,18 @@ function putTheadTabbleau(theTableauEntete, listeSoutenance){
 	console.log('entête faite : ' + theTableauEntete);
 }
 
-function addHeaders(firstLine, deb, end, months){
+function addHeaders(firstLine, deb, months, changeMethod){
 	var i = new Date(deb);
 	$.each($(firstLine + ' td'), function(index, value){
 		if(index != 0){
 			$(value).html($(value).html() + ' '
 				+ i.getDate() + ' ' + months[i.getMonth()]);
 			i.setDate(i.getDate() + 1);
+			if(changeMethod != null){
+				$(value).click(function(){
+					changeMethod($(this));
+				});
+			}
 		}
 	});
 }
@@ -73,15 +69,18 @@ function identifierCellule(selecteurTbody, listeSoutenance){
 	$.each($(selecteurTbody + ' tr'), function(index, value){
 		if( ! firstLoop){
 			for ( var i = 0; i < nbDeSalles; i++ ) {
-				$(this).append('<td id="l_' + (parseInt(ptDeDepart) + index) + '_c_' + i + '"></td>')
-				console.log('généré : <td id="l_' + (parseInt(ptDeDepart) + index) + '_c_' + i + '"></td>')
+				$(this).append('<td id="l_' +
+					(parseInt(ptDeDepart) + index) + 
+					'_c_' + i + '"></td>');
+				console.log('généré : <td id="l_' +
+					(parseInt(ptDeDepart) + index) + '_c_' + i + '"></td>');
 			}
 		}
 		firstLoop = false;
 	});
 }
 
-function getCelluleCompletee(informationsStage){
+function getCelluleCompleteeJ(informationsStage){
 	var infoEtu = informationsStage['etudiant']['prenom'] + 
 		' ' + 
 		informationsStage['etudiant']['nom'];
@@ -118,13 +117,21 @@ function remplirTableauxJ(bodyTab, data){
 		}
 
 		// recherche de l'id de la cellule cible
-		var target = '#l_' + heure + '_c_' + salle;
+		var target = '#l_' + parseInt(heure) + '_c_' + salle;
 
 		console.log('soutenance sur ' + target);
 		$(target).html(
-			getCelluleCompletee(
+			getCelluleCompleteeJ(
 				value['fields']['stage']));
 	});
+}
+
+function getCelluleCompletee(pk, infos){
+	var textAff = infos['stage']['etudiant']['prenom'] + ' ' +
+		infos['stage']['etudiant']['nom'] + ' dans la salle ' +
+		infos['salle'];
+	return '<a href="./' + pk + '" target="_blank">' + 
+		textAff + '</a>';
 }
 
 function remplirTableaux(bodyTab, data){
@@ -143,9 +150,9 @@ function remplirTableaux(bodyTab, data){
 		var jour = new Date(laDate[0], laDate[1] - 1, laDate[2]).getDay();
 
 		// recherche de l'id de la cellule cible
-		var target = '#l_' + heure + '_d_' + jour;
+		var target = '#l_' + parseInt(heure) + '_d_' + jour;
 
 		console.log('soutenance sur ' + target);
-		$(target).html($(target).html() + value['fields']['salle']);
+		$(target).html(getCelluleCompletee(value['pk'], value['fields']));
 	});
 }
