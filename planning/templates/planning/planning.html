@@ -78,6 +78,21 @@
 		});
 	}
 
+	function getCelluleCompletee(informationsStage){
+		var infoEtu = informationsStage['etudiant']['prenom'] + 
+			' ' + 
+			informationsStage['etudiant']['nom'];
+		var infoEnt = informationsStage['entreprise']['nom'];
+		var infoStage = informationsStage['intitule'];
+		console.log('infos sur le stage :');
+
+		var res = '<a href="/stage/' + informationsStage['id'] + '">' +
+			infoEtu + ' chez ' +
+			infoEnt + '<br />pour le stage <br />"' + infoStage + '"</a>';
+		console.log(res);
+		return res;
+	}
+
 	function remplirTableaux(bodyTab, data){
 		var salles = getListeSalles(data);
 		$.each(data, function( index, value ) {
@@ -98,7 +113,9 @@
 			var target = '#l_' + heure + '_c_' + salle;
 
 			console.log('soutenance sur ' + target);
-			$(target).html(value['fields']['stage']['intitule']);
+			$(target).html(
+				getCelluleCompletee(
+					value['fields']['stage']));
 		});
 	}
 
