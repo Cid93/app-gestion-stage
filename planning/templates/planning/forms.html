@@ -2,26 +2,20 @@
 {% block title %}{{ block.super }} | {{ actionAFaire }} {% endblock %}
 {% block main %}
 	<form action="" method="post">{% csrf_token %}
-		<table>
-			{% for group in user.groups.all %}
-				{% if group.name == "etudiants" %}
-					<tr><td style="font-weight:bold">Etudiant:</td><td> {{ nomEtu }} </td></tr>
-				{% endif %}
-			{% endfor %}
-			{{ form.as_table }}
+	<table>
+		{{ form.as_table }}
 		</table>
 		<input class="btn btn-success" type="submit" value="{{ actionAFaire }}" />
 	</form>
 {% endblock %}
 {% block libraries %}{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="/static/css/jquery.datetimepicker.css" media="screen">
+	<script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.datetimepicker.js"></script>
 	<script type="text/javascript" src="/static/js/utils.js"></script>
 {% endblock %}
 {% block js %}
-
-	$( document ).ready( function() {
-		publierBoutonAjouter('#id_persConvention', '/stage/personne-ext');
-		publierBoutonAjouter('#id_maitreStage', '/stage/personne-ext');
-	});
-
+	becomeDateTimePicker("#id_datePassage");
+	publierBoutonAjouter('#id_salle', '/planning/ajouterSalle');
 	active_tab="#tab-stage"
 {% endblock %}

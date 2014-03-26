@@ -54,6 +54,12 @@ class Etudiant(PersonneInterne):
     cp = models.IntegerField(max_length=5)
     ville = models.CharField(max_length=50)
 
+    def natural_key(self):
+        return {'numEtu' : self.numEtu,
+            'nom' : self.nom,
+            'prenom' : self.prenom,
+            'telephone' : self.telephone}
+
 class Enseignant(PersonneInterne):
     idEnseignant = models.AutoField(primary_key=True)
     emailEns = models.EmailField(max_length=80)
@@ -61,10 +67,22 @@ class Enseignant(PersonneInterne):
     #numEns = models.IntegerField(primary_key=True)
     #grade = models.CharField(max_length=50)
 
+    def natural_key(self):
+        return {'nom' : self.nom,
+            'prenom' : self.prenom,
+            'telephone' : self.telephone,
+            'departement' : self.departement}
+
 class PersonneExterieure(Personne):
     idPersonneExt = models.AutoField(primary_key=True)
     emailPro = models.EmailField(max_length=80)
     entreprise=models.ForeignKey(Entreprise, related_name="personneExterieure_entreprise")
+
+    def natural_key(self):
+        return {'nom' : self.nom,
+            'prenom' : self.prenom,
+            'telephone' : self.telephone,
+            'emailPro' : self.emailPro}
 
 class Logiciel(models.Model):
     nomLog = models.CharField(primary_key=True, max_length=50)
@@ -102,6 +120,17 @@ class Stage(OffreStage):
 
     def __str__(self):
         return self.intitule
+
+    def natural_key(self):
+        return {'id' : self.idStage,
+            'intitule' : self.intitule,
+            'sujet' : self.sujet,
+            'dateDeDebut' : self.dateDebut,
+            'dateDeFin' : self.dateFin,
+            'etudiant' : self.etudiant.natural_key(),
+            'entreprise' : self.entreprise.natural_key(),
+            'maitreStage' : self.maitreStage.natural_key(),
+            'enseignantTuteur' : self.enseignantTuteur.natural_key()}
 
 class EnseignantResp(models.Model):
     enseignant = models.ForeignKey(Stage,related_name="EnseignantResp_enseignant")

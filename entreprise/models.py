@@ -15,3 +15,7 @@ class Entreprise(models.Model):
 
 	def __str__(self):
 		return "%s" % (self.nom)
+
+	def natural_key(self):
+		return { 'idEntreprise' : self.idEntreprise,
+			'nom' : self.nom}

@@ -5,6 +5,7 @@ from stage.models import Stage, PersonneExterieure, Etudiant
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
+
 class StageFormEtu(ModelForm):
     etudiant = forms.ModelChoiceField(queryset=Etudiant.objects.all(),
             widget=forms.HiddenInput())

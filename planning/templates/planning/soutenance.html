@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Soutenance {% endblock %}
+{% block main %}
+<h1>Soutenance au {{ soutenance.datePassage }}</h1>
+<br/>
+<div>
+	{{ soutenance.datePassage }} <br />
+</div>
+{% endblock %}
+{% block js %}
+	active_tab="#tab-stage"
+{% endblock %}
