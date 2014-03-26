@@ -122,6 +122,9 @@ class OffreStage(models.Model):
             ("postuler_offrestage", "Peut postuler à une offre de stage"),
         )
 
+    def __str__(self):
+        return self.intitule
+
     def search_result_header():
         html="<thead><tr><th>Intitulé</th><th>Entreprise</th></tr></thead>"
         return "%s" % (html)

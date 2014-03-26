@@ -55,7 +55,7 @@ Stage:
 ************************ Important ************************
 
 Planning				==> nouveau module
-	Consultation (tous les users loggé)
+	Consultation (tous les users loggés)
 	Edition Planning soutenance (responsables de stages, secretaires)
 	Gestion des salles (responsables de stages, secretaires)
 

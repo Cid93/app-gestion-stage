@@ -26,12 +26,14 @@
 					<li id="tab-home">
 						<a href="{% url 'accueil' %}">Accueil</a>
 					</li>
-
 					<li id="tab-entreprise">
 						<a href="{% url 'entreprise.views.show_entreprise' %}">Entreprises</a>
 					</li>
 					<li id="tab-stage">
 						<a href="{% url 'stage.views.show_stages' %}">Stages</a>
+					</li>
+					<li id="tab-offrestage">
+						<a href="{% url 'stage.views.showOffres' %}">Offres de stage</a>
 					</li>
 					<li id="tab-recherche">
 						<a href="{% url 'gestionStage.views.search' %}">Recherche</a>
