@@ -46,11 +46,11 @@ th, td {
 	padding-right: 20px;
 }
 
-#table_planning{
+#table_planning, #table_planningJ{
 	border_collapse: collapse;
 }
 
-#table_planning td{
+#table_planning td, #table_planningJ td{
 	border: black 2px solid;
 	height: 50px;
 }

@@ -9,7 +9,6 @@ urlpatterns = patterns('',
    
 	# Planning
     url(r'^$', "planning.views.show_planning", name="show_planning"),
-    url(r'^jour/?$', "planning.views.show_planningJ", name="show_planningJ"),
     url(r'^(?P<pk>\d+)$', "planning.views.show_soutenance", name="show_soutenance"),
     url(r'^find/?$', "planning.views.find_planning", name="find_planning"),
 
