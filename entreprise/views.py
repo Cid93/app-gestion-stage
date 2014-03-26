@@ -32,35 +32,52 @@ def show_visiter(request):
 
 # Manipulation Entreprise
 def addEnt(request):
-	if request.method == 'POST':  				# Si une requête POST a été passée
-		form = EntrepriseForm(request.POST)  	# On récupère les données
-		
-		if form.is_valid(): 					# Si les données reçues sont valides
-			form.save()
-			return HttpResponseRedirect('/entreprise')
-		else:									# Si les données reçues sont invalides
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("entreprise.add_entreprise" in permissions):
+
+		if request.method == 'POST':  				# Si une requête POST a été passée
+			form = EntrepriseForm(request.POST)  	# On récupère les données
+			
+			if form.is_valid(): 					# Si les données reçues sont valides
+				form.save()
+				return HttpResponseRedirect('/entreprise')
+			else:									# Si les données reçues sont invalides
+				con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+				return render(request,'entreprise/forms.html', con)
+
+		else: 										# Pas de requête POST
+			form = EntrepriseForm()  				# On crée un formulaire vide
 			con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 			return render(request,'entreprise/forms.html', con)
 
-	else: 										# Pas de requête POST
-		form = EntrepriseForm()  				# On crée un formulaire vide
-		con = { 'actionAFaire' : 'Ajouter', 'form' : form}
-		return render(request,'entreprise/forms.html', con)
+	else:
+		return HttpResponseRedirect('/oups')
 
 
 def modifEnt(request, pk):
-	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		form = EntrepriseForm(request.POST,instance=Entreprise.objects.get(pk=pk))
-		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
-			form.save()
-			return HttpResponseRedirect('/entreprise/' + pk)
-	else: # Si ce n'est pas du POST, c'est probablement une requête GET
-		form = EntrepriseForm(instance=Entreprise.objects.get(pk=pk))
-		print("Error")
-		  # Nous créons un formulaire vide
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("entreprise.change_entreprise" in permissions):
 
-	return render(request,'entreprise/forms.html', { 'actionAFaire' : 'Modifier', 'form' : form})
+		if request.method == 'POST':  # Si on a une requête POST (le formulaire a été posté)
+			form = EntrepriseForm(request.POST,instance=Entreprise.objects.get(pk=pk))
+			if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+				form.save()
+				return HttpResponseRedirect('/entreprise/' + pk)
+		else: # Si on a une requête GET, on récupère l'id de l'entreprise à modifier et on affiche le form
+			form = EntrepriseForm(instance=Entreprise.objects.get(pk=pk))
+			print("Error")
+			# On crée un formulaire vide
 
+		return render(request,'entreprise/forms.html', { 'actionAFaire' : 'Modifier', 'form' : form})
+
+	else:
+		return HttpResponseRedirect('/oups')
 
 def delEnt(request):
 	# Vérification des permissions de l'utilisateur
@@ -81,5 +98,4 @@ def delEnt(request):
 			return render(request,'entreprise/forms.html', con)
 
 	else:
-		con = {}
 		return HttpResponseRedirect('/oups')

@@ -63,14 +63,14 @@ Planning				==> nouveau module
 
 Entreprise:
 	Ajouter (tous les users loggés)
-	Modifier (responsable des stages ou resp enseignants du stages)
+	Modifier (responsable des stages ou resp enseignants du stage)
 	Supprimer (responsable des stages)
 	
 	************************IMPORTANT************************
-	Rechercher (tous les users loggés) moteur de recherche (auto completion, liste deroulante géographique, nom, secteur d'activité)
+	Rechercher (tous les users loggés) moteur de recherche (auto completion, liste déroulante géographique, nom, secteur d'activité)
 	*********************************************************
 	
-	Consulter (ts les loggé)
+	Consulter (tous les loggés)
 	Valider (responsable des stages )
 						==> orientation à la deletion
 
