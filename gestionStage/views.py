@@ -61,6 +61,21 @@ def search(request):
 			for i in listeEnseignants:
 				res += Stage.objects.filter(enseignantTuteur=i.idEnseignant)
 			model = get_model('stage', model)
+		elif (model=="Stage") and attribut=="promotion":
+			listePromo = Promotion.objects.filter(intitule__contains=champ)
+			res = []
+			etu = []
+			for i in listePromo:
+				etu += Etudiant.objects.filter(promotion=i.idPromotion)
+			for i in etu:
+				res += Stage.objects.filter(etudiant=i.numEtu)
+			model = get_model('stage', model)
+		elif (model=="Etudiant") and attribut=="promotion":
+			listePromo = Promotion.objects.filter(intitule__contains=champ)
+			res = []
+			for i in listePromo:
+				res += Etudiant.objects.filter(promotion=i.idPromotion)
+			model = get_model('stage', model)
 		else:
 			column = attribut+'__contains'
 			kwargs = {
@@ -72,6 +87,8 @@ def search(request):
 			else:
 				model = get_model('stage', model)
 
+			
+				
 			res=model.objects.filter(**kwargs)
 
 
@@ -91,7 +108,7 @@ def search(request):
 	
 
 	type_donnee = {'Entreprise':('nom','ville','pays'),
-                   'Etudiant':('numEtu','nom','prenom','emailEtu'),
+                   'Etudiant':('numEtu','nom','prenom','emailEtu','promotion'),
                    'Enseignant':('nom','prenom','emailEns','departement'),
                    'OffreStage':('intitule','entreprise','nomLogiciels'),
                    'Stage':('intitule','entreprise','nomLogiciels','etudiant','enseignantTuteur','promotion')

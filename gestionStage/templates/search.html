@@ -3,11 +3,11 @@
 {% block heading %}Recherche :({% endblock %}
 {% block main %}
 	<h1>Recherche :</h1>
-	
-	<form method="POST" action="">{% csrf_token %}
+	<div <div class="btn-group open">
+	<form   method="POST" action="">{% csrf_token %}
   
-      <select name="search_data" id="search_data">
-      	<option value="">-- Sélectionnez une Donnée --</option>
+      <select class="btn btn-default dropdown-toggle" name="search_data" id="search_data">
+      	<option value="">-- Sélectionnez une Donnée -- </span></option>
       	{% for d in data %}
       	<option value="{{d}}">{{d}}</option>
     	{% endfor %}
@@ -23,7 +23,7 @@
 
       
     </form>
-
+    </div>
     <div class="result">
     
     {% if res != None %}
@@ -52,7 +52,7 @@
 			fieldWrapper.html('');
 			var fieldWrapper2 = $("#champ_text");
 			fieldWrapper2.html('');
-			var fName = '<select id="select_champ" name="select_champ">';
+			var fName = '<select class="btn btn-default dropdown-toggle form-control"  id="select_champ" name="select_champ">';
 			fName += '<option value="">-- Sélectionnez un champ --</option>';
 			var obj = data[idVal];
 			for(var val in obj) {
@@ -65,7 +65,7 @@
 				
 				var fieldWrapper2 = $("#champ_text");
 				fieldWrapper2.html('');
-				var fName2 = '<input type="text"  name="search_text"/><input type="submit" value="Go">';
+				var fName2 = '<input class="form-control"  type="text"  name="search_text"/><input class="btn btn-default" type="submit" value="Go">';
 				fieldWrapper2.append(fName2).fadeIn('slow');
 			});
 		});

@@ -41,7 +41,8 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><p><b><span class="username">{{ user }}</span></b></p></li>
+							<li><p><b><span class="username"><span class="glyphicon glyphicon-user"></span>
+{{ user }} </span></b></p></li>
 							<li><a href="{% url 'logout' %}">Se deconnecter</a></li>
 							{% for group in user.groups.all %}
 								{% if group.name == "etudiants" %}

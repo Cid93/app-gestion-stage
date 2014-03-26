@@ -80,7 +80,22 @@ personnesExt = json.load(open("json/personnes_exterieures.json")) 	#encoding='ut
 promotions = json.load(open("json/promotions.json")) 	#encoding='utf-8'
 diplomes = json.load(open("json/diplomes.json")) 		#encoding='utf-8'
 
+for d in diplomes:
+	diplome=Diplome(
+		nom=d["nom"],
+		specialite=d["specialite"]
+	)
+	diplome.save()
 
+
+for p in promotions:
+	promo=Promotion(
+		diplome=Diplome.objects.get(pk=p["diplome"]),
+		intitule=p["intitule"],
+		annee=p["annee"]
+	)
+	promo.save()
+	
 for e in entreprise:
 	Entreprise(
 		idEntreprise=e["idEntreprise"],
@@ -126,7 +141,8 @@ for e in etudiants:
 		emailEtu=e["emailEtu"],
 		adresse= e["adresse"],
 		cp=e["cp"],
-		ville=e["ville"]
+		ville=e["ville"],
+		promotion=Promotion.objects.get(pk=e["promotion"])
 	).save()
 
 for p in personnesExt:
@@ -142,21 +158,7 @@ for p in personnesExt:
 	).save()
 
 
-for d in diplomes:
-	diplome=Diplome(
-		nom=d["nom"],
-		specialite=d["specialite"]
-	)
-	diplome.save()
 
-
-for p in promotions:
-	promo=Promotion(
-		diplome=Diplome.objects.get(pk=p["diplome"]),
-		intitule=p["intitule"],
-		annee=p["annee"]
-	)
-	promo.save()
 
 for s in stage:	
 	internship=Stage(
@@ -169,7 +171,7 @@ for s in stage:
 		persConvention=PersonneExterieure.objects.get(pk=s["persConvention"]),
 		maitreStage=PersonneExterieure.objects.get(pk=s["maitreStage"]),
 		enseignantTuteur=Enseignant.objects.get(pk=s["enseignantTuteur"]),
-		promotion=Promotion.objects.get(pk=s["promotion"])
+		
 	)
 	internship.save()
 

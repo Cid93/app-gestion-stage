@@ -27,7 +27,7 @@ class Promotion(models.Model):
         ordering = ('intitule',)
 
     def __str__(self):
-        return self.intitule
+        return self.intitule+"-"+self.annee
 
 class Personne(models.Model):
     nom=models.CharField(max_length=30)
@@ -53,7 +53,7 @@ class Etudiant(PersonneInterne):
     adresse = models.CharField(max_length=100)
     cp = models.IntegerField(max_length=5)
     ville = models.CharField(max_length=50)
-
+    promotion = models.ForeignKey(Promotion)
     class Meta:
         permissions = (
             ("rechercherconsulter_etudiant", "Peut rechercher et consulter les fiches d'étudiants"),
@@ -62,11 +62,11 @@ class Etudiant(PersonneInterne):
     
 
     def search_result_header():
-        html="<thead><tr><th>Numéro</th><th>Nom</th><th>Prénom</th><th>E-mail</th></tr></thead>"
+        html="<thead><tr><th>Promotion</th><th>Numéro</th><th>Nom</th><th>Prénom</th><th>E-mail</th></tr></thead>"
         return "%s" % (html)
 
     def search_result(self):
-        html="<tr><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
+        html="<tr><td>"+str(self.promotion)+"</td><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
         return "%s" % (html)
 
     
@@ -139,7 +139,7 @@ class Stage(OffreStage):
     maitreStage=models.ForeignKey(PersonneExterieure, related_name="stage_maitreStage")
     enseignantTuteur=models.ForeignKey(Enseignant, related_name="stage_enseignantTuteur")
     # Un étudiant peut changer de promotion donc on préfère stocker la promotion dans le stage
-    promotion = models.ForeignKey(Promotion)
+    # promotion = models.ForeignKey(Promotion)
 
     class Meta:
         ordering = ('intitule',)
