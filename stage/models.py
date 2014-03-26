@@ -27,7 +27,7 @@ class Promotion(models.Model):
         ordering = ('intitule',)
 
     def __str__(self):
-        return self.intitule
+        return self.intitule+"-"+self.annee
 
 class Personne(models.Model):
     nom=models.CharField(max_length=30)
@@ -53,6 +53,23 @@ class Etudiant(PersonneInterne):
     adresse = models.CharField(max_length=100)
     cp = models.IntegerField(max_length=5)
     ville = models.CharField(max_length=50)
+    promotion = models.ForeignKey(Promotion)
+    class Meta:
+        permissions = (
+            ("rechercherconsulter_etudiant", "Peut rechercher et consulter les fiches d'étudiants"),
+        )
+
+    
+
+    def search_result_header():
+        html="<thead><tr><th>Promotion</th><th>Numéro</th><th>Nom</th><th>Prénom</th><th>E-mail</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        html="<tr><td>"+str(self.promotion)+"</td><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
+        return "%s" % (html)
+
+    
 
     def natural_key(self):
         return {'numEtu' : self.numEtu,
@@ -72,6 +89,20 @@ class Enseignant(PersonneInterne):
             'prenom' : self.prenom,
             'telephone' : self.telephone,
             'departement' : self.departement}
+
+    class Meta:
+        permissions = (
+            ("rechercherconsulter_enseignant", "Peut rechercher et consulter les fiches d'enseignants"),
+        )
+
+    def search_result_header():
+        html="<thead><tr><th>Nom</th><th>Prénom</th><th>E-mail</th><th>Département</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        html="<tr><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEns+"</td><td>"+self.departement+"</td></tr>"
+        return "%s" % (html)
+
 
 class PersonneExterieure(Personne):
     idPersonneExt = models.AutoField(primary_key=True)
@@ -104,6 +135,23 @@ class OffreStage(models.Model):
     nomLogiciels = models.ManyToManyField(Logiciel, null=True, blank=True)
     possibiliteEmbauche = models.NullBooleanField(null=True, default=None)
 
+    class Meta:
+        permissions = (
+            ("valider_offrestage", "Peut valider une offre de stage"),
+            ("postuler_offrestage", "Peut postuler à une offre de stage"),
+        )
+
+    def __str__(self):
+        return self.intitule
+
+    def search_result_header():
+        html="<thead><tr><th>Intitulé</th><th>Entreprise</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        html="<tr><td>"+self.intitule+"</td><td>"+str(self.entreprise)+"</td></tr>"
+        return "%s" % (html)
+
 class Stage(OffreStage):
     idStage = models.AutoField(primary_key=True)
     etudiant=models.ForeignKey(Etudiant, related_name="stage_etudiant")
@@ -113,10 +161,16 @@ class Stage(OffreStage):
     maitreStage=models.ForeignKey(PersonneExterieure, related_name="stage_maitreStage")
     enseignantTuteur=models.ForeignKey(Enseignant, related_name="stage_enseignantTuteur")
     # Un étudiant peut changer de promotion donc on préfère stocker la promotion dans le stage
-    promotion = models.ForeignKey(Promotion)
+    # promotion = models.ForeignKey(Promotion)
 
     class Meta:
         ordering = ('intitule',)
+        permissions = (
+            ("valider_stage", "Peut valider un stage"),
+            ("genererdocuments_stage", "Peut générer les documents propres à un stage (convention)"),
+            ("noter_stage", "Peut noter un stage"),
+        )
+
 
     def __str__(self):
         return self.intitule
@@ -131,6 +185,16 @@ class Stage(OffreStage):
             'entreprise' : self.entreprise.natural_key(),
             'maitreStage' : self.maitreStage.natural_key(),
             'enseignantTuteur' : self.enseignantTuteur.natural_key()}
+
+    def search_result_header():
+        html="<thead><tr><th>Intitulé</th><th>Etudiant</th><th>Enseignant Tuteur</th><th>Entreprise</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        idEnt = Entreprise.objects.get(nom=str(self.entreprise)).idEntreprise
+        html='<tr><td><a href="/stage/'+str(self.idStage)+'">'+self.intitule+'</td><td>'+str(self.etudiant)+'</td><td>'+str(self.enseignantTuteur)+'</td><td><a href="/entreprise/'+str(idEnt)+'">'+str(self.entreprise)+'</a></td></tr>'
+        return "%s" % (html)
+
 
 class EnseignantResp(models.Model):
     enseignant = models.ForeignKey(Stage,related_name="EnseignantResp_enseignant")

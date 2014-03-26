@@ -1,20 +1,27 @@
 [
-	{"codename": "ajouter_entreprise", "name": "Peut ajouter entreprise"},
-	{"codename": "changer_entreprise", "name": "Peut changer entreprise"},
-	{"codename": "supprimer_entreprise", "name": "Peut supprimer entreprise"},
-	{"codename": "ajouter_personne", "name": "Peut ajouter personne"},
-	{"codename": "changer_personne", "name": "Peut changer personne"},
-	{"codename": "supprimer_personne", "name": "Peut supprimer personne"},
-	{"codename": "ajouter_stage", "name": "Peut ajouter stage"},
-	{"codename": "changer_stage", "name": "Peut changer stage"},
-	{"codename": "supprimer_stage", "name": "Peut supprimer stage"},
-	{"codename": "ajouter_logiciel", "name": "Peut ajouter logiciel"},
-	{"codename": "changer_logiciel", "name": "Peut changer logiciel"},
-	{"codename": "supprimer_logiciel", "name": "Peut supprimer logiciel"},
-	{"codename": "ajouter_stage_logiciel", "name": "Peut ajouter stage_logiciel"},
-	{"codename": "changer_stage_logiciel", "name": "Peut changer stage_logiciel"},
-	{"codename": "supprimer_stage_logiciel", "name": "Peut supprimer stage_logiciel"},
-	{"codename": "ajouter_stage_entreprise", "name": "Peut ajouter stage entreprise"},
-	{"codename": "changer_stage_entreprise", "name": "Peut changer stage entreprise"},
-	{"codename": "supprimer_stage_entreprise", "name": "Peut supprimer stage entreprise"}
+	{"codename": "ajouter_offrestage", "name": "Peut ajouter une offre de stage"},
+	{"codename": "modifier_offrestage", "name": "Peut modifier une offre de stage"},
+	{"codename": "supprimer_offrestage", "name": "Peut supprimer une offre de stage"},
+	{"codename": "valider_offrestage", "name": "Peut valider une offre de stage"},
+	{"codename": "postuler_offrestage", "name": "Peut postuler à une offre de stage"},
+	
+	{"codename": "proposer_stage", "name": "Peut proposer un stage"},
+	{"codename": "modifier_stage", "name": "Peut modifier un stage"},
+	{"codename": "supprimer_stage", "name": "Peut supprimer un stage"},
+	{"codename": "valider_stage", "name": "Peut valider un stage"},
+	{"codename": "genererdocuments_stage", "name": "Peut générer les documents propres à un stage (convention)"},
+	{"codename": "noter_stage", "name": "Peut noter un stage"},
+
+	{"codename": "editer_planning", "name": "Peut éditer le planning et gérer les salles"},
+	
+	{"codename": "ajouter_entreprise", "name": "Peut ajouter une entreprise"},
+	{"codename": "modifier_entreprise", "name": "Peut modifier une entreprise"},
+	{"codename": "supprimer_entreprise", "name": "Peut supprimer une entreprise"},
+	{"codename": "valider_entreprise", "name": "Peut valider une entreprise"},
+	
+	{"codename": "modifier_etudiant", "name": "Peut modifier les infos d'un étudiant"},
+	{"codename": "rechercherconsulter_etudiant", "name": "Peut rechercher et consulter les fiches d'étudiants"},
+	
+	{"codename": "modifier_enseignant", "name": "Peut modifier les infos d'un enseignant"},
+	{"codename": "rechercherconsulter_enseignant", "name": "Peut rechercher et consulter les fiches d'enseignants"}
 ]

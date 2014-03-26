@@ -7,12 +7,10 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gestionStage.settings")
 from django.forms import ModelForm
 from entreprise.models import Entreprise
-from stage.models import Personne, PersonneExterieure, PersonneInterne, Diplome, Promotion, Etudiant, Enseignant, Stage, Logiciel
+from stage.models import Personne, PersonneExterieure, PersonneInterne, Diplome, Promotion, Etudiant, Enseignant, Stage, Logiciel, OffreStage
 from pprint import pprint
 
 import json
-
-
 
 
 
@@ -20,19 +18,21 @@ import json
 from django.contrib.auth.models import Permission, User, Group
 from django.contrib.contenttypes.models import ContentType
 
+
+
 personne_interne_content_type = ContentType.objects.get_for_model(PersonneInterne)
-perms= json.load(open("json/permissions.json"))
-PERMS = {}
+# perms= json.load(open("json/permissions.json"))
+# PERMS = {}
 
-for p in perms:
-	perm=Permission.objects.create(
-		codename=p["codename"],
-		name=p["name"],
-		content_type=personne_interne_content_type
-	)
-	perm.save()
-	PERMS[p["codename"]] = perm
-
+# for p in perms:
+# 	perm=Permission.objects.create(
+# 		codename=p["codename"],
+# 		name=p["name"],
+# 		content_type=personne_interne_content_type
+# 	)
+# 	perm.save()
+# 	PERMS[p["codename"]] = perm
+# 	print(perm)
 
 #charger les groupes
 groups=json.load(open("json/groups.json"))
@@ -41,7 +41,8 @@ for g in groups:
 	group=Group.objects.create(name=g["name"])
 	group.save()
 	for p in g["permissions"]:
-		group.permissions.add(PERMS[p])
+		perm = Permission.objects.get(codename=p)
+		group.permissions.add(perm)
 	group.save()
 	GROUPS[g["name"]]=group
 
@@ -52,11 +53,12 @@ USERS={}
 for u in users:
 	user=User.objects.create_user(
 		username=u["username"],
-		password=u["password"],
+		password='',
 		first_name=u["first_name"],
 		last_name=u["last_name"],
 		email=u["email"]
 	)
+	user.set_password(u["password"])
 	user.save()
 
 	for g in u["groups"]:
@@ -78,7 +80,22 @@ personnesExt = json.load(open("json/personnes_exterieures.json")) 	#encoding='ut
 promotions = json.load(open("json/promotions.json")) 	#encoding='utf-8'
 diplomes = json.load(open("json/diplomes.json")) 		#encoding='utf-8'
 
+for d in diplomes:
+	diplome=Diplome(
+		nom=d["nom"],
+		specialite=d["specialite"]
+	)
+	diplome.save()
 
+
+for p in promotions:
+	promo=Promotion(
+		diplome=Diplome.objects.get(pk=p["diplome"]),
+		intitule=p["intitule"],
+		annee=p["annee"]
+	)
+	promo.save()
+	
 for e in entreprise:
 	Entreprise(
 		idEntreprise=e["idEntreprise"],
@@ -124,7 +141,8 @@ for e in etudiants:
 		emailEtu=e["emailEtu"],
 		adresse= e["adresse"],
 		cp=e["cp"],
-		ville=e["ville"]
+		ville=e["ville"],
+		promotion=Promotion.objects.get(pk=e["promotion"])
 	).save()
 
 for p in personnesExt:
@@ -140,21 +158,7 @@ for p in personnesExt:
 	).save()
 
 
-for d in diplomes:
-	diplome=Diplome(
-		nom=d["nom"],
-		specialite=d["specialite"]
-	)
-	diplome.save()
 
-
-for p in promotions:
-	promo=Promotion(
-		diplome=Diplome.objects.get(pk=p["diplome"]),
-		intitule=p["intitule"],
-		annee=p["annee"]
-	)
-	promo.save()
 
 for s in stage:	
 	internship=Stage(
@@ -167,7 +171,7 @@ for s in stage:
 		persConvention=PersonneExterieure.objects.get(pk=s["persConvention"]),
 		maitreStage=PersonneExterieure.objects.get(pk=s["maitreStage"]),
 		enseignantTuteur=Enseignant.objects.get(pk=s["enseignantTuteur"]),
-		promotion=Promotion.objects.get(pk=s["promotion"])
+		
 	)
 	internship.save()
 

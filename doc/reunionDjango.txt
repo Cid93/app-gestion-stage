@@ -18,74 +18,74 @@
 
 
 Recapitulatif			==>		nouveau module
-	etudiant: -> synthese stage
+	etudiant: -> synthèse stage
 	admin: -> Récapitulatif : Responsable des stages ???
 	secretaire: -> note et convention
 						==> associer à une groupe ou à une type (attribut)
 	enseignant 
-						==>		views reprennant les différentes classes depuis stage
+						==>		views reprenant les différentes classes depuis stage
 
 reprendre l'admin de django pour une gestion de droit et de groupe (surtout de groupe
-						==> implique la bonne initialisation des droit pour ce concentrer sur les groupes uniquement !)
+						==> implique la bonne initialisation des droit pour se concentrer sur les groupes uniquement !)
 
 Offre de stage:
-	Ajouter (ts le monde peut poster mm à l'exterieur)
-	Modifier? : (enseignant, secretaire, responsable de stage, admin)
-	Supprimer? 	(enseignant, secretaire, responsable de stage, admin)
-	Rechercher (en fonction des techno, du nom), tous user loggé
-	Consulter: ts user loggé
-	Valider: (enseignant, secretaire, responsable de stage, admin)
-						==> peut être simplifier sur une suppression ou non après un check
+	Ajouter (tout le monde peut poster même à l'exterieur)
+	Modifier? : (enseignant, secrétaire, responsable de stage, admin)
+	Supprimer? 	(enseignant, secrétaire, responsable de stage, admin)
+	Rechercher (en fonction des techno, du nom), tout user loggé
+	Consulter: tout user loggé
+	Valider: (enseignant, secrétaire, responsable de stage, admin)
+						==> peut être simplifié sur une suppression ou non après un check
 	postuler: etudiant
 						==> many to many field (^^)
-						==> orientation vers les contactes et les docs requient
-						==> info sur les pers déjà postulantes avec codes couleurs
+						==> orientation vers les contacts et les docs requis
+						==> info sur les personnes déjà postulantes avec code couleur
 
 Stage:
 	proposer: (etudiant)
-	Modifier: (etudiant ou personels  )
-	Supprimer (secretaires, responsables de stages)
+	Modifier: (etudiant ou personnel  )
+	Supprimer (secretaire, responsable de stages)
 	Consulter (tous les users loggé)
 	
-	generer convention( ensemble de docs): (secretaires, responsables de stage)
-	gerer les notes de stages/alternances (enseignants resp ou secretaires, resp de stage)
+	générer convention( ensemble de docs): (secretaires, responsables de stage)
+	gérer les notes de stages/alternances (enseignants resp ou secretaires, resp de stage)
 	Valider (responsable de stage)
 
 
 ************************ Important ************************
 
 Planning				==> nouveau module
-	Consultation (tous les users loggé)
+	Consultation (tous les users loggés)
 	Edition Planning soutenance (responsables de stages, secretaires)
 	Gestion des salles (responsables de stages, secretaires)
 
 ************************************************************
 
 Entreprise:
-	Ajouter (ts les loggé)
-	Modifier (responsable des stages ou resp enseignants du stages)
+	Ajouter (tous les users loggés)
+	Modifier (responsable des stages ou resp enseignants du stage)
 	Supprimer (responsable des stages)
 	
 	************************IMPORTANT************************
-	Rechercher (ts les loggé) moteur de recherche (auto completion, liste deroulante géographique, nom, secteur d'activité)
+	Rechercher (tous les users loggés) moteur de recherche (auto completion, liste déroulante géographique, nom, secteur d'activité)
 	*********************************************************
 	
-	Consulter (ts les loggé)
+	Consulter (tous les loggés)
 	Valider (responsable des stages )
 						==> orientation à la deletion
 
 
 Etudiant:
-    Annuaire (Personnels)
-	Rechercher (personels)
-	Consulter (personels)
+    Annuaire (Personnel)
+	Rechercher (personel)
+	Consulter (personel)
 	Modifier profil? (son profil, admin)
 	
 Enseignant:
-	Annuaire
-	Rechercher
-	Consulter
-	Modifier profil?
+	Annuaire (Personnel)
+	Rechercher (Personnel)
+	Consulter (Personnel)
+	Modifier profil? (son profil, admin)
 
 
 
@@ -95,11 +95,11 @@ Enseignant:
 ------------------------------------------------------------
 
 Note:
-	-Secteur d' Activité entreprise à implementer (modèle)
-	-rating du stage ou de l'entreprise de l'etudiant
+	-Secteur d' Activité entreprise à implémenter (modèle)
+	-rating du stage ou de l'entreprise de l'étudiant
 	-date de soutenance dans stage
-	-promotion attaché a un étudiant et non a un stage
-	-resp de stage d'une promo à les droits sur ttes les promo
-	-offre de stage non validé == supprimer
+	-promotion attachée à un étudiant et non à un stage
+	-resp de stage d'une promo a les droits sur toutes les promo
+	-offre de stage non validée == supprimer
 
 

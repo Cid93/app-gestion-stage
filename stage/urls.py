@@ -17,6 +17,11 @@ urlpatterns = patterns('',
     url(r'^monStage/?$',"stage.views.monStage", name="theStage"),
     url(r'^ajouter/?$',"stage.views.addStage", name="addStage"),
     url(r'^supprimer/?$',"stage.views.delStage", name="delStage"),
-    url(r'^personne-ext/$',"stage.views.addPersonneExt",name="addPersonneExt")
+    url(r'^personne-ext/$',"stage.views.addPersonneExt",name="addPersonneExt"),
 
+    url(r'^offrestage/?$',"stage.views.showOffres", name="showOffres"),
+    url(r'^offrestage/(?P<pk>\d+)$',"stage.views.detailsOffreStage", name="detailsOffreStage"),
+    url(r'^offrestage/modifier/(?P<pk>\d+)$',"stage.views.modifOffreStage", name="modifOffreStage"),
+    url(r'^offrestage/ajouter/?$',"stage.views.addOffreStage", name="addOffreStage"),
+    url(r'^offrestage/supprimer/?$',"stage.views.delOffreStage", name="delOffreStage")
 )

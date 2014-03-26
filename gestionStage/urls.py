@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^login/$', "gestionStage.forms.login_page", name="login"),
     url(r'^logout/$', "gestionStage.forms.logout_action", name="logout"),
     url(r'^oups/$',"gestionStage.views.oups",name="oups"),
+    url(r'^recherche/$',"gestionStage.views.search",name="search"),
 
     # app entreprise
     url(r'^entreprise/', include('entreprise.urls')),

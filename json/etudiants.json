@@ -11,7 +11,8 @@
 		"emailEtu":"william.roux@etu.univ-orleans.fr",
 		"adresse":"Mars",
 		"cp":"44444",
-		"ville":"MarsCity"
+		"ville":"MarsCity",
+		"promotion": 1
 	},
 
 	{
@@ -26,7 +27,8 @@
 		"emailEtu":"yacine.ait-maamar@etu.univ-orleans.fr",
 		"adresse":"Namekseijin",
 		"cp":"55666",
-		"ville":"Namek"
+		"ville":"Namek",
+		"promotion": 1
     },
 
     {
@@ -41,7 +43,8 @@
 		"emailEtu":"cedric.outreville@etu.univ-orleans.fr",
 		"adresse":"zbra",
 		"cp":"98752",
-		"ville":"Pluton"
+		"ville":"Pluton",
+		"promotion": 1
 	}
 
 ]
