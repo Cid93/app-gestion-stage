@@ -70,11 +70,15 @@
 		var ptDeDepart = $(selecteurTbody + ' tr:nth-child(2)');
 		// l'index commencera à 1 donc on le compence avec ptDeDepart
 		ptDeDepart = ptDeDepart.attr('id').split("_")[1] - 1;
+		var firstLoop = true;
 		$.each($(selecteurTbody + ' tr'), function(index, value){
-			for ( var i = 0; i < nbDeSalles; i++ ) {
-				$(this).append('<td id="l_' + (parseInt(ptDeDepart) + index) + '_c_' + i + '"></td>')
-				console.log('généré : <td id="l_' + (parseInt(ptDeDepart) + index) + '_c_' + i + '"></td>')
+			if( ! firstLoop){
+				for ( var i = 0; i < nbDeSalles; i++ ) {
+					$(this).append('<td id="l_' + (parseInt(ptDeDepart) + index) + '_c_' + i + '"></td>')
+					console.log('généré : <td id="l_' + (parseInt(ptDeDepart) + index) + '_c_' + i + '"></td>')
+				}
 			}
+			firstLoop = false;
 		});
 	}
 
@@ -83,12 +87,14 @@
 			' ' + 
 			informationsStage['etudiant']['nom'];
 		var infoEnt = informationsStage['entreprise']['nom'];
-		var infoStage = informationsStage['intitule'];
+		var infoMDS = informationsStage['enseignantTuteur']['prenom'] +
+			' ' +
+			informationsStage['enseignantTuteur']['nom'];
 		console.log('infos sur le stage :');
 
-		var res = '<a href="./' + informationsStage['id'] + '">' +
+		var res = '<a href="./' + informationsStage['id'] + '" target="_blank">' +
 			infoEtu + ' chez ' +
-			infoEnt + '<br />pour le stage <br />"' + infoStage + '"</a>';
+			infoEnt + '<br />avec "' + infoMDS + '"</a>';
 		console.log(res);
 		return res;
 	}
@@ -145,5 +151,5 @@
 			});
 		});
 	});
-	active_tab="#tab-stage"
+	active_tab="#tab-planning"
 {% endblock %}

@@ -46,6 +46,15 @@ th, td {
 	padding-right: 20px;
 }
 
+#table_planning{
+	border_collapse: collapse;
+}
+
+#table_planning td{
+	border: black 2px solid;
+	height: 50px;
+}
+
 tr {
 	height: 40px;
 }
