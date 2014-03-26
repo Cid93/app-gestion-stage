@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Recherche {% endblock %}
+{% block heading %}Recherche :({% endblock %}
+{% block main %}
+	<h1>Recherche :</h1>
+	
+	<form method="POST" action="">{% csrf_token %}
+  
+      <select name="search_data" id="search_data">
+      	<option value="">-- Sélectionnez une Donnée --</option>
+      	{% for d in data %}
+      	<option value="{{d}}">{{d}}</option>
+    	{% endfor %}
+             
+      </select>
+
+      <div id="data_champ">
+      </div>
+
+
+      <div id="champ_text">
+      </div>
+
+      
+    </form>
+
+    <div class="result">
+    
+    {% if res != None %}
+		<table>
+    	{{res | safe}}
+    	</table>
+    {% endif %}
+    
+    </div>
+{% endblock %}
+
+{% block js %}
+
+	$(document).ready(function(){
+		$("select#search_data").change(function(){
+			var idVal = $("select#search_data option:selected").attr('value');
+
+			var data = {
+				{% for d, values in data.items %}
+				"{{d}}" : [ {% for v in values %}"{{ v }}",{% endfor %} ],
+				{% endfor %}
+			}
+
+			var obj = eval(data);
+			var fieldWrapper = $("#data_champ");
+			fieldWrapper.html('');
+			var fieldWrapper2 = $("#champ_text");
+			fieldWrapper2.html('');
+			var fName = '<select id="select_champ" name="select_champ">';
+			fName += '<option value="">-- Sélectionnez un champ --</option>';
+			var obj = data[idVal];
+			for(var val in obj) {
+				fName += '<option value="'+obj[val]+'">'+obj[val]+'</option>';	
+			}
+			fName += '</select>';
+			fieldWrapper.append(fName).fadeIn('slow');
+
+			$("#select_champ").change(function(){
+				
+				var fieldWrapper2 = $("#champ_text");
+				fieldWrapper2.html('');
+				var fName2 = '<input type="text"  name="search_text"/><input type="submit" value="Go">';
+				fieldWrapper2.append(fName2).fadeIn('slow');
+			});
+		});
+
+		
+		
+	});
+
+	active_tab="#tab-recherche"
+
+{% endblock %}
