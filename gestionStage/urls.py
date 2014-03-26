@@ -30,5 +30,7 @@ urlpatterns = patterns('',
 
     url(r'^oups/$',"gestionStage.views.oups",name="oups"),
 
+    url(r'^recherche/$',"gestionStage.views.search",name="search"),
+
 
 )

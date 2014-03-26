@@ -20,3 +20,12 @@ class Entreprise(models.Model):
 
 	def __str__(self):
 		return "%s" % (self.nom)
+
+	
+	def search_result_header():
+		html="<thead><tr><th>Nom</th><th>Adresse</th><th>Ville</th><th>Téléphone</th></tr></thead>"
+		return "%s" % (html)
+
+	def search_result(self):
+		html='<tr><td><a href="/entreprise/'+str(self.idEntreprise)+'">'+self.nom+'</a></td><td>'+self.adresse+'</td><td>'+self.ville+'</td><td>'+str(self.telephone)+'</td></tr>'
+		return "%s" % (html)

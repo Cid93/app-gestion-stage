@@ -59,6 +59,18 @@ class Etudiant(PersonneInterne):
             ("rechercherconsulter_etudiant", "Peut rechercher et consulter les fiches d'étudiants"),
         )
 
+    
+
+    def search_result_header():
+        html="<thead><tr><th>Numéro</th><th>Nom</th><th>Prénom</th><th>E-mail</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        html="<tr><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
+        return "%s" % (html)
+
+    
+
 class Enseignant(PersonneInterne):
     idEnseignant = models.AutoField(primary_key=True)
     emailEns = models.EmailField(max_length=80)
@@ -70,6 +82,14 @@ class Enseignant(PersonneInterne):
         permissions = (
             ("rechercherconsulter_enseignant", "Peut rechercher et consulter les fiches d'enseignants"),
         )
+
+    def search_result_header():
+        html="<thead><tr><th>Nom</th><th>Prénom</th><th>E-mail</th><th>Département</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        html="<tr><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEns+"</td><td>"+self.departement+"</td></tr>"
+        return "%s" % (html)
 
 class PersonneExterieure(Personne):
     idPersonneExt = models.AutoField(primary_key=True)
@@ -102,6 +122,14 @@ class OffreStage(models.Model):
             ("postuler_offrestage", "Peut postuler à une offre de stage"),
         )
 
+    def search_result_header():
+        html="<thead><tr><th>Intitulé</th><th>Entreprise</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        html="<tr><td>"+self.intitule+"</td><td>"+str(self.entreprise)+"</td></tr>"
+        return "%s" % (html)
+
 class Stage(OffreStage):
     idStage = models.AutoField(primary_key=True)
     etudiant=models.ForeignKey(Etudiant, related_name="stage_etudiant")
@@ -121,8 +149,19 @@ class Stage(OffreStage):
             ("noter_stage", "Peut noter un stage"),
         )
 
+
     def __str__(self):
         return self.intitule
+
+    def search_result_header():
+        html="<thead><tr><th>Intitulé</th><th>Etudiant</th><th>Enseignant Tuteur</th><th>Entreprise</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        idEnt = Entreprise.objects.get(nom=str(self.entreprise)).idEntreprise
+        html='<tr><td><a href="/stage/'+str(self.idStage)+'">'+self.intitule+'</td><td>'+str(self.etudiant)+'</td><td>'+str(self.enseignantTuteur)+'</td><td><a href="/entreprise/'+str(idEnt)+'">'+str(self.entreprise)+'</a></td></tr>'
+        return "%s" % (html)
+
 
 class EnseignantResp(models.Model):
     enseignant = models.ForeignKey(Stage,related_name="EnseignantResp_enseignant")
