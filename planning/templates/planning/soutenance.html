@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} | Soutenance {% endblock %}
 {% block main %}
+<a href="{% url 'editSoutenance' pk=soutenance.idSoutenance %}" class="pull-right btn btn-primary">Modifier</a>
 <h1>Soutenance au {{ soutenance.datePassage }}</h1>
 <br/>
-<div>
-	{{ soutenance.datePassage }} <br />
-</div>
+<table class="table table-striped col-xs-12 col-lg-12">
+
+	<tr><td><b>Stage :</b></td><td>{{ soutenance.stage.intitule }}</td></tr>
+	<tr><td><b>Etudiant :</b></td><td>{{ soutenance.stage.etudiant.prenom }}
+		{{ soutenance.stage.etudiant.nom }}</td></tr>
+	<tr><td><b>Entreprise :</b></td><td>{{ soutenance.stage.entreprise.nom }}</td></tr>
+	<tr><td><b>Maitre de stage :</b></td><td>{{ soutenance.stage.maitreStage.prenom }}
+		{{ soutenance.stage.maitreStage.nom }}</td></tr>
+	<tr><td><b>Enseignant tuteur:</b></td><td>{{ soutenance.stage.enseignantTuteur.prenom }}
+		{{ soutenance.stage.enseignantTuteur.nom }}</td></tr>
+	<tr><td><b>Date de passage :</b></td><td>{{ soutenance.datePassage }}</td></tr>
+	<tr><td><b>Salle :</b></td><td>{{ soutenance.salle.num }}</td></tr>
+
+</table>
 {% endblock %}
 {% block js %}
 	active_tab="#tab-stage"

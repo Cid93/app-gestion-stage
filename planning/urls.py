@@ -14,4 +14,6 @@ urlpatterns = patterns('',
 
     url(r'^ajout/$', "planning.views.addSoutenance", name="addSoutenance"),
     url(r'^ajouterSalle/$', "planning.views.addSalle", name="addSalle"),
+
+    url(r'^modifier/(?P<pk>\d+)$', "planning.views.editSoutenance", name="editSoutenance"),
 )

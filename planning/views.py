@@ -64,6 +64,20 @@ def addSalle(request):
 
 	return render(request,'planning/forms.html', con)
 
+def editSoutenance(request, pk):
+	if request.method == 'POST':  # S'il s'agit d'une requête POST
+		form = SoutenanceForm(request.POST, instance=Soutenance.objects.get(pk=pk))
+		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+			form.save()
+			return HttpResponseRedirect('/planning/' + pk)
+		else: # Si ce n'est pas du POST, c'est probablement une requête GET
+			print("Error")
+
+	return render(request,
+		'planning/forms.html',
+		{ 'actionAFaire' : 'Modifier',
+			'form' : SoutenanceForm(instance=Soutenance.objects.get(pk=pk))})
+
 # méthode AJAX ! ! !
 def find_planning(request):
 	arg = datetime.strptime(request.GET['date'], "%Y-%m-%d")

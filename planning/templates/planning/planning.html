@@ -3,23 +3,23 @@
 {% block main %}
 <h1>Planning</h1>
 <br/>
-	<a href="{% url 'addSoutenance' %}" class="btn btn-primary">Ajouter une Soutenance</a>
-	<div>
-		{{ form.as_table }} <br />
-	</div>
-	<table id="table_planning">
-		<tbody id="body_planning">
-			<tr id="entete_planning">
-				<td></td>
+<div>
+	{{ form.as_table }} <br />
+</div>
+<table id="table_planning">
+	<tbody id="body_planning">
+		<tr id="entete_planning">
+			<td></td>
+		</tr>
+		{% load utils %}
+		{% for cpt in taille %}
+			<tr id="l_{{ cpt|incrementSept:cpt }}">
+				<td>{{ cpt|incrementSept:cpt }} à {{ cpt|incrementHuit:cpt }}h</td>
 			</tr>
-			{% load utils %}
-			{% for cpt in taille %}
-				<tr id="l_{{ cpt|incrementSept:cpt }}">
-					<td>{{ cpt|incrementSept:cpt }} à {{ cpt|incrementHuit:cpt }}h</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+		{% endfor %}
+	</tbody>
+</table>
+<a href="{% url 'addSoutenance' %}" class="btn btn-primary">Ajouter une Soutenance</a>
 
 {% endblock %}
 {% block libraries %}{{ block.super }}
@@ -86,7 +86,7 @@
 		var infoStage = informationsStage['intitule'];
 		console.log('infos sur le stage :');
 
-		var res = '<a href="/stage/' + informationsStage['id'] + '">' +
+		var res = '<a href="./' + informationsStage['id'] + '">' +
 			infoEtu + ' chez ' +
 			infoEnt + '<br />pour le stage <br />"' + infoStage + '"</a>';
 		console.log(res);
