@@ -26,4 +26,10 @@ urlpatterns = patterns('',
 
     # app planning
     url(r'^planning/', include('planning.urls')),
+
+    url(r'^etudiant/(?P<pk>\d+)$',"stage.views.detailsEtudiant", name="detailsEtudiant"),
+    url(r'^etudiant/modifier/(?P<pk>\d+)$',"stage.views.modifEtudiant", name="modifEtudiant"),
+
+    url(r'^enseignant/(?P<pk>\d+)$',"stage.views.detailsEnseignant", name="detailsEnseignant"),
+    url(r'^enseignant/modifier/(?P<pk>\d+)$',"stage.views.modifEnseignant", name="modifEnseignant")
 )
