@@ -50,7 +50,9 @@
 		</table>
 	</div>
 </div>
-<a href="{% url 'addSoutenance' %}" class="btn btn-primary">Ajouter une Soutenance</a>
+{% if "planning.add_soutenance" in user.get_all_permissions %}
+	<a href="{% url 'addSoutenance' %}" class="btn btn-primary">Ajouter une Soutenance</a>
+{% endif %}
 
 {% endblock %}
 {% block libraries %}{{ block.super }}

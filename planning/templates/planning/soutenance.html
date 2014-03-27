@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} | Soutenance {% endblock %}
 {% block main %}
+{% if "planning.change_soutenance" in user.get_all_permissions %}
 <a href="{% url 'editSoutenance' pk=soutenance.idSoutenance %}" class="pull-right btn btn-primary">Modifier</a>
+{% endif %}
 <h1>Soutenance au {{ soutenance.datePassage }}</h1>
 <br/>
 <table class="table table-striped col-xs-12 col-lg-12">
