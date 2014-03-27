@@ -5,7 +5,7 @@
 	"last_name": "Outreville", 
 	"groups": ["etudiants"], 
 	"password": "a", 
-	"email": ""
+	"email": "cedric.outreville@etu.univ-orleans.fr"
 	},
 
 	{
@@ -14,7 +14,7 @@
 	"last_name": "Roux", 
 	"groups": ["etudiants"], 
 	"password": "a", 
-	"email": ""
+	"email": "william.roux@etu.univ-orleans.fr"
 	},
 
 	{
@@ -23,16 +23,16 @@
 	"last_name": "Ait-maamar", 
 	"groups": ["etudiants"], 
 	"password": "a", 
-	"email": ""
+	"email": "yacine.ait-maamar@etu.univ-orleans.fr"
 	},
 
 	{
 	"username": "roza", 
 	"first_name": "Gerard", 
 	"last_name": "Rozsavolgyi", 
-	"groups": ["enseignants"],
+	"groups": ["responsables_stages"],
 	"password": "a", 
-	"email": ""
+	"email": "roza@univ-orleans.fr"
 	},
 
 	{
@@ -41,7 +41,7 @@
 	"last_name": "Duchier", 
 	"groups": ["enseignants"],
 	"password": "a", 
-	"email": ""
+	"email": "denys.duchier@univ-orleans.fr"
 	},
 
 	{
@@ -50,6 +50,15 @@
 	"last_name": "Chabin", 
 	"groups": ["enseignants"],
 	"password": "a", 
-	"email": ""
+	"email": "jacques.chabin@univ-orleans.fr"
+	},
+
+	{
+	"username": "bruletot", 
+	"first_name": "Carole", 
+	"last_name": "Bruletot", 
+	"groups": ["secretaires"],
+	"password": "a", 
+	"email": "carole.bruletot@univ-orleans.fr"
 	}
 ]
