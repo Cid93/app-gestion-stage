@@ -26,28 +26,58 @@
 					<li id="tab-home">
 						<a href="{% url 'accueil' %}">Accueil</a>
 					</li>
-					<li id="tab-entreprise">
-						<a href="{% url 'entreprise.views.show_entreprise' %}">Entreprises</a>
+
+					<li id="tab-entreprise" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Entreprises <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="{% url 'entreprise.views.show_entreprise' %}"><span class="glyphicon glyphicon-list"></span> Voir les entreprises</a></li>
+							<li><a href="{% url 'entreprise.views.addEnt' %}"><span class="glyphicon glyphicon-plus"></span> Ajouter une entreprise</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Administration</li>
+							<li><a href="#"><span class="glyphicon glyphicon-ok"></span> Entreprises en attente de validation</a></li>
+							<li><a href="{% url 'entreprise.views.delEnt' %}"><span class="glyphicon glyphicon-remove"></span> Suppression d'entreprises</a></li>
+						</ul>
 					</li>
-					<li id="tab-stage">
-						<a href="{% url 'stage.views.show_stages' %}">Stages</a>
+
+					<li id="tab-stage" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Stages <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Stages</li>
+							<li><a href="{% url 'stage.views.show_stages' %}"><span class="glyphicon glyphicon-list"></span> Voir les stages</a></li>
+							<li><a href="{% url 'stage.views.addStage' %}"><span class="glyphicon glyphicon-plus"></span> Ajouter un stage</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Offres de stage</li>
+							<li><a href="{% url 'stage.views.showOffres' %}"><span class="glyphicon glyphicon-list"></span> Voir les offres</a></li>
+							<li><a href="{% url 'stage.views.addOffreStage' %}"><span class="glyphicon glyphicon-plus"></span> Ajouter une offre</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Administration</li>
+							<li><a href="#"><span class="glyphicon glyphicon-ok"></span> Stages en attente de validation</a></li>
+							<li><a href="#"><span class="glyphicon glyphicon-ok"></span> Offres en attente de validation</a></li>
+							<li><a href="{% url 'stage.views.delStage' %}"><span class="glyphicon glyphicon-remove"></span> Suppression de stages</a></li>
+							<li><a href="{% url 'stage.views.delOffreStage' %}"><span class="glyphicon glyphicon-remove"></span> Suppression d'offres</a></li>
+						</ul>
 					</li>
-					<li id="tab-offrestage">
-						<a href="{% url 'stage.views.showOffres' %}">Offres de stage</a>
+
+					<li id="tab-planning" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Planning <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="{% url 'entreprise.views.show_entreprise' %}"><span class="glyphicon glyphicon-calendar"></span> Consulter le planning</a></li>
+							<li><a href="{% url 'entreprise.views.addEnt' %}"><span class="glyphicon glyphicon-plus"></span> Ajouter une soutenance</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Administration</li>
+							<li><a href="{% url 'entreprise.views.delEnt' %}"><span class="glyphicon glyphicon-remove"></span> Suppression de soutenances</a></li>
+						</ul>
 					</li>
-					<li id="tab-planning">
-						<a href="{% url 'planning.views.show_planning' %}">Planning des soutenances</a>
-					</li>
+
 					<li id="tab-recherche">
-						<a href="{% url 'gestionStage.views.search' %}">Recherche</a>
+						<a href="{% url 'gestionStage.views.search' %}">Rechercher</a>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><p><b><span class="username"><span class="glyphicon glyphicon-user"></span>
-{{ user }} </span></b></p></li>
+							<li><p><b><span class="username"><span class="glyphicon glyphicon-user"></span>{{ user }} </span></b></p></li>
 							<li><a href="{% url 'logout' %}">Se deconnecter</a></li>
 							{% for group in user.groups.all %}
 								{% if group.name == "etudiants" %}
