@@ -14,11 +14,15 @@
 	</form>
 {% endblock %}
 {% block libraries %}{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-1.10.4.custom.min.css" media="screen">
+	<script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
 	<script type="text/javascript" src="/static/js/utils.js"></script>
 {% endblock %}
 {% block js %}
 
 	$( document ).ready( function() {
+		becomeDatePicker('#id_dateDebut');
+		becomeDatePicker('#id_dateFin');
 		publierBoutonAjouter('#id_persConvention', '/stage/personne-ext');
 		publierBoutonAjouter('#id_maitreStage', '/stage/personne-ext');
 	});
