@@ -51,6 +51,10 @@
 							{% for group in user.groups.all %}
 								{% if group.name == "etudiants" %}
 									<li><a href="{% url 'stage.views.monStage' %}">Mon stage</a></li>
+									<li><a href="{% url 'stage.views.monProfilEtu'  %}">Mon Profil</a></li>
+								{% endif %}
+								{% if group.name == "enseignants"  %}
+									<li><a href="{% url 'stage.views.monProfilEns' %}">Mon Profil</a></li>
 								{% endif %}
 							{% endfor %}
 							<li class="divider"></li>

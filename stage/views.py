@@ -339,3 +339,35 @@ def modifEnseignant(request, pk):
 
 	else:
 		return HttpResponseRedirect('/oups')
+
+
+def monProfilEtu(request):
+
+	etu = Etudiant.objects.filter(
+			username=User.objects.get(
+				username=request.user.username))
+	monProfil = None
+
+	for e in etu:
+		monProfil = e.numEtu
+
+	return detailsEtudiant(
+		request,
+		monProfil
+	)
+
+def monProfilEns(request):
+
+	ens = Enseignant.objects.filter(
+			username=User.objects.get(
+				username=request.user.username))
+	monProfil = None
+
+	for e in ens:
+		monProfil = e.idEnseignant
+
+	return detailsEnseignant(
+		request,
+		monProfil
+	)
+	

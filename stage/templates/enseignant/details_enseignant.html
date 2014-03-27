@@ -6,7 +6,7 @@
 <h1 class="page-heading">{{ enseignant.nom }} {{ enseignant.prenom }}
 	<span class="small" > {{enseignant.departement}} </span>
 	{% if enseignant.username == user or "admin" in user.perms %}
-		<a class="pull-right btn btn-primary" href="{% url 'modifenseignant' pk=enseignant.idEntrep %}">Modifier</a>
+		<a class="pull-right btn btn-primary" href="{% url 'modifEnseignant' pk=enseignant.idEnseignant %}">Modifier</a>
 	{% endif %}
 </h1> 
 </span><br/>
