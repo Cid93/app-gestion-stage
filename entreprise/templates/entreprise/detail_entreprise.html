@@ -12,7 +12,9 @@
   <p><b>Pays :</b> {{ entreprise.pays }}</p><br/>
   <p><b>Téléphone :</b> {{ entreprise.telephone }}</p><br/>
   <p><b>Fax :</b> {{ entreprise.fax }}</p><br/>
-  <a class="btn btn-primary" href="{% url 'modifEnt' pk=entreprise.pk %}">Modifier</a>
+  {% if "entreprise.change_entreprise" in user.get_all_permissions %}
+    <a class="btn btn-primary" href="{% url 'modifEnt' pk=entreprise.pk %}">Modifier</a>
+  {% endif %}
 </div>
 
 <div id="map" class="col-xs-12 col-md-9 col-lg-9">

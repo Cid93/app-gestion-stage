@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Détails de l'enseignant {% endblock %}
+{% block main %}
+
+<span class="details_etu">
+<h1 class="page-heading">{{ enseignant.nom }} {{ enseignant.prenom }}
+	<span class="small" > {{enseignant.departement}} </span>
+	{% if enseignant.username == user or "admin" in user.perms %}
+		<a class="pull-right btn btn-primary" href="{% url 'modifEnseignant' pk=enseignant.idEnseignant %}">Modifier</a>
+	{% endif %}
+</h1> 
+</span><br/>
+
+<table class="table table-striped col-xs-12 col-lg-12">
+
+	
+	
+	 
+	<tr>
+		<td><b>E-Mail :</b></td>
+		<td> {{ enseignant.emailPerso }}</td>
+	</tr> 
+	<tr>
+		<td><b>E-Mail enseignant :</b></td>
+		<td> {{ enseignant.emailEns }}</td>
+	</tr> 
+	<tr>
+		<td><b>Téléphone :</b></td>
+		<td> {{ enseignant.telephone }}</td>
+	</tr>
+	
+	 
+	 
+	
+
+	
+	
+	
+
+</table>
+
+{% endblock %}

@@ -4,7 +4,9 @@
 <h1>Offres de stage</h1>
 <br/>
 	<div class="menu col-xs-12 col-sm-2 col-lg-2">
-	<a class="btn btn-primary" href="{% url 'addOffreStage' %}">Ajouter</a><br/>
+	{% if "stage.add_offrestage" in user.get_all_permissions %}
+		<a class="btn btn-primary" href="{% url 'addOffreStage' %}">Ajouter</a><br/>
+	{% endif %}
 	{% if "stage.delete_offrestage" in user.get_all_permissions %}
 		<a class="btn btn-danger" href="{% url 'delOffreStage' %}">Supprimer</a>
 	{% endif %}
@@ -16,5 +18,5 @@
 	</ul>
 
 {% endblock %}
-{% block js %}active_tab="#tab-offrestage"{% endblock %}
+{% block js %}active_tab="#tab-stage"{% endblock %}
 

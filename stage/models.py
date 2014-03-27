@@ -64,7 +64,7 @@ class Etudiant(PersonneInterne):
         return "%s" % (html)
 
     def search_result(self):
-        html="<tr><td>"+str(self.promotion)+"</td><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
+        html="<tr class=\"trLien\" onclick=\"document.location='/etudiant/"+str(self.numEtu)+"'\"><td>"+str(self.promotion)+"</td><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
         return "%s" % (html)
 
     def natural_key(self):
@@ -97,7 +97,7 @@ class Enseignant(PersonneInterne):
         return "%s" % (html)
 
     def search_result(self):
-        html="<tr><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEns+"</td><td>"+self.departement+"</td></tr>"
+        html="<tr class=\"trLien\" onclick=\"document.location='/enseignant/"+str(self.idEnseignant)+"'\"><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEns+"</td><td>"+self.departement+"</td></tr>"
         return "%s" % (html)
 
 

@@ -262,3 +262,98 @@ def delOffreStage(request):
 
 	else:
 		return HttpResponseRedirect('/oups')
+
+
+def detailsEtudiant(request, pk):
+	return render(
+		request,
+		"etudiant/details_etudiant.html",
+		{"etudiant": Etudiant.objects.get(pk=pk)}
+	)
+
+def modifEtudiant(request, pk):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	etudiant = Etudiant.objects.get(pk=pk)
+
+	if ("stage.change_etudiant" in permissions or etudiant.username == user):
+
+
+		if request.method == 'POST':  # Si on a une requête POST (le formulaire a été posté)
+			form = EtudiantForm(request.POST,instance=Etudiant.objects.get(pk=pk))
+			if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+				form.save()
+				return HttpResponseRedirect('/etudiant/' + pk)
+		else: # Si on a une requête GET, on récupère l'id de l'entreprise à modifier et on affiche le form
+			form = EtudiantForm(instance=Etudiant.objects.get(pk=pk))
+			print("Error")
+			# On crée un formulaire vide
+
+		return render(request,'etudiant/forms.html', { 'actionAFaire' : 'Modifier', 'form' : form})
+
+	else:
+		return HttpResponseRedirect('/oups')
+
+def detailsEnseignant(request, pk):
+	return render(
+		request,
+		"enseignant/details_enseignant.html",
+		{"enseignant": Enseignant.objects.get(pk=pk)}
+	)
+
+def modifEnseignant(request, pk):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	enseignant = Enseignant.objects.get(pk=pk)
+
+	if ("stage.change_enseignant" in permissions or enseignant.username == user):
+
+
+		if request.method == 'POST':  # Si on a une requête POST (le formulaire a été posté)
+			form = EnseignantForm(request.POST,instance=Enseignant.objects.get(pk=pk))
+			if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+				form.save()
+				return HttpResponseRedirect('/enseignant/' + pk)
+		else: # Si on a une requête GET, on récupère l'id de l'entreprise à modifier et on affiche le form
+			form = EnseignantForm(instance=Enseignant.objects.get(pk=pk))
+			print("Error")
+			# On crée un formulaire vide
+
+		return render(request,'enseignant/forms.html', { 'actionAFaire' : 'Modifier', 'form' : form})
+
+	else:
+		return HttpResponseRedirect('/oups')
+
+
+def monProfilEtu(request):
+
+	etu = Etudiant.objects.filter(
+			username=User.objects.get(
+				username=request.user.username))
+	monProfil = None
+
+	for e in etu:
+		monProfil = e.numEtu
+
+	return detailsEtudiant(
+		request,
+		monProfil
+	)
+
+def monProfilEns(request):
+
+	ens = Enseignant.objects.filter(
+			username=User.objects.get(
+				username=request.user.username))
+	monProfil = None
+
+	for e in ens:
+		monProfil = e.idEnseignant
+
+	return detailsEnseignant(
+		request,
+		monProfil
+	)
+	

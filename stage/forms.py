@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
 from django import forms
-from stage.models import Stage, PersonneExterieure, Etudiant, OffreStage
+from stage.models import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
 
@@ -68,3 +68,13 @@ class supprimeOffreStageForm(forms.Form):
     class Meta:
         model = Stage
         fields ='offrestagelots'
+
+
+
+class EtudiantForm(ModelForm):
+    class Meta:
+        model = Etudiant
+
+class EnseignantForm(ModelForm):
+    class Meta:
+        model = Enseignant
