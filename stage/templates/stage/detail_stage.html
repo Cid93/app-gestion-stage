@@ -5,7 +5,7 @@
 <span class="details_etu">
 <h1 class="page-heading">{{ stage.intitule }}
 	<small>{{ stage.etudiant }}</small>
-	{% if stage.etudiant.username == user or "admin" in user.perms %}
+	{% if stage.etudiant.username == user or "stage.change_stage" in user.get_all_permissions %}
 		<a class="pull-right btn btn-primary" href="{% url 'modifStage' pk=stage.pk %}">Modifier</a>
 	{% endif %}
 </h1> 

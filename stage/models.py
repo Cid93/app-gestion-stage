@@ -59,8 +59,6 @@ class Etudiant(PersonneInterne):
             ("rechercherconsulter_etudiant", "Peut rechercher et consulter les fiches d'étudiants"),
         )
 
-    
-
     def search_result_header():
         html="<thead><tr><th>Promotion</th><th>Numéro</th><th>Nom</th><th>Prénom</th><th>E-mail</th></tr></thead>"
         return "%s" % (html)
@@ -69,13 +67,12 @@ class Etudiant(PersonneInterne):
         html="<tr><td>"+str(self.promotion)+"</td><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
         return "%s" % (html)
 
-    
-
     def natural_key(self):
         return {'numEtu' : self.numEtu,
             'nom' : self.nom,
             'prenom' : self.prenom,
             'telephone' : self.telephone}
+
 
 class Enseignant(PersonneInterne):
     idEnseignant = models.AutoField(primary_key=True)
@@ -114,6 +111,7 @@ class PersonneExterieure(Personne):
             'prenom' : self.prenom,
             'telephone' : self.telephone,
             'emailPro' : self.emailPro}
+
 
 class Logiciel(models.Model):
     nomLog = models.CharField(primary_key=True, max_length=50)
@@ -155,8 +153,8 @@ class OffreStage(models.Model):
 class Stage(OffreStage):
     idStage = models.AutoField(primary_key=True)
     etudiant=models.ForeignKey(Etudiant, related_name="stage_etudiant")
-    dateDebut=models.DateTimeField()
-    dateFin=models.DateTimeField()
+    dateDebut=models.DateField()
+    dateFin=models.DateField()
     persConvention=models.ForeignKey(PersonneExterieure, related_name="stage_persConvention")
     maitreStage=models.ForeignKey(PersonneExterieure, related_name="stage_maitreStage")
     enseignantTuteur=models.ForeignKey(Enseignant, related_name="stage_enseignantTuteur")
@@ -170,7 +168,6 @@ class Stage(OffreStage):
             ("genererdocuments_stage", "Peut générer les documents propres à un stage (convention)"),
             ("noter_stage", "Peut noter un stage"),
         )
-
 
     def __str__(self):
         return self.intitule
