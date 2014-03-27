@@ -120,18 +120,20 @@ function remplirTableauxJ(bodyTab, data){
 		var target = '#l_' + parseInt(heure) + '_c_' + salle;
 
 		console.log('soutenance sur ' + target);
-		$(target).html(
-			getCelluleCompleteeJ(
-				value['fields']['stage']));
+		if($(target).html()){
+			$(target).html($(target).html() + '<p>' +
+				getCelluleCompleteeJ(value['fields']['stage']) +
+				'</p>');
+		} else {
+			$(target).html('<p>' + 
+				getCelluleCompleteeJ(value['fields']['stage']) +
+				'</p>');
+		}
 	});
 }
 
-function getCelluleCompletee(pk, infos){
-	var textAff = infos['stage']['etudiant']['prenom'] + ' ' +
-		infos['stage']['etudiant']['nom'] + ' dans la salle ' +
-		infos['salle'];
-	return '<a href="./' + pk + '" target="_blank">' + 
-		textAff + '</a>';
+function getCelluleCompletee(infos){
+	return ' ' + infos['salle'];
 }
 
 function remplirTableaux(bodyTab, data){
@@ -153,6 +155,11 @@ function remplirTableaux(bodyTab, data){
 		var target = '#l_' + parseInt(heure) + '_d_' + jour;
 
 		console.log('soutenance sur ' + target);
-		$(target).html(getCelluleCompletee(value['pk'], value['fields']));
+		if($(target).html()){
+			$(target).html($(target).html() 
+				+ getCelluleCompletee(value['fields']));
+		} else {
+			$(target).html(getCelluleCompletee(value['fields']));
+		}
 	});
 }
