@@ -59,6 +59,11 @@ tr {
 	height: 40px;
 }
 
+.trLien {
+	cursor:pointer;
+}
+
+
 #visite #init {
 	display: block;
 	margin: auto;

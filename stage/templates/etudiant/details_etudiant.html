@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Détails de l'etudiant {% endblock %}
+{% block main %}
+
+<span class="details_etu">
+<h1 class="page-heading">{{ etudiant.nom }} {{ etudiant.prenom }}
+	
+	{% if etudiant.username == user or "admin" in user.perms %}
+		<a class="pull-right btn btn-primary" href="{% url 'modifEtudiant' pk=etudiant.numEtu %}">Modifier</a>
+	{% endif %}
+</h1> 
+</span><br/>
+
+<table class="table table-striped col-xs-12 col-lg-12">
+
+	<tr>
+		<td><b>Promotion :</b></td>
+		<td> {{ etudiant.promotion }}</td>
+	</tr> 
+	<tr>
+		<td><b>Numéro :</b></td>
+		<td> {{ etudiant.numEtu }}</td>
+	</tr>
+	<tr>
+		<td><b>Date de Naissance :</b></td>
+		<td> {{ etudiant.dateNaissance }}</td>
+	</tr> 
+	 
+	<tr>
+		<td><b>E-Mail :</b></td>
+		<td> {{ etudiant.emailPerso }}</td>
+	</tr> 
+	<tr>
+		<td><b>E-Mail Etudiant :</b></td>
+		<td> {{ etudiant.emailEtu }}</td>
+	</tr> 
+	<tr>
+		<td><b>Téléphone :</b></td>
+		<td> {{ etudiant.telephone }}</td>
+	</tr>
+	<tr>
+		<td><b>Adresse :</b></td>
+		<td> {{ etudiant.adresse }}</td>
+	</tr>
+	<tr>
+		<td><b>Code Postale :</b></td>
+		<td> {{ etudiant.cp }}</td>
+	</tr>
+	<tr>
+		<td><b>Ville :</b></td>
+		<td> {{ etudiant.ville }}</td>
+	</tr> 
+	 
+	 
+	
+
+	
+	
+	
+
+</table>
+
+{% endblock %}

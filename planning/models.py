@@ -10,9 +10,9 @@ class Salle(models.Model):
 
 class Soutenance(models.Model):
 	idSoutenance = models.AutoField(primary_key=True)
-	stage = models.ForeignKey(Stage)
+	stage = models.ForeignKey(Stage, unique=True)
 	datePassage = models.DateTimeField(verbose_name="Date de passage")
-	salle = models.ForeignKey(Salle)
+	salle = models.ForeignKey(Salle, unique_for_date="datePassage")
 
 	def __str__(self):
 		return "%s" % ("Soutenance")
