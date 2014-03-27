@@ -1,153 +1,75 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} | Planning {% endblock %}
 {% block main %}
-<h1>Planning</h1>
-<br/>
-<div>
-	{{ form.as_table }} <br />
-</div>
-<div class="row">
-	<div class="col-xs-5 col-lg-offset-1 col-md-offset-1 col-md-5 col-lg-5">
-		<table id="table_planning">
-			<tbody id="body_planning">
-				<tr id="entete_planning">
-					<td></td>
-					<td id="1">Lundi</td>
-					<td id="2">Mardi</td>
-					<td id="3">Mercredi</td>
-					<td id="4">Jeudi</td>
-					<td id="5">Vendredi</td>
-					<td id="6">Samedi</td>
-				</tr>
-				{% load utils %}
-				{% for cpt in taille %}
-					<tr id="l_{{ cpt|incrementSept:cpt }}">
-						<td>{{ cpt|incrementSept:cpt }} à {{ cpt|incrementHuit:cpt }}h</td>
-						<td id="l_{{ cpt|incrementSept:cpt }}_d_1"></td>
-						<td id="l_{{ cpt|incrementSept:cpt }}_d_2"></td>
-						<td id="l_{{ cpt|incrementSept:cpt }}_d_3"></td>
-						<td id="l_{{ cpt|incrementSept:cpt }}_d_4"></td>
-						<td id="l_{{ cpt|incrementSept:cpt }}_d_5"></td>
-						<td id="l_{{ cpt|incrementSept:cpt }}_d_6"></td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-	<div class="col-xs-5 col-lg-offset-1 col-md-offset-1 col-md-5 col-lg-5">
-		<table id="table_planningJ">
-			<tbody id="body_planningJ">
-				<tr id="entete_planningJ">
-					<td></td>
-				</tr>
-				{% load utils %}
-				{% for cpt in taille %}
-					<tr id="l_{{ cpt|incrementSept:cpt }}">
-						<td>{{ cpt|incrementSept:cpt }} à {{ cpt|incrementHuit:cpt }}h</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-</div>
-{% if "planning.add_soutenance" in user.get_all_permissions %}
-	<a href="{% url 'addSoutenance' %}" class="btn btn-primary">Ajouter une Soutenance</a>
-{% endif %}
+	<h1>Planning</h1>
+	<br/>
 
+	<button id="create-user">Create new user</button>
+	<div id="soutenanceForm">
+		<form action="{% url 'addSoutenance' %}" method="post">{% csrf_token %}
+			<table>
+				{{ form.as_table }}
+			</table>
+			<input id="soutenanceSubmit" class="btn btn-success" type="submit" value="" />
+		</form>
+	</div>
+	<div id="salleForm">
+		<form action="" method="post">{% csrf_token %}
+			<table>
+				{{ salleForm.as_table }}
+			</table>
+			<input id="salleSubmit" class="btn btn-success" type="submit" value="" />
+		</form>
+	</div>
+
+	<div>
+		<label for="id_dateDebut">Soutenance du</label>
+		<input id="id_dateDebut" />
+		<label for="id_dateFin"> au </label>
+		<input id="id_dateFin" />
+	</div>
+<div id="planning"></div>
 {% endblock %}
 {% block libraries %}{{ block.super }}
+	<link href='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.css' rel='stylesheet' />
+	<link href='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-1.10.4.custom.min.css" media="screen">
+
+	<script src='/static/fullcalendar-1.6.4/lib/jquery.min.js'></script>
+	<script src='/static/fullcalendar-1.6.4/lib/jquery-ui.custom.min.js'></script>
+	<script src='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js'></script>
 	<script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
 	<script type="text/javascript" src="/static/js/utils.js"></script>
 	<script type="text/javascript" src="/static/js/planning.js"></script>
 {% endblock %}
 {% block js %}
 
-	const theadTab = "#entete_planning";
-	const bodyTab = "#body_planning";
-	const saveTableau = $(tab).html();
-
-	const tabJ = "#table_planningJ";
-	const theadTabJ = "#entete_planningJ";
-	const bodyTabJ = "#body_planningJ";
-	const saveTableauJ = $(tabJ).html();
-
 	$( document ).ready( function() {
 
-		becomeDatePicker("#id_datePassage");
+		//$('input[type=submit]').css('visibility', 'hidden');
 
-		$("#id_datePassage").change(function(){
+		becomeDatePicker('#id_dateDebut');
+		becomeDatePicker('#id_dateFin');
+		becomeDatePicker('#id_datePassage');
 
-			// Modification du tableau par jour
-			$.ajax({
-				url: '{% url 'find_planning' %}',
-				data: {
-					'date': $("#id_datePassage").val()
-				},
-				type: 'GET',
-				dataType: 'json',
-				contentType: 'application/json'
-			}).done(function(data, textStatus, jqXHR){
-
-				reinitTableaux(bodyTabJ, saveTableauJ);
-				putTheadTabbleau(theadTabJ, data);
-				identifierCellule(tabJ, data);
-				remplirTableauxJ(bodyTabJ, data);
-
-			}).fail(function(jqXHR, textStatus, errorThrown){
-				console.log("ajax failed");
-				alert(errorThrown);
-			});
-
-			// Modification du tableau par semaine
-			console.log('récupération du range de la semaine');
-			const laDate = $('#id_datePassage').val()
-					// recuperation de la date sans l'heure
-					.split('T')[0]
-					// mise en tableau de l'année, mois, jour
-					.split('-');
-			const jour = new Date(laDate[0], laDate[1] - 1, laDate[2]);
-			const curJour = new Date(jour), finSem = new Date(jour);
-			curJour.setDate(parseInt(laDate[2]) - (jour.getDay() - 1));
-			finSem.setDate(parseInt(laDate[2]) + (6 - jour.getDay()));
-			console.log('commence : ' + curJour);
-			console.log('termine : ' + finSem);
-
-			reinitTableaux(bodyTab, saveTableau);
-			addHeaders(tab + ' tr:first-child', curJour, month, 
-				function(arg){
-					var numDate = arg.html().split(' ')[1];
-					var date = new Date(curJour);
-					for(i = new Date(curJour);
-							i.getDate() != numDate;
-							i.setDate(i.getDate() + 1)){
-						date = i;
-						console.log(i);
-					}
-					$("#id_datePassage").val(date.toLocaleFormat("%Y-%m-%d"));
-					$("#id_datePassage").change();
-				});
-
-			for(var i = new Date(curJour); i <= finSem; i.setDate(i.getDate() + 1)){
-				console.log('range : ' + i);
-				$.ajax({
-					url: '{% url 'find_planning' %}',
-					data: {
-						'date': i.toLocaleFormat("%Y-%m-%d")
-					},
-					type: 'GET',
-					dataType: 'json',
-					contentType: 'application/json'
-				}).done(function(data, textStatus, jqXHR){
-
-					remplirTableaux(bodyTab, data);
-
-				}).fail(function(jqXHR, textStatus, errorThrown){
-					console.log("ajax failed");
-					alert(errorThrown);
-				});
+		$('#id_dateDebut').change(function(){
+			if($('#id_dateFin').val() && testArgs()){
+				updatePlanning();
 			}
 		});
+		$('#id_dateFin').change(function(){
+			if($('#id_dateDebut').val() && testArgs()){
+				updatePlanning();
+			}
+		});
+
+		genDialogForm("#soutenanceForm", "#create-user", 500, 300, function(){
+			$('#soutenanceSubmit').click();
+		});
+		publierBoutonAjouterDialog('#id_salle', '#id_addSalle', "#salleForm", 500, 300, function(){
+			alert('coucou');
+		});
 	});
+
 	active_tab="#tab-planning"
 {% endblock %}

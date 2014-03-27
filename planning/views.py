@@ -15,20 +15,10 @@ from django.contrib.auth.models import User
 import json
 
 def show_planning(request):
-	tableDHeure = range(13)
-	tableDHeureHEt1 = range(13)
-	for chiffre in tableDHeure:
-		chiffre = chiffre + 7
-	for chiffre in tableDHeureHEt1:
-		chiffre = chiffre + 8
-
-	return render(
-		request,
-		"planning/planning.html",
-		{'form' : SoutenanceSelection,
-		'taille' : tableDHeure,
-		'TEtUn' : tableDHeureHEt1}
-	)
+	return render(request,
+		"planning/planning.html", {
+			'form' : SoutenanceForm(),
+			'salleForm' : SalleForm()})
 
 def show_soutenance(request, pk):
 	return render(
@@ -109,10 +99,8 @@ def editSoutenance(request, pk):
 
 # méthode AJAX ! ! !
 def find_planning(request):
-	arg = datetime.strptime(request.GET['date'], "%Y-%m-%d")
-
-	debutDeJournee = datetime(arg.year, arg.month, arg.day, 0, 1)
-	finDeJournee = datetime(arg.year, arg.month, arg.day, 23, 59)
+	debutDeJournee = datetime.strptime(request.GET['dateD'], "%Y-%m-%d");
+	finDeJournee = datetime.strptime(request.GET['dateF'], "%Y-%m-%d");
 
 	res = serializers.serialize(
 		"json",
