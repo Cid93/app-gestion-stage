@@ -10,6 +10,8 @@ from stage.models import Stage, Etudiant, Enseignant, PersonneExterieure
 from planning.models import Soutenance
 from planning.forms import SoutenanceSelection, SoutenanceForm, SalleForm
 
+from django.contrib.auth.models import User
+
 import json
 
 def show_planning(request):
@@ -35,48 +37,75 @@ def show_soutenance(request, pk):
 		{'soutenance' : Soutenance.objects.get(idSoutenance=pk)})
 
 def addSoutenance(request):
-	if request.method == 'POST':  				# Si une requête POST a été passée
-		form = SoutenanceForm(request.POST)  	# On récupère les données
-		
-		if form.is_valid(): 					# Si les données reçues sont valides
-			form.save()
-			return HttpResponseRedirect('/planning/')
-		else:									# Si les données reçues sont invalides
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("planning.add_soutenance" in permissions):
+
+		if request.method == 'POST':  				# Si une requête POST a été passée
+			form = SoutenanceForm(request.POST)  	# On récupère les données
+			
+			if form.is_valid(): 					# Si les données reçues sont valides
+				form.save()
+				return HttpResponseRedirect('/planning/')
+			else:									# Si les données reçues sont invalides
+				con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+				return render(request,'planning/forms.html', con)
+
+		else: 										# Pas de requête POST
+			form = SoutenanceForm()  				# On crée un formulaire vide
 			con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 			return render(request,'planning/forms.html', con)
-
-	else: 										# Pas de requête POST
-		form = SoutenanceForm()  				# On crée un formulaire vide
-		con = { 'actionAFaire' : 'Ajouter', 'form' : form}
-		return render(request,'planning/forms.html', con)
+	
+	else:
+		return HttpResponseRedirect('/oups/')
 
 
 def addSalle(request):
-	if request.method == 'POST':  				# S'il s'agit d'une requête POST
-		form = SalleForm(request.POST)  	# Nous reprenons les données
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("planning.add_salle" in permissions):
 
-		if form.is_valid(): 					# Nous vérifions que les données envoyées sont valides
-			form.save()
-			return HttpResponseRedirect('/planning/ajout')
+		if request.method == 'POST':  				# S'il s'agit d'une requête POST
+			form = SalleForm(request.POST)  	# Nous reprenons les données
 
-	form = SalleForm()  					# Nous créons un formulaire vide
-	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+			if form.is_valid(): 					# Nous vérifions que les données envoyées sont valides
+				form.save()
+				return HttpResponseRedirect('/planning/ajout')
 
-	return render(request,'planning/forms.html', con)
+		form = SalleForm()  					# Nous créons un formulaire vide
+		con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+
+		return render(request,'planning/forms.html', con)
+
+	else:
+		return HttpResponseRedirect('/oups/')
 
 def editSoutenance(request, pk):
-	if request.method == 'POST':  # S'il s'agit d'une requête POST
-		form = SoutenanceForm(request.POST, instance=Soutenance.objects.get(pk=pk))
-		if form.is_valid(): # Nous vérifions que les données envoyées sont valides
-			form.save()
-			return HttpResponseRedirect('/planning/' + pk)
-		else: # Si ce n'est pas du POST, c'est probablement une requête GET
-			print("Error")
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("planning.change_soutenance" in permissions):
 
-	return render(request,
-		'planning/forms.html',
-		{ 'actionAFaire' : 'Modifier',
-			'form' : SoutenanceForm(instance=Soutenance.objects.get(pk=pk))})
+		if request.method == 'POST':  # S'il s'agit d'une requête POST
+			form = SoutenanceForm(request.POST, instance=Soutenance.objects.get(pk=pk))
+			if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+				form.save()
+				return HttpResponseRedirect('/planning/' + pk)
+			else: # Si ce n'est pas du POST, c'est probablement une requête GET
+				print("Error")
+
+		return render(request,
+			'planning/forms.html',
+			{ 'actionAFaire' : 'Modifier',
+				'form' : SoutenanceForm(instance=Soutenance.objects.get(pk=pk))})
+
+	else:
+		return HttpResponseRedirect('/oups/')
 
 # méthode AJAX ! ! !
 def find_planning(request):

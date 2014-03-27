@@ -49,8 +49,6 @@
 				"noter_stage",
 				"valider_stage",
 
-				
-
 				"add_entreprise",
 				"change_entreprise",
 				"delete_entreprise",
@@ -58,7 +56,15 @@
 
 				"rechercherconsulter_etudiant",
 
-				"rechercherconsulter_enseignant"
+				"rechercherconsulter_enseignant",
+
+				"add_salle",
+				"change_salle",
+				"delete_salle",
+
+				"add_soutenance",
+				"change_soutenance",
+				"delete_salle"
 			]
 	},
 
@@ -76,13 +82,19 @@
 				"genererdocuments_stage",
 				"noter_stage",
 
-				
-
 				"add_entreprise",
 
 				"rechercherconsulter_etudiant",
 
-				"rechercherconsulter_enseignant"
+				"rechercherconsulter_enseignant",
+
+				"add_salle",
+				"change_salle",
+				"delete_salle",
+
+				"add_soutenance",
+				"change_soutenance",
+				"delete_soutenance"
 			]
 	}
 ]
