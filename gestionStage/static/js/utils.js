@@ -77,26 +77,6 @@ function publierBoutonAjouterDialog(selecteurElement, boutonId, formId, largeur,
     console.log(selecteurElement + ' va être suivi d\'un bouton ' + boutonId);
     $(selecteurElement)
         .parent()
-        .append('<button id="'+ boutonId.split('#')[1]
-            +'" style="padding:2px 7px;" class="btn btn-default">Ajouter</button>');
+        .append('<a id="'+ boutonId.split('#')[1] + '" href="#" style="padding:2px 7px;" class="btn btn-default">Ajouter</a>');
     genDialogForm(formId, boutonId, largeur, hauteur, ajouter);
-}
-
-function enregistrerForm(){
-    $.ajax({
-        url: "./find/",
-        data: {
-            'dateD': $("#id_dateDebut").val(),
-            'dateF': $("#id_dateFin").val()
-        },
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json'
-    }).done(function(data, textStatus, jqXHR){
-        $('#planning').html();
-        makeCalendar(extractSoutenanceCalendarData(data));
-    }).fail(function(jqXHR, textStatus, errorThrown){
-        console.log("ajax failed");
-        alert(errorThrown);
-    });
 }

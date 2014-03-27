@@ -14,7 +14,7 @@
 		</form>
 	</div>
 	<div id="salleForm">
-		<form action="" method="post">{% csrf_token %}
+		<form action="{% url 'addSalle' %}" method="post">{% csrf_token %}
 			<table>
 				{{ salleForm.as_table }}
 			</table>
@@ -46,7 +46,7 @@
 
 	$( document ).ready( function() {
 
-		//$('input[type=submit]').css('visibility', 'hidden');
+		$('input[type=submit]').css('visibility', 'hidden');
 
 		becomeDatePicker('#id_dateDebut');
 		becomeDatePicker('#id_dateFin');
@@ -65,9 +65,10 @@
 
 		genDialogForm("#soutenanceForm", "#create-user", 500, 300, function(){
 			$('#soutenanceSubmit').click();
+			return false;
 		});
 		publierBoutonAjouterDialog('#id_salle', '#id_addSalle', "#salleForm", 500, 300, function(){
-			alert('coucou');
+			$('#salleSubmit').click();
 		});
 	});
 
