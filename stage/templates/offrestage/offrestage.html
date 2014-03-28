@@ -13,7 +13,9 @@
 	</div>
 	<ul class="col-xs-12 col-sm-offset-1 col-lg-8">
 		{% for o in liste_offrestage %}
-			<li><a href="{% url 'detailsOffreStage' pk=o.pk %}">{{ o }}</a></li><br/>
+			{% if o.valideOffreStage == True %}
+				<li><a href="{% url 'detailsOffreStage' pk=o.pk %}">{{ o }}</a></li><br/>
+			{% endif %}
 		{% endfor %}
 	</ul>
 

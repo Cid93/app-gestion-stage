@@ -1,0 +1,17 @@
+[
+	{
+		"intitule" : "Faire des trucs",
+		"sujet" : "Dans ce stage il faut faire tout plein de trucs.",
+		"entreprise": 2,
+		"valideOffreStage": true,
+		"possibiliteEmbauche": true
+	},
+
+	{
+		"intitule" : "Test offre pas validée",
+		"sujet" : "Cette offre n'est pas validée pour des raisons de test.",
+		"entreprise": 2,
+		"valideOffreStage": false,
+		"possibiliteEmbauche": null
+	}
+]

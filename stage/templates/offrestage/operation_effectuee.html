@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Offres de stages {% endblock %}
+{% block main %}
+
+<div class="alert alert-success">
+<h4><strong>Opération effectuée</strong></h4>
+<p>Votre offre de stage a bien été enregistrée, elle est maintenant en attente de validation par un responsable.</p>
+</div>
+<a href="/">Retour à l'accueil</a>
+
+{% endblock %}
+{% block js %}active_tab="#tab-stage"{% endblock %}
+
