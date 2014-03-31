@@ -70,10 +70,11 @@
 					$('#soutenance_form').html(data
 						.split('<form action="" method="post">')[1]
 						.split('</form>')[0]);
+					$('input[type=submit]').remove();
 					$('#soutenance_form').append('<input type="hidden" value="true" name="ajax" />');
 					publierBoutonAjouterDialog('#id_salle',
 						'#id_addSalle',
-						"#salleForm",
+						'#salle_form',
 						850, 400,
 						function(){
 							$('#salle_form').submit();
@@ -90,6 +91,7 @@
 						data[0]['pk'] + '</option>');
 				} else {
 					$('#salle_form').html(data.split('<form action="" method="post">')[1].split('</form>')[0]);
+					$('input[type=submit]').remove();
 					$('#salle_form').append('<input type="hidden" value="true" name="ajax" />');
 					$("#id_addSalle").click();
 				}
