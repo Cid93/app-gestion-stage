@@ -1,5 +1,4 @@
 [
-
 	{
 		"etudiant" : 111111,
 		"intitule" : "Dematerialisation portfolio Polytech",
@@ -9,7 +8,9 @@
 		"persConvention": 2,
 		"maitreStage": 1,
 		"enseignantTuteur": 1,
-		"entreprise": 1
+		"entreprise": 1,
+		"possibiliteEmbauche": null,
+		"valideStage": true,
+		"valideOffreStage": null
 	}
 ]
-

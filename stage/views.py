@@ -43,7 +43,7 @@ def addStage(request):
 				form = StageFormEtu(request.POST) # On récupère les données
 				if form.is_valid(): # Si les données reçues sont valides
 					form.save()
-					return HttpResponseRedirect('/stage')
+					return HttpResponseRedirect('/stage/ok')
 				else: # Si les données reçues sont invalides
 					con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
 					return render(request,'stage/stage_form.html', con)			
@@ -60,7 +60,7 @@ def addStage(request):
 				
 				if form.is_valid(): # Si les données reçues sont valides
 					form.save()
-					return HttpResponseRedirect('/stage')
+					return HttpResponseRedirect('/stage/ok')
 				else: # Si les données reçues sont invalides
 					con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 					return render(request,'stage/stage_form.html', con)			
@@ -219,7 +219,7 @@ def addOffreStage(request):
 			
 			if form.is_valid(): 					# Si les données reçues sont valides
 				form.save()
-				return HttpResponseRedirect('/stage/offrestage')
+				return HttpResponseRedirect('/stage/offrestage/ok')
 			else:									# Si les données reçues sont invalides
 				con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 				return render(request,'offrestage/forms.html', con)
@@ -371,3 +371,16 @@ def monProfilEns(request):
 		monProfil
 	)
 	
+def offreStage_operationEffectuee(request):
+	return render(
+		request,
+		"offrestage/operation_effectuee.html",
+		{}
+	)
+
+def stage_operationEffectuee(request):
+	return render(
+		request,
+		"stage/operation_effectuee.html",
+		{}
+	)
