@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Offres de stages {% endblock %}
+{% block main %}
+	<h1>Validation des offres de stage</h1>
+	<br/>
+
+	<div class="menu col-xs-12 col-sm-2 col-lg-2">
+	{% if "stage.add_offrestage" in user.get_all_permissions %}
+		<a class="btn btn-primary" href="{% url 'addOffreStage' %}">Ajouter</a><br/>
+	{% endif %}
+	{% if "stage.delete_offrestage" in user.get_all_permissions %}
+		<a class="btn btn-danger" href="{% url 'delOffreStage' %}">Supprimer</a>
+	{% endif %}
+	</div>
+
+	<ul id="offres_stage" class="col-xs-12 col-sm-offset-1 col-lg-8">
+		{% for o in liste_offrestage %}
+			{% if o.valideOffreStage == False %}
+				<!-- <li><a href="{% url 'detailsOffreStage' pk=o.pk %}">{{ o }}</a></li><br/>-->
+				<li><a href="#" onclick="javascript:openDialog()" value="{{o.pk}}">{{ o }}</a></li><br/>
+			{% endif %}
+		{% endfor %}
+	</ul>
+
+	<div id="dialog" >
+		<title>Valider l'offre de stage</title>
+		Test
+	</div>
+	
+
+
+{% endblock %}
+
+{% block libraries %}{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-1.10.4.custom.min.css" media="screen">
+	<script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
+{% endblock %}
+
+{% block js %}
+
+	$(document).ready( function(){
+		active_tab="#tab-stage"
+
+		$("#dialog").dialog({
+			autoOpen: false,
+			title: 'Valider l\'offre de stage',
+			buttons: {
+				"Valider cette offre": function() {
+					/*
+					$.ajax({
+						#ajax call for delete
+						#with url pointing to your delete function
+					});
+					*/
+					$(this).dialog("close");
+				},
+				"Fermer": function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	});
+	
+	$("#offres_stage a").click(function(){
+		$("#dialog").dialog('open');
+	});
+
+{% endblock %}
+

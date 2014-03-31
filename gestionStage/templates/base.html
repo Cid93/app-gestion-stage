@@ -68,7 +68,7 @@
 									<li><a href="#"><span class="glyphicon glyphicon-ok"></span> Stages en attente de validation</a></li>
 								{% endif %}
 								{% if "stage.valider_offrestage" in user.get_all_permissions %}
-									<li><a href="#"><span class="glyphicon glyphicon-ok"></span> Offres en attente de validation</a></li>
+									<li><a href="{% url 'stage.views.validerOffreStage' %}"><span class="glyphicon glyphicon-ok"></span> Offres en attente de validation</a></li>
 								{% endif %}
 								{% if "stage.delete_stage" in user.get_all_permissions %}
 									<li><a href="{% url 'stage.views.delStage' %}"><span class="glyphicon glyphicon-remove"></span> Suppression de stages</a></li>

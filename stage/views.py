@@ -278,6 +278,43 @@ def delOffreStage(request):
 		return HttpResponseRedirect('/oups')
 
 
+# def validerOffreStage(request):
+# 	# Vérification des permissions de l'utilisateur
+# 	user = User.objects.get(username=request.user.username)
+# 	permissions = user.get_all_permissions()
+	
+# 	if ("stage.valider_offrestage" in permissions):
+# 		form = validerOffreStageForm()
+# 		con ={'form': form, 'actionAFaire' : 'Valider'}
+# 		con.update(csrf(request))
+# 		if len(request.POST) > 0:
+# 			form =validerOffreStageForm(request.POST)
+# 			con = {'form': form}
+# 			if form.is_valid():   
+# 				form.save()
+# 				return HttpResponseRedirect("/stage/offrestage")
+# 		else:
+# 			return render(request,'offrestage/forms.html', con)
+
+# 	else:
+# 		return HttpResponseRedirect('/oups')
+
+def validerOffreStage(request):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("stage.valider_offrestage" in permissions):
+		return render(
+			request,
+			"offrestage/valideroffrestage.html",
+			{"liste_offrestage": OffreStage.objects.order_by("intitule")}
+		)
+
+	else:
+		return HttpResponseRedirect('/oups')
+
+
 def detailsEtudiant(request, pk):
 	return render(
 		request,

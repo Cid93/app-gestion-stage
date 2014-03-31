@@ -166,6 +166,12 @@ class OffreStage(models.Model):
         html="<tr><td>"+self.intitule+"</td><td>"+str(self.entreprise)+"</td></tr>"
         return "%s" % (html)
 
+    def valider(self):
+        return setattr(self, 'valideOffreStage', True)
+
+    def reserver(self):
+        return setattr(self, 'valideOffreStage', None)
+
 
 
 class Stage(OffreStage):
