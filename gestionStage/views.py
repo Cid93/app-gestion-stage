@@ -92,7 +92,7 @@ def search(request):
 			res=model.objects.filter(**kwargs)
 
 
-		
+
 		# Construction du tableau de résultats
 		result = model.search_result_header()
 		result+= '<tbody>'
