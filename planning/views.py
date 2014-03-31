@@ -38,7 +38,19 @@ def addSoutenance(request):
 			
 			if form.is_valid(): 					# Si les données reçues sont valides
 				form.save()
-				return HttpResponseRedirect('/planning/')
+				# try:
+				request.POST['ajax']
+				return HttpResponse(
+					serializers.serialize(
+						"json",
+						Soutenance.objects.filter(stage=
+							Stage.objects.get(pk=request.POST['stage'])),
+						indent = 2, 
+						use_natural_keys=True
+					),
+					mimetype="application/json")
+				# except:
+				# 	return HttpResponseRedirect('/planning/')
 			else:									# Si les données reçues sont invalides
 				con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 				return render(request,'planning/forms.html', con)
@@ -65,10 +77,10 @@ def addSalle(request):
 			if form.is_valid(): 					# Nous vérifions que les données envoyées sont valides
 				form.save()
 				return HttpResponseRedirect('/planning/ajout')
+		else:
+			form = SalleForm()
 
-		form = SalleForm()  					# Nous créons un formulaire vide
 		con = { 'actionAFaire' : 'Ajouter', 'form' : form}
-
 		return render(request,'planning/forms.html', con)
 
 	else:

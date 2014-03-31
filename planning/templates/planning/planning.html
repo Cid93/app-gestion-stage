@@ -4,13 +4,14 @@
 	<h1>Planning</h1>
 	<br/>
 
-	<button id="create-user">Create new user</button>
+	<button id="createSoutenance">Create new user</button>
 	<div id="soutenanceForm">
-		<form action="{% url 'addSoutenance' %}" method="post">{% csrf_token %}
+		<form action="" id="soutenance_form" method="post">{% csrf_token %}
 			<table>
 				{{ form.as_table }}
+				<input type="hidden" value="true" name="ajax" />
 			</table>
-			<input id="soutenanceSubmit" class="btn btn-success" type="submit" value="" />
+			<input id="soutenanceSubmit" class="btn btn-success" type="submit" value="true" />
 		</form>
 	</div>
 	<div id="salleForm">
@@ -34,11 +35,13 @@
 	<link href='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.css' rel='stylesheet' />
 	<link href='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-1.10.4.custom.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/static/css/jquery.datetimepicker.css" media="screen">
 
 	<script src='/static/fullcalendar-1.6.4/lib/jquery.min.js'></script>
 	<script src='/static/fullcalendar-1.6.4/lib/jquery-ui.custom.min.js'></script>
 	<script src='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js'></script>
 	<script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.datetimepicker.js"></script>
 	<script type="text/javascript" src="/static/js/utils.js"></script>
 	<script type="text/javascript" src="/static/js/planning.js"></script>
 {% endblock %}
@@ -47,10 +50,38 @@
 	$( document ).ready( function() {
 
 		$('input[type=submit]').css('visibility', 'hidden');
+		$('#createSoutenance').css('visibility', 'hidden');
 
 		becomeDatePicker('#id_dateDebut');
 		becomeDatePicker('#id_dateFin');
-		becomeDatePicker('#id_datePassage');
+		becomeDateTimePicker('#id_datePassage');
+		becomeDateTimePicker('#id_dateFinPrevu');
+
+		$("#soutenance_form").submit( function(e) {
+			console.log('envoi du form : #soutenance_form')
+			e.preventDefault(); // on empeche l'envoi du formulaire par le navigateur
+			var datas = $(this).serialize();
+			$.ajax({
+				url: '{% url 'addSoutenance' %}',
+				data: datas,
+				type: 'POST'
+			}).done(function(data, textStatus, jqXHR){
+				// try{ 
+					var nouvelObjet = extractSoutenanceCalendarData(data)[0];
+					$('#planning').fullCalendar(
+						'renderEvent',
+						nouvelObjet,
+						true // make the event "stick"
+					);
+				//} catch(err) {
+					
+				//}
+			}).fail(function(jqXHR, textStatus, errorThrown){
+				console.log("ajax failed");
+				alert(errorThrown);
+			});
+			return false;
+		});
 
 		$('#id_dateDebut').change(function(){
 			if($('#id_dateFin').val() && testArgs()){
@@ -63,9 +94,8 @@
 			}
 		});
 
-		genDialogForm("#soutenanceForm", "#create-user", 500, 300, function(){
+		genDialogForm("#soutenanceForm", "#createSoutenance", 500, 300, function(){
 			$('#soutenanceSubmit').click();
-			return false;
 		});
 		publierBoutonAjouterDialog('#id_salle', '#id_addSalle', "#salleForm", 500, 300, function(){
 			$('#salleSubmit').click();

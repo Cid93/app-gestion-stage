@@ -12,11 +12,13 @@ class StageFormEtu(ModelForm):
 
     class Meta:
         model = Stage
+        exclude = ['valideOffreStage', 'valideStage']
 
 
 class StageForm(ModelForm):
     class Meta:
         model = Stage
+        exclude = ['valideOffreStage', 'valideStage']
 
 
 class supprimeStageForm(forms.Form):
@@ -48,6 +50,7 @@ class PersonneExtForm(ModelForm):
 class OffreStageForm(ModelForm):
     class Meta:
         model = OffreStage
+        exclude = ['valideOffreStage']
 
 class supprimeOffreStageForm(forms.Form):
     def __init__(self, *args, **kwargs):

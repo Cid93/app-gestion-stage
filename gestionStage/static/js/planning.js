@@ -1,24 +1,40 @@
+function extractDateHeure(arg){
+	console.log("création Object date depuis String");
+	console.log(arg);
+	var dateTab = arg.split('T')[0];
+	var dateHeure = arg.split('T')[1];
+
+	dateTab = dateTab.split('-');
+	dateHeure = dateHeure.split(':');
+
+	return new Date(dateTab[0], dateTab[1] - 1, dateTab[2],
+		dateHeure[0], dateHeure[1]);
+}
+
+function extractData(value){
+	console.log('extraction données depuis : ');
+	console.log(value);
+	
+	var debut = extractDateHeure(value['fields']['datePassage']);
+	var fin = extractDateHeure(value['fields']['dateFinPrevu']);
+
+	var res = {
+		title: value['fields']['salle'],
+		start: debut,
+		end: fin,
+		// la racine par du module !
+		url: './' + value['pk'],
+		allDay: false
+	};
+	console.log(res);
+	return res;
+}
+
 function extractSoutenanceCalendarData(datas){
 	var res = [];
 	console.log('extraction des données depuis json');
 	$.each(datas, function(index, value){
-		var dateTab = value['fields']['datePassage'].split('T')[0];
-		var dateHeure = value['fields']['datePassage'].split('T')[1];
-
-		dateTab = dateTab.split('-');
-		dateHeure = dateHeure.split(':');
-
-		var debut = new Date(dateTab[0], dateTab[1] - 1, dateTab[2],
-			dateHeure[0], dateHeure[1]);
-
-		res[index] = {
-			title: value['fields']['salle'],
-			start: debut,
-			end: new Date(debut.getTime() + 35*60000),
-			// la racine par du module !
-			url: './' + value['pk'],
-			allDay: false
-		}
+		res[index] = extractData(value);
 	})
 	console.log('données extraites :');
 	console.log(res);
@@ -35,27 +51,22 @@ function makeCalendar(donnees){
 		selectable: true,
 		selectHelper: true,
 		select: function(start, end, allDay) {
-			var title = prompt('Event Title:');
-			if (title) {
-				calendar.fullCalendar('renderEvent',
-					{
-						title: title,
-						start: start,
-						end: end,
-						allDay: allDay
-					},
-					true // make the event "stick"
-				);
-				creerSoutenance(title);
-			}
+			$('#id_datePassage').val(start.toLocaleFormat("%Y-%m-%d %H:%M"));
+			$('#id_dateFinPrevu').val(end.toLocaleFormat("%Y-%m-%d %H:%M"));
+			$('#createSoutenance').click();
 			calendar.fullCalendar('unselect');
 		},
 		editable: true,
-		events: donnees
+		events: donnees,
+		eventClick: function(event) {
+			window.open(event.url);
+            return false;
+		}
 	});
 }
 
 function updatePlanning(){
+	$('#planning').html("");
 	$.ajax({
 		url: "./find/",
 		data: {
