@@ -7,7 +7,7 @@ from datetime import datetime
 
 from gestionStage.shortcuts import render
 from stage.models import Stage, Etudiant, Enseignant, PersonneExterieure
-from planning.models import Soutenance
+from planning.models import Soutenance, Salle
 from planning.forms import SoutenanceSelection, SoutenanceForm, SalleForm
 
 from django.contrib.auth.models import User
@@ -76,7 +76,16 @@ def addSalle(request):
 
 			if form.is_valid(): 					# Nous vérifions que les données envoyées sont valides
 				form.save()
-				return HttpResponseRedirect('/planning/ajout')
+				try:
+					request.POST['ajax']
+					return HttpResponse(
+						serializers.serialize(
+							"json",
+							Salle.objects.filter(num=request.POST['num'])
+						),
+						mimetype="application/json")
+				except:
+					return HttpResponseRedirect('/planning/')
 		else:
 			form = SalleForm()
 

@@ -1,3 +1,22 @@
+function submitAjax(idForm, urlTraitement, fonctionOK){
+	$(idForm).submit( function(e) {
+		console.log('envoi du form : ' + idForm)
+		e.preventDefault(); // on empeche l'envoi du formulaire par le navigateur
+		var datas = $(this).serialize();
+		$.ajax({
+			url: urlTraitement,
+			data: datas,
+			type: 'POST'
+		}).done(function(data, textStatus, jqXHR){
+			fonctionOK(data);
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			console.log("ajax failed");
+			alert(errorThrown);
+		});
+		return false;
+	});
+}
+
 function extractDateHeure(arg){
 	console.log("création Object date depuis String");
 	console.log(arg);
