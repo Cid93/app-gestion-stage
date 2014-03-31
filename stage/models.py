@@ -130,6 +130,8 @@ class PersonneExterieure(Personne):
             'emailPro' : self.emailPro
         }
 
+
+
 class Logiciel(models.Model):
     nomLog = models.CharField(primary_key=True, max_length=50)
     theme = models.CharField(max_length=50)

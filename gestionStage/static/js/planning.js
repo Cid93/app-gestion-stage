@@ -1,165 +1,116 @@
-const tab = "#table_planning";
-const month=new Array();
-month[0]="Janvier";
-month[1]="Février";
-month[2]="Mars";
-month[3]="Avril";
-month[4]="Mai";
-month[5]="Juin";
-month[6]="Juillet";
-month[7]="Août";
-month[8]="Septembre";
-month[9]="Octobre";
-month[10]="Novembre";
-month[11]="Decembre";
-
-function reinitTableaux(theTableau, savedTableau){
-	console.log('réinitialisation du planning : ' + theTableau);
-	$(theTableau).html(savedTableau);
-	console.log('planning réinitialisé : ' + theTableau);
-}
-
-function getListeSalles(listeSoutenance){
-	var salles = [];
-	console.log('récupération des salles');
-	$.each(listeSoutenance, function(index, value){
-		if($.inArray(value['fields']['salle'], salles) == -1){
-			console.log('nouvelles salles : ' + value['fields']['salle']);
-			salles.push(value['fields']['salle']);
-		}
-	});
-	salles.sort();
-	console.log(salles);
-	return salles;
-}
-
-function putTheadTabbleau(theTableauEntete, listeSoutenance){
-	console.log('création de l\'entête du tableau : ' + theTableauEntete);
-	var cellules = [];
-	$.each(getListeSalles(listeSoutenance), function(index, value){
-		$(theTableauEntete).append($('<td>' + value + '</td>'));
-	});
-	console.log('entête faite : ' + theTableauEntete);
-}
-
-function addHeaders(firstLine, deb, months, changeMethod){
-	var i = new Date(deb);
-	$.each($(firstLine + ' td'), function(index, value){
-		if(index != 0){
-			$(value).html($(value).html() + ' '
-				+ i.getDate() + ' ' + months[i.getMonth()]);
-			i.setDate(i.getDate() + 1);
-			if(changeMethod != null){
-				$(value).click(function(){
-					changeMethod($(this));
-				});
-			}
-		}
+function submitAjax(idForm, urlTraitement, fonctionOK){
+	$(idForm).submit( function(e) {
+		console.log('envoi du form : ' + idForm)
+		e.preventDefault(); // on empeche l'envoi du formulaire par le navigateur
+		var datas = $(this).serialize();
+		$.ajax({
+			url: urlTraitement,
+			data: datas,
+			type: 'POST'
+		}).done(function(data, textStatus, jqXHR){
+			fonctionOK(data);
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			console.log("ajax failed");
+			alert(errorThrown);
+		});
+		return false;
 	});
 }
 
-function identifierCellule(selecteurTbody, listeSoutenance){
-	console.log('mise en place des id sur chaque td');
-	var nbDeSalles = getListeSalles(listeSoutenance).length;
-	console.log(nbDeSalles + ' colonnes par lignes');
-	var ptDeDepart = $(selecteurTbody + ' tr:nth-child(2)');
-	// l'index commencera à 1 donc on le compence avec ptDeDepart
-	ptDeDepart = ptDeDepart.attr('id').split("_")[1] - 1;
-	var firstLoop = true;
-	$.each($(selecteurTbody + ' tr'), function(index, value){
-		if( ! firstLoop){
-			for ( var i = 0; i < nbDeSalles; i++ ) {
-				$(this).append('<td id="l_' +
-					(parseInt(ptDeDepart) + index) + 
-					'_c_' + i + '"></td>');
-				console.log('généré : <td id="l_' +
-					(parseInt(ptDeDepart) + index) + '_c_' + i + '"></td>');
-			}
-		}
-		firstLoop = false;
-	});
+function extractDateHeure(arg){
+	console.log("création Object date depuis String");
+	console.log(arg);
+	var dateTab = arg.split('T')[0];
+	var dateHeure = arg.split('T')[1];
+
+	dateTab = dateTab.split('-');
+	dateHeure = dateHeure.split(':');
+
+	return new Date(dateTab[0], dateTab[1] - 1, dateTab[2],
+		dateHeure[0], dateHeure[1]);
 }
 
-function getCelluleCompleteeJ(informationsStage){
-	var infoEtu = informationsStage['etudiant']['prenom'] + 
-		' ' + 
-		informationsStage['etudiant']['nom'];
-	var infoEnt = informationsStage['entreprise']['nom'];
-	var infoMDS = informationsStage['enseignantTuteur']['prenom'] +
-		' ' +
-		informationsStage['enseignantTuteur']['nom'];
-	console.log('infos sur le stage :');
-	console.log(infoEtu);
-	console.log(infoEnt);
-	console.log(infoMDS);
+function extractData(value){
+	console.log('extraction données depuis : ');
+	console.log(value);
+	
+	var debut = extractDateHeure(value['fields']['datePassage']);
+	var fin = extractDateHeure(value['fields']['dateFinPrevu']);
 
-	var res = '<a href="./' + informationsStage['id'] + '" target="_blank">' +
-		infoEtu + ' chez ' +
-		infoEnt + '<br />avec "' + infoMDS + '"</a>';
+	var res = {
+		title: value['fields']['salle'],
+		start: debut,
+		end: fin,
+		// la racine par du module !
+		url: './' + value['pk'],
+		allDay: false
+	};
 	console.log(res);
 	return res;
 }
 
-function remplirTableauxJ(bodyTab, data){
-	var salles = getListeSalles(data);
-	$.each(data, function( index, value ) {
-		var heure = value['fields']['datePassage']
-			// recuperation de l'heure et minutes
-			.split("T")[1]
-			// recuperation seule de l'heure
-			.split(":")[0];
+function extractSoutenanceCalendarData(datas){
+	var res = [];
+	console.log('extraction des données depuis json');
+	$.each(datas, function(index, value){
+		res[index] = extractData(value);
+	})
+	console.log('données extraites :');
+	console.log(res);
+	return res;
+}
 
-		var salle = 0;
-		for(i = 0; i < salles.length; i++){
-			if(value['fields']['salle'] == salles[i]){
-				salle = i;
-			}
-		}
-
-		// recherche de l'id de la cellule cible
-		var target = '#l_' + parseInt(heure) + '_c_' + salle;
-
-		console.log('soutenance sur ' + target);
-		if($(target).html()){
-			$(target).html($(target).html() + '<p>' +
-				getCelluleCompleteeJ(value['fields']['stage']) +
-				'</p>');
-		} else {
-			$(target).html('<p>' + 
-				getCelluleCompleteeJ(value['fields']['stage']) +
-				'</p>');
+function makeCalendar(donnees){
+	var calendar = $('#planning').fullCalendar({
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+		selectable: true,
+		selectHelper: true,
+		select: function(start, end, allDay) {
+			$('#id_datePassage').val(start.toLocaleFormat("%Y-%m-%d %H:%M"));
+			$('#id_dateFinPrevu').val(end.toLocaleFormat("%Y-%m-%d %H:%M"));
+			$('#createSoutenance').click();
+			calendar.fullCalendar('unselect');
+		},
+		editable: true,
+		events: donnees,
+		eventClick: function(event) {
+			window.open(event.url);
+            return false;
 		}
 	});
 }
 
-function getCelluleCompletee(infos){
-	return ' ' + infos['salle'];
+function updatePlanning(){
+	$('#planning').html("");
+	$.ajax({
+		url: "./find/",
+		data: {
+			'dateD': $("#id_dateDebut").val(),
+			'dateF': $("#id_dateFin").val()
+		},
+		type: 'GET',
+		dataType: 'json',
+		contentType: 'application/json'
+	}).done(function(data, textStatus, jqXHR){
+		$('#planning').html();
+		makeCalendar(extractSoutenanceCalendarData(data));
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		console.log("ajax failed");
+		alert(errorThrown);
+	});
 }
 
-function remplirTableaux(bodyTab, data){
-	$.each(data, function( index, value ) {
-		var heure = value['fields']['datePassage']
-			// recuperation de l'heure et minutes
-			.split("T")[1]
-			// recuperation seule de l'heure
-			.split(":")[0];
-
-		var laDate = value['fields']['datePassage']
-			// recuperation de la date sans l'heure
-			.split('T')[0]
-			// mise en tableau de l'année, mois, jour
-			.split('-');
-		var jour = new Date(laDate[0], laDate[1] - 1, laDate[2]).getDay();
-
-		// recherche de l'id de la cellule cible
-		var target = '#l_' + parseInt(heure) + '_d_' + jour;
-
-		console.log('soutenance sur ' + target);
-		if($(target).html()){
-			$(target).html($(target).html() 
-				+ getCelluleCompletee(value['fields']));
-		} else {
-			$(target).html(getCelluleCompletee(value['fields']));
-		}
-	});
+function testArgs(){
+	var deb = new Date($('#id_dateDebut').val());
+	var fin = new Date($('#id_dateFin').val());
+	if( deb >= fin ){
+		alert('un début plus tard ou équivalent à une fin ... !');
+		return false;
+	} else {
+		return true;
+	}
 }

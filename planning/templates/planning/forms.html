@@ -16,6 +16,7 @@
 {% endblock %}
 {% block js %}
 	becomeDateTimePicker("#id_datePassage");
+	becomeDateTimePicker('#id_dateFinPrevu');
 	{% if "planning.add_salle" in user.get_all_permissions %}
 		publierBoutonAjouter('#id_salle', '/planning/ajouterSalle');
 	{% endif %}

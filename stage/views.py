@@ -26,17 +26,10 @@ def show_detail_stage(request, pk):
 def addStage(request):
 	# Vérification des permissions de l'utilisateur
 	user = User.objects.get(username=request.user.username)
-	permissions = user.get_all_permissions()
 	
-	if ("stage.add_stage" in permissions):
+	if ("stage.add_stage" in user.get_all_permissions()):
 
-		groups = user.groups.all()
-		verifEtu = False
-		for g in groups:
-			if (g.name == "etudiants"):
-				verifEtu = True
-
-		if (verifEtu == True):
+		if ("etudiants" in user.groups.values_list('name',flat=True)):
 			etu = Etudiant.objects.get(username=User.objects.get(username=request.user.username))
 
 			if request.method == 'POST': # Si une requête POST a été passée en paramètre
@@ -80,17 +73,10 @@ def modifStage(request, pk):
 	user = User.objects.get(username=request.user.username)
 	permissions = user.get_all_permissions()
 	
-	if ("stage.change_stage" in permissions):
+	stg = Stage.objects.get(pk=pk)
 
-		groups = user.groups.all()
-		verifEtu = False
-		for g in groups:
-			if (g.name == "etudiants"):
-				verifEtu = True
-
-		stg = Stage.objects.get(pk=pk)
-
-		if (verifEtu):
+	if ("stage.change_stage" in permissions or stg.etudiant.username == user):
+		if ("etudiants" in user.groups.values_list('name',flat=True)):
 			etu = Etudiant.objects.get(username=User.objects.get(username=request.user.username))
 
 			if stg.etudiant != etu:
