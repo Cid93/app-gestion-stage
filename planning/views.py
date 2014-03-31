@@ -101,10 +101,13 @@ def editSoutenance(request, pk):
 	permissions = user.get_all_permissions()
 	
 	if ("planning.change_soutenance" in permissions):
-
+		print(1)
 		if request.method == 'POST':  # S'il s'agit d'une requête POST
+			print(2)
 			form = SoutenanceForm(request.POST, instance=Soutenance.objects.get(pk=pk))
 			if form.is_valid(): # Nous vérifions que les données envoyées sont valides
+				print(request.POST['datePassage'])
+				print(request.POST['dateFinPrevu'])
 				form.save()
 				return HttpResponseRedirect('/planning/' + pk)
 			else: # Si ce n'est pas du POST, c'est probablement une requête GET

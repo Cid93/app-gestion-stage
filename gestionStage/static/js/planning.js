@@ -1,22 +1,3 @@
-function submitAjax(idForm, urlTraitement, fonctionOK){
-	$(idForm).submit( function(e) {
-		console.log('envoi du form : ' + idForm)
-		e.preventDefault(); // on empeche l'envoi du formulaire par le navigateur
-		var datas = $(this).serialize();
-		$.ajax({
-			url: urlTraitement,
-			data: datas,
-			type: 'POST'
-		}).done(function(data, textStatus, jqXHR){
-			fonctionOK(data);
-		}).fail(function(jqXHR, textStatus, errorThrown){
-			console.log("ajax failed");
-			alert(errorThrown);
-		});
-		return false;
-	});
-}
-
 function extractDateHeure(arg){
 	console.log("création Object date depuis String");
 	console.log(arg);
@@ -60,6 +41,52 @@ function extractSoutenanceCalendarData(datas){
 	return res;
 }
 
+function updateSoutenance(event){
+	$.ajax({
+		url: "./modifier/" + event.url.split('/')[event.url.split('/').length - 1],
+		data: { },
+		type: 'GET',
+		dataType: 'html',
+		contentType: 'application/html'
+	}).done(function(data, textStatus, jqXHR){
+		$('body').append(
+			$('<form action="" method="post" id="tmp_modif"></form>').html(
+				data
+				.split('<form action="" method="post">')[1]
+				.split('</form>')[0]));
+
+		becomeDateTimePicker('#tmp_modif  #id_datePassage');
+		becomeDateTimePicker('#tmp_modif #id_dateFinPrevu');
+
+		$('#tmp_modif #id_datePassage').attr('value',
+			event.start.toLocaleFormat("%Y-%m-%d %H:%M"));
+		if(event.end == null || event.end == undefined){
+			$('#tmp_modif #id_dateFinPrevu').attr('value',
+				event.start.toLocaleFormat("%Y-%m-%d %H:%M"));
+		} else {
+			$('#tmp_modif #id_dateFinPrevu').attr('value',
+				event.end.toLocaleFormat("%Y-%m-%d %H:%M"));
+		}
+		console.log('les nouvelles dates pour la soutenance ' +
+			event.url.split('/')[event.url.split('/').length - 1] +
+			' sont :');
+		console.log($('#tmp_modif #id_datePassage').val());
+		console.log($('#tmp_modif #id_dateFinPrevu').val());
+
+		submitAjax("#tmp_modif",
+			"./modifier/" + event.url.split('/')[event.url.split('/').length - 1],
+			function(data){
+				return;
+			});
+
+		$('#tmp_modif').submit();
+		$('#tmp_modif').remove();
+	}).fail(function(jqXHR, textStatus, errorThrown){
+		console.log("ajax failed");
+		alert(errorThrown);
+	});
+}
+
 function makeCalendar(donnees, canSelect){
 	var calendar = $('#planning').fullCalendar({
 		header: {
@@ -78,6 +105,16 @@ function makeCalendar(donnees, canSelect){
 			}
 		},
 		editable: canSelect,
+		eventDragStop: function( event, jsEvent, ui, view ){
+			if(canSelect){
+				updateSoutenance(event);
+			}
+		},
+		eventResizeStop: function( event, jsEvent, ui, view ){
+			if(canSelect){
+				updateSoutenance(event);
+			}
+		},
 		events: donnees,
 		eventClick: function(event) {
 			window.open(event.url);
