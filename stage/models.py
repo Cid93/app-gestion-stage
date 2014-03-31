@@ -88,7 +88,8 @@ class Etudiant(PersonneInterne):
         return {'numEtu' : self.numEtu,
             'nom' : self.nom,
             'prenom' : self.prenom,
-            'telephone' : self.telephone}
+            'telephone' : self.telephone
+            }
 
 
 

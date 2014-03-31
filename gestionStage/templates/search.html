@@ -32,7 +32,7 @@
 		<table class="table table-striped table-hover" class="table table-striped col-xs-12 col-lg-12">
     	{{res | safe}}
     	</table>
-    
+
     {% endif %}
 
     
@@ -42,6 +42,26 @@
 {% endblock %}
 
 {% block js %}
+	
+	
+	function unique(arr) {
+	    var ret, len, i, j, cur, found;
+	    ret = [];
+	    len = arr.length;
+	    for (i = 0; i < len; i++) {
+	        cur = arr[i];
+	        found = false;
+	        for (j = 0; !found && (j < len); j++) {
+	            if (cur === arr[j]) {
+	                if (i === j) {
+	                    ret.push(cur);
+	                }
+	                found = true;
+	            }
+	        }
+	    }
+	    return ret;
+	};
 
 	$(document).ready(function(){
 		$("select#search_data").change(function(){
@@ -90,8 +110,12 @@
 					contentType: 'application/json'
 				}).done(function(data, textStatus, jqXHR){
 					
+					
+
 					var donnees= [];
  					for(var val in data){
+ 						
+ 					
  						if ( (model=="Etudiant" || model=="Enseignant") && (attribut=="nom" || attribut=="prenom")) {
  							
 								donnees.push(data[val].fields.personneinterne_ptr[attribut]); 
@@ -103,7 +127,8 @@
  						else if (model=="Etudiant" && attribut=="numEtu"){
  							donnees.push(data[val].pk);
  						}
- 						else if (model=="Etudiant" && attribut=="promotion"){
+ 						else if ((model=="Etudiant" || model=="Stage") && attribut=="promotion"){
+ 							alert(data[val].fields.promotion.intitule);
  							donnees.push(data[val].fields.promotion.intitule);
  						}
  						else if (model=="Stage" && attribut=="intitule"){
@@ -121,10 +146,15 @@
 						else{
 							donnees.push(data[val].fields[attribut]); 
 						}
+						
+						
 					}
 
+					var donneesDistinct=unique(donnees)
+					
+
 					$(function() {
-						var availableTags = donnees;
+						var availableTags = donneesDistinct;
 					    $( "#search_text" ).autocomplete({
 					    	source: availableTags,
 					    	 messages: {
