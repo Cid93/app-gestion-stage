@@ -7,7 +7,7 @@ from datetime import datetime
 
 from gestionStage.shortcuts import render
 from stage.models import Stage, Etudiant, Enseignant, PersonneExterieure
-from planning.models import Soutenance
+from planning.models import Soutenance, Salle
 from planning.forms import SoutenanceSelection, SoutenanceForm, SalleForm
 
 from django.contrib.auth.models import User
@@ -15,20 +15,10 @@ from django.contrib.auth.models import User
 import json
 
 def show_planning(request):
-	tableDHeure = range(13)
-	tableDHeureHEt1 = range(13)
-	for chiffre in tableDHeure:
-		chiffre = chiffre + 7
-	for chiffre in tableDHeureHEt1:
-		chiffre = chiffre + 8
-
-	return render(
-		request,
-		"planning/planning.html",
-		{'form' : SoutenanceSelection,
-		'taille' : tableDHeure,
-		'TEtUn' : tableDHeureHEt1}
-	)
+	return render(request,
+		"planning/planning.html", {
+			'form' : SoutenanceForm(),
+			'salleForm' : SalleForm()})
 
 def show_soutenance(request, pk):
 	return render(
@@ -48,7 +38,19 @@ def addSoutenance(request):
 			
 			if form.is_valid(): 					# Si les données reçues sont valides
 				form.save()
-				return HttpResponseRedirect('/planning/')
+				try:
+					request.POST['ajax']
+					return HttpResponse(
+						serializers.serialize(
+							"json",
+							Soutenance.objects.filter(stage=
+								Stage.objects.get(pk=request.POST['stage'])),
+							indent = 2, 
+							use_natural_keys=True
+						),
+						mimetype="application/json")
+				except:
+					return HttpResponseRedirect('/planning/')
 			else:									# Si les données reçues sont invalides
 				con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 				return render(request,'planning/forms.html', con)
@@ -74,11 +76,20 @@ def addSalle(request):
 
 			if form.is_valid(): 					# Nous vérifions que les données envoyées sont valides
 				form.save()
-				return HttpResponseRedirect('/planning/ajout')
+				try:
+					request.POST['ajax']
+					return HttpResponse(
+						serializers.serialize(
+							"json",
+							Salle.objects.filter(num=request.POST['num'])
+						),
+						mimetype="application/json")
+				except:
+					return HttpResponseRedirect('/planning/')
+		else:
+			form = SalleForm()
 
-		form = SalleForm()  					# Nous créons un formulaire vide
 		con = { 'actionAFaire' : 'Ajouter', 'form' : form}
-
 		return render(request,'planning/forms.html', con)
 
 	else:
@@ -109,10 +120,8 @@ def editSoutenance(request, pk):
 
 # méthode AJAX ! ! !
 def find_planning(request):
-	arg = datetime.strptime(request.GET['date'], "%Y-%m-%d")
-
-	debutDeJournee = datetime(arg.year, arg.month, arg.day, 0, 1)
-	finDeJournee = datetime(arg.year, arg.month, arg.day, 23, 59)
+	debutDeJournee = datetime.strptime(request.GET['dateD'], "%Y-%m-%d");
+	finDeJournee = datetime.strptime(request.GET['dateF'], "%Y-%m-%d");
 
 	res = serializers.serialize(
 		"json",
