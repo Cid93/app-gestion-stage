@@ -66,16 +66,19 @@
 				data: datas,
 				type: 'POST'
 			}).done(function(data, textStatus, jqXHR){
-				// try{ 
+				try{ 
 					var nouvelObjet = extractSoutenanceCalendarData(data)[0];
 					$('#planning').fullCalendar(
 						'renderEvent',
 						nouvelObjet,
 						true // make the event "stick"
 					);
-				//} catch(err) {
-					
-				//}
+				} catch(err) {
+					$('#soutenance_form').html(data
+						.split('<form action="" method="post">')[1]
+						.split('</form>')[0]);
+					$('#createSoutenance').click();
+				}
 			}).fail(function(jqXHR, textStatus, errorThrown){
 				console.log("ajax failed");
 				alert(errorThrown);
@@ -94,10 +97,10 @@
 			}
 		});
 
-		genDialogForm("#soutenanceForm", "#createSoutenance", 500, 300, function(){
+		genDialogForm("#soutenanceForm", "#createSoutenance", 850, 400, function(){
 			$('#soutenanceSubmit').click();
 		});
-		publierBoutonAjouterDialog('#id_salle', '#id_addSalle', "#salleForm", 500, 300, function(){
+		publierBoutonAjouterDialog('#id_salle', '#id_addSalle', "#salleForm", 850, 400, function(){
 			$('#salleSubmit').click();
 		});
 	});
