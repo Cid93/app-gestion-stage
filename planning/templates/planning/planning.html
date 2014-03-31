@@ -4,6 +4,7 @@
 	<h1>Planning</h1>
 	<br/>
 
+	{% if "planning.add_soutenance" in user.get_all_permissions %}
 	<button id="createSoutenance">Create new user</button>
 	<div id="soutenanceForm">
 		<form action="" id="soutenance_form" method="post">{% csrf_token %}
@@ -21,6 +22,7 @@
 			<input type="hidden" value="true" name="ajax" />
 		</form>
 	</div>
+	{% endif %}
 
 	<div>
 		<label for="id_dateDebut">Soutenance du</label>
@@ -48,11 +50,10 @@
 
 	$( document ).ready( function() {
 
-		$('input[type=submit]').css('visibility', 'hidden');
+		{% if "planning.add_soutenance" in user.get_all_permissions %}
+
 		$('#createSoutenance').css('visibility', 'hidden');
 
-		becomeDatePicker('#id_dateDebut');
-		becomeDatePicker('#id_dateFin');
 		becomeDateTimePicker('#id_datePassage');
 		becomeDateTimePicker('#id_dateFinPrevu');
 
@@ -94,22 +95,35 @@
 				}
 			});
 
-		$('#id_dateDebut').change(function(){
-			if($('#id_dateFin').val() && testArgs()){
-				updatePlanning();
-			}
-		});
-		$('#id_dateFin').change(function(){
-			if($('#id_dateDebut').val() && testArgs()){
-				updatePlanning();
-			}
-		});
-
 		genDialogForm("#soutenance_form", "#createSoutenance", 850, 400, function(){
 			$('#soutenance_form').submit();
 		});
 		publierBoutonAjouterDialog('#id_salle', '#id_addSalle', "#salle_form", 850, 400, function(){
 			$('#salle_form').submit();
+		});
+
+		{% endif %}
+
+		becomeDatePicker('#id_dateDebut');
+		becomeDatePicker('#id_dateFin');
+
+		$('#id_dateDebut').change(function(){
+			if($('#id_dateFin').val() && testArgs()){
+				{% if "planning.add_soutenance" in user.get_all_permissions %}
+				updatePlanning(true);
+				{% else %}
+				updatePlanning(false);
+				{% endif %}
+			}
+		});
+		$('#id_dateFin').change(function(){
+			if($('#id_dateDebut').val() && testArgs()){
+				{% if "planning.add_soutenance" in user.get_all_permissions %}
+				updatePlanning(true);
+				{% else %}
+				updatePlanning(false);
+				{% endif %}
+			}
 		});
 	});
 

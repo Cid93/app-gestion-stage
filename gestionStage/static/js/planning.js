@@ -60,22 +60,24 @@ function extractSoutenanceCalendarData(datas){
 	return res;
 }
 
-function makeCalendar(donnees){
+function makeCalendar(donnees, canSelect){
 	var calendar = $('#planning').fullCalendar({
 		header: {
 			left: 'prev,next today',
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
-		selectable: true,
-		selectHelper: true,
+		selectable: canSelect,
+		selectHelper: canSelect,
 		select: function(start, end, allDay) {
-			$('#id_datePassage').val(start.toLocaleFormat("%Y-%m-%d %H:%M"));
-			$('#id_dateFinPrevu').val(end.toLocaleFormat("%Y-%m-%d %H:%M"));
-			$('#createSoutenance').click();
-			calendar.fullCalendar('unselect');
+			if(canSelect){
+				$('#id_datePassage').val(start.toLocaleFormat("%Y-%m-%d %H:%M"));
+				$('#id_dateFinPrevu').val(end.toLocaleFormat("%Y-%m-%d %H:%M"));
+				$('#createSoutenance').click();
+				calendar.fullCalendar('unselect');
+			}
 		},
-		editable: true,
+		editable: canSelect,
 		events: donnees,
 		eventClick: function(event) {
 			window.open(event.url);
@@ -84,7 +86,7 @@ function makeCalendar(donnees){
 	});
 }
 
-function updatePlanning(){
+function updatePlanning(canSelect){
 	$('#planning').html("");
 	$.ajax({
 		url: "./find/",
@@ -97,7 +99,7 @@ function updatePlanning(){
 		contentType: 'application/json'
 	}).done(function(data, textStatus, jqXHR){
 		$('#planning').html();
-		makeCalendar(extractSoutenanceCalendarData(data));
+		makeCalendar(extractSoutenanceCalendarData(data), canSelect);
 	}).fail(function(jqXHR, textStatus, errorThrown){
 		console.log("ajax failed");
 		alert(errorThrown);
