@@ -1,7 +1,7 @@
 # Create your views here.
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.forms import ModelForm
-
+from django.core import serializers
 from django.template import RequestContext
 from gestionStage.shortcuts import render
 from django.db.models import get_model
@@ -92,7 +92,7 @@ def search(request):
 			res=model.objects.filter(**kwargs)
 
 
-
+		
 		# Construction du tableau de résultats
 		result = model.search_result_header()
 		result+= '<tbody>'
@@ -115,3 +115,31 @@ def search(request):
 				  }
 	con = { 'data' : type_donnee, "res" : result}			  
 	return render(request,"search.html",con)
+
+
+
+# méthode AJAX ! ! !
+def find_data(request):
+	
+	
+	model = request.GET['model']
+
+	attribut = request.GET['attribut']
+
+
+
+	if model== "Entreprise":
+		model = get_model('entreprise', model)
+	else:
+		model = get_model('stage', model)
+
+	res = serializers.serialize(
+		"json",
+		model.objects.all(),
+		indent = 2, 
+		use_natural_keys=True
+	)
+
+	
+
+	return HttpResponse(res, mimetype="application/json")

@@ -31,6 +31,10 @@ class Promotion(models.Model):
     def __str__(self):
         return self.intitule+"-"+self.annee
 
+    def natural_key(self):
+        return {
+            'intitule' : self.intitule
+        }
 
 
 class Personne(models.Model):
@@ -52,6 +56,11 @@ class Personne(models.Model):
 class PersonneInterne(Personne):
     username=models.ForeignKey(User, related_name="personneInterne_username")
 
+    def natural_key(self):
+        return {
+            'nom' : self.nom,
+            'prenom' : self.prenom,
+            'telephone' : self.telephone}
 
 
 class Etudiant(PersonneInterne):
@@ -83,6 +92,7 @@ class Etudiant(PersonneInterne):
 
 
 
+
 class Enseignant(PersonneInterne):
     idEnseignant = models.AutoField(primary_key=True)
     emailEns = models.EmailField(max_length=80)
@@ -90,11 +100,7 @@ class Enseignant(PersonneInterne):
     #numEns = models.IntegerField(primary_key=True)
     #grade = models.CharField(max_length=50)
 
-    def natural_key(self):
-        return {'nom' : self.nom,
-            'prenom' : self.prenom,
-            'telephone' : self.telephone,
-            'departement' : self.departement}
+    
 
     class Meta:
         permissions = (
@@ -155,6 +161,12 @@ class OffreStage(models.Model):
             ("postuler_offrestage", "Peut postuler à une offre de stage"),
         )
 
+    def natural_key(self):
+        return {
+            'intitule' : self.intitule,
+            'entreprise' : self.entreprise.natural_key(),
+            }
+
     def __str__(self):
         return self.intitule
 
@@ -186,6 +198,7 @@ class Stage(OffreStage):
     # Un étudiant peut changer de promotion donc on préfère stocker la promotion dans le stage
     # promotion = models.ForeignKey(Promotion)
 
+
     class Meta:
         ordering = ('intitule',)
         permissions = (
@@ -205,7 +218,6 @@ class Stage(OffreStage):
             'dateDeDebut' : self.dateDebut,
             'dateDeFin' : self.dateFin,
             'etudiant' : self.etudiant.natural_key(),
-            'entreprise' : self.entreprise.natural_key(),
             'maitreStage' : self.maitreStage.natural_key(),
             'enseignantTuteur' : self.enseignantTuteur.natural_key()
         }
