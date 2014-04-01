@@ -4,6 +4,7 @@
 	<h1>Planning</h1>
 	<br/>
 
+	{% if "planning.add_soutenance" in user.get_all_permissions %}
 	<button id="createSoutenance">Create new user</button>
 	<div id="soutenanceForm">
 		<form action="" id="soutenance_form" method="post">{% csrf_token %}
@@ -21,6 +22,7 @@
 			<input type="hidden" value="true" name="ajax" />
 		</form>
 	</div>
+	{% endif %}
 
 	<div>
 		<label for="id_dateDebut">Soutenance du</label>
@@ -31,16 +33,14 @@
 <div id="planning"></div>
 {% endblock %}
 {% block libraries %}{{ block.super }}
-	<link href='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.css' rel='stylesheet' />
-	<link href='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link href='/static/css/fullcalendar.css' rel='stylesheet' />
+	<link href='/static/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-1.10.4.custom.min.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="/static/css/jquery.datetimepicker.css" media="screen">
 
-	<script src='/static/fullcalendar-1.6.4/lib/jquery.min.js'></script>
-	<script src='/static/fullcalendar-1.6.4/lib/jquery-ui.custom.min.js'></script>
-	<script src='/static/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js'></script>
 	<script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
 	<script type="text/javascript" src="/static/js/jquery.datetimepicker.js"></script>
+	<script type="text/javascript" src='/static/js/fullcalendar.min.js'></script>
 	<script type="text/javascript" src="/static/js/utils.js"></script>
 	<script type="text/javascript" src="/static/js/planning.js"></script>
 {% endblock %}
@@ -48,11 +48,10 @@
 
 	$( document ).ready( function() {
 
-		$('input[type=submit]').css('visibility', 'hidden');
+		{% if "planning.add_soutenance" in user.get_all_permissions %}
+
 		$('#createSoutenance').css('visibility', 'hidden');
 
-		becomeDatePicker('#id_dateDebut');
-		becomeDatePicker('#id_dateFin');
 		becomeDateTimePicker('#id_datePassage');
 		becomeDateTimePicker('#id_dateFinPrevu');
 
@@ -69,10 +68,11 @@
 					$('#soutenance_form').html(data
 						.split('<form action="" method="post">')[1]
 						.split('</form>')[0]);
+					$('input[type=submit]').remove();
 					$('#soutenance_form').append('<input type="hidden" value="true" name="ajax" />');
 					publierBoutonAjouterDialog('#id_salle',
 						'#id_addSalle',
-						"#salleForm",
+						'#salle_form',
 						850, 400,
 						function(){
 							$('#salle_form').submit();
@@ -89,27 +89,41 @@
 						data[0]['pk'] + '</option>');
 				} else {
 					$('#salle_form').html(data.split('<form action="" method="post">')[1].split('</form>')[0]);
+					$('input[type=submit]').remove();
 					$('#salle_form').append('<input type="hidden" value="true" name="ajax" />');
 					$("#id_addSalle").click();
 				}
 			});
-
-		$('#id_dateDebut').change(function(){
-			if($('#id_dateFin').val() && testArgs()){
-				updatePlanning();
-			}
-		});
-		$('#id_dateFin').change(function(){
-			if($('#id_dateDebut').val() && testArgs()){
-				updatePlanning();
-			}
-		});
 
 		genDialogForm("#soutenance_form", "#createSoutenance", 850, 400, function(){
 			$('#soutenance_form').submit();
 		});
 		publierBoutonAjouterDialog('#id_salle', '#id_addSalle', "#salle_form", 850, 400, function(){
 			$('#salle_form').submit();
+		});
+
+		{% endif %}
+
+		becomeDatePicker('#id_dateDebut');
+		becomeDatePicker('#id_dateFin');
+
+		$('#id_dateDebut').change(function(){
+			if($('#id_dateFin').val() && testArgs()){
+				{% if "planning.add_soutenance" in user.get_all_permissions %}
+				updatePlanning(true);
+				{% else %}
+				updatePlanning(false);
+				{% endif %}
+			}
+		});
+		$('#id_dateFin').change(function(){
+			if($('#id_dateDebut').val() && testArgs()){
+				{% if "planning.add_soutenance" in user.get_all_permissions %}
+				updatePlanning(true);
+				{% else %}
+				updatePlanning(false);
+				{% endif %}
+			}
 		});
 	});
 

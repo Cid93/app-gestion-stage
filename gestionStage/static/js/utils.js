@@ -53,7 +53,7 @@ function genDialogForm(selecteurTarget, selecteurBouton, largeur, hauteur, ajout
         width: largeur,
         modal: true,
         buttons: {
-            "Ajouter": function(){
+            "Valider": function(){
                 ajouter();
                 $( this ).dialog( "close" );
             },
@@ -79,4 +79,23 @@ function publierBoutonAjouterDialog(selecteurElement, boutonId, formId, largeur,
         .parent()
         .append('<a id="'+ boutonId.split('#')[1] + '" href="#" style="padding:2px 7px;" class="btn btn-default">Ajouter</a>');
     genDialogForm(formId, boutonId, largeur, hauteur, ajouter);
+}
+
+function submitAjax(idForm, urlTraitement, fonctionOK){
+    $(idForm).submit( function(e) {
+        console.log('envoi du form : ' + idForm)
+        e.preventDefault(); // on empeche l'envoi du formulaire par le navigateur
+        var datas = $(this).serialize();
+        $.ajax({
+            url: urlTraitement,
+            data: datas,
+            type: 'POST'
+        }).done(function(data, textStatus, jqXHR){
+            fonctionOK(data);
+        }).fail(function(jqXHR, textStatus, errorThrown){
+            console.log("ajax failed");
+            alert(errorThrown);
+        });
+        return false;
+    });
 }
