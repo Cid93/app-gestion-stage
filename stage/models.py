@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django import forms
 from django.db import models
 from django.contrib.auth.models import User
 from entreprise.models import Entreprise
@@ -196,8 +196,8 @@ class OffreStage(models.Model):
 class Stage(OffreStage):
     idStage = models.AutoField(primary_key=True)
     etudiant = models.ForeignKey(Etudiant, related_name="stage_etudiant")
-    dateDebut = models.DateTimeField()
-    dateFin = models.DateTimeField()
+    dateDebut = models.DateField()
+    dateFin = models.DateField()
     persConvention = models.ForeignKey(PersonneExterieure, related_name="stage_persConvention")
     maitreStage = models.ForeignKey(PersonneExterieure, related_name="stage_maitreStage")
     enseignantTuteur = models.ForeignKey(Enseignant, related_name="stage_enseignantTuteur")
