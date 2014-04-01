@@ -12,5 +12,33 @@
 		"possibiliteEmbauche": null,
 		"valideStage": true,
 		"valideOffreStage": null
+	},
+	{
+		"etudiant" : 222222,
+		"intitule" : "emballer c'est pesé !",
+		"sujet" : "C'est marque dans le titre je pense ;)",
+		"dateDebut" : "2014-02-12",
+		"dateFin" : "2014-08-25",
+		"persConvention": 1,
+		"maitreStage": 3,
+		"enseignantTuteur": 2,
+		"entreprise": 1,
+		"possibiliteEmbauche": false,
+		"valideStage": true,
+		"valideOffreStage": null
+	},
+	{
+		"etudiant" : 333333,
+		"intitule" : "Coucou toi :D",
+		"sujet" : "J'aimerais trop qu'elle m'aime",
+		"dateDebut" : "2014-01-01",
+		"dateFin" : "2014-06-12",
+		"persConvention": 3,
+		"maitreStage": 4,
+		"enseignantTuteur": 3,
+		"entreprise": 2,
+		"possibiliteEmbauche": true,
+		"valideStage": false,
+		"valideOffreStage": null
 	}
 ]

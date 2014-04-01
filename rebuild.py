@@ -8,6 +8,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gestionStage.settings")
 from django.forms import ModelForm
 from entreprise.models import Entreprise
 from stage.models import Personne, PersonneExterieure, PersonneInterne, Diplome, Promotion, Etudiant, Enseignant, Stage, Logiciel, OffreStage
+from planning.models import Salle, Soutenance
 from pprint import pprint
 
 import json
@@ -80,6 +81,8 @@ personnesExt = json.load(open("json/personnes_exterieures.json")) 	#encoding='ut
 promotions = json.load(open("json/promotions.json")) 	#encoding='utf-8'
 diplomes = json.load(open("json/diplomes.json")) 		#encoding='utf-8'
 offreStage = json.load(open("json/offrestage.json")) 				#encoding='utf-8'
+soutenances = json.load(open("json/soutenances.json")) 				#encoding='utf-8'
+salles = json.load(open("json/salles.json")) 				#encoding='utf-8'
 
 for d in diplomes:
 	diplome=Diplome(
@@ -185,8 +188,15 @@ for s in stage:
 		valideOffreStage=s["valideOffreStage"]
 	).save()
 
+for s in salles:
+	Salle(
+		num = s['num']
+	).save()
 
-
-
-
-
+for s in soutenances:
+	Soutenance(
+		stage = Stage.objects.get(pk=s['stage']),
+		datePassage = s['datePassage'],
+		dateFinPrevu = s['dateFinPrevu'],
+		salle = Salle.objects.get(pk=s['salle'])
+	).save()

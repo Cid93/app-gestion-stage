@@ -1,0 +1,20 @@
+[
+	{
+		"stage" : 1,
+		"datePassage" : "2014-04-01 08:30",
+		"dateFinPrevu" : "2014-04-01 09:00",
+		"salle" : "S22"
+	},
+	{
+		"stage" : 2,
+		"datePassage" : "2014-04-02 09:35",
+		"dateFinPrevu" : "2014-04-02 10:00",
+		"salle" : "S21"
+	},
+	{
+		"stage" : 3,
+		"datePassage" : "2014-04-01 08:30",
+		"dateFinPrevu" : "2014-04-01 09:00",
+		"salle" : "S21"
+	}
+]
