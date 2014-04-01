@@ -53,7 +53,7 @@ function genDialogForm(selecteurTarget, selecteurBouton, largeur, hauteur, ajout
         width: largeur,
         modal: true,
         buttons: {
-            "Ajouter": function(){
+            "Valider": function(){
                 ajouter();
                 $( this ).dialog( "close" );
             },
