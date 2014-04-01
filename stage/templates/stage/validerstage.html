@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | Offres de stages {% endblock %}
+{% block main %}
+	<h1>Stage non validés</h1>
+	<br/>
+
+	<div class="menu col-xs-12 col-sm-2 col-lg-2">
+	{% if "stage.add_stage" in user.get_all_permissions %}
+		<a class="btn btn-primary" href="{% url 'addStage' %}">Ajouter</a><br/>
+	{% endif %}
+	{% if "stage.delete_stage" in user.get_all_permissions %}
+		<a class="btn btn-danger" href="{% url 'delStage' %}">Supprimer</a>
+	{% endif %}
+	</div>
+
+	<ul id="stages" class="col-xs-12 col-sm-offset-1 col-lg-8">
+		{% for o in liste_stage %}
+			{% if o.valideStage == False %}
+				<!-- <li><a href="{% url 'detailsOffreStage' pk=o.pk %}">{{ o }}</a></li><br/>-->
+				<li><a href="#" onclick="javascript:openDialog()" value="{{o.pk}}">{{ o }}</a></li><br/>
+			{% endif %}
+		{% endfor %}
+	</ul>
+
+	<div id="dialog" >
+		<div id="content"></div>
+	</div>
+	
+
+
+{% endblock %}
+
+{% block libraries %}{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-1.10.4.custom.min.css" media="screen">
+	<script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script type="text/javascript" src="/static/js/utils.js"></script>
+{% endblock %}
+
+{% block js %}
+
+	$(document).ready( function(){
+		active_tab="#tab-stage"
+
+		$("#stages a").click(function(){
+			var idstage = $(this).attr("value");
+			$.ajax({
+				url: "./detailsvalider/"+idstage,
+				data: {},
+				type: 'GET',
+				dataType: 'html'
+			}).done(function(data, textStatus, jqXHR){
+				var html = data;
+				$("#dialog #content").html(html);
+		
+				function validerStage() {
+					if (confirm("Êtes-vous sûr de vouloir valider cette offre ?")) {
+						$.ajax({
+							url: "./validerenbase/"+idstage,
+							data: {},
+							type: 'GET',
+							dataType: 'html'
+						}).done(function(data, textStatus, jqXHR){
+							location.reload();
+						}).fail(function(jqXHR, textStatus, errorThrown){
+							console.log("ajax failed");
+							alert(errorThrown);
+						});
+					}
+				}
+
+				$("body").append($('<button id="open_dialog" style="display:none;"></button>'));
+				genDialogForm($("#dialog"), $("#open_dialog"), 700, 600, validerStage);
+				$("#open_dialog").click();
+			}).fail(function(jqXHR, textStatus, errorThrown){
+				console.log("ajax failed");
+				alert(errorThrown);
+			});
+			$("#dialog").dialog('open');
+		});
+
+	});
+
+
+	
+
+{% endblock %}
+

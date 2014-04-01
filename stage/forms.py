@@ -73,29 +73,6 @@ class supprimeOffreStageForm(forms.Form):
         fields ='offrestagelots'
 
 
-# class validerOffreStageForm(forms.Form):
-#     def __init__(self, *args, **kwargs):
-#         super(validerOffreStageForm, self).__init__(*args, **kwargs)
-#         self.fields['offrestagelots'].label = "Selectionnez les offres de stage à valider"
-#     # You can change the queryset in the __init__ method, but this should be a nice basis
-        
-#     offrestagelots = forms.ModelMultipleChoiceField(queryset=OffreStage.objects.all(), widget=forms.CheckboxSelectMultiple(),required=False)
-
-#     def save(self):
-#         # make sure you do a form.is_valid() before trying to save()
-#         print(self.cleaned_data['offrestagelots'])
-#         for offrestagelots in self.cleaned_data['offrestagelots']:
-#             print(offrestagelots)
-#             setattr(offrestagelots, 'valideOffreStage', True)
-#             offrestagelots.valider()
-#     def list(self):
-#         # make sure you do a form.is_valid() before trying to save()
-#         for offrestagelots in self.cleaned_data['offrestagelots']:
-#             print(offrestagelots)
-#     class Meta:
-#         model = Stage
-#         fields ='offrestagelots'
-
 
 class EtudiantForm(ModelForm):
     class Meta:

@@ -163,6 +163,22 @@ def monStage(request):
 		)
 	except:
 		return addStage(request)
+
+
+def validerStage(request):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+	
+	if ("stage.valider_stage" in permissions):
+		return render(
+			request,
+			"stage/validerstage.html",
+			{"liste_stage": Stage.objects.order_by("intitule")}
+		)
+
+	else:
+		return HttpResponseRedirect('/oups')
 		
 
 # Manipulation Personnes extérieures
@@ -266,26 +282,6 @@ def delOffreStage(request):
 		return HttpResponseRedirect('/oups')
 
 
-# def validerOffreStage(request):
-# 	# Vérification des permissions de l'utilisateur
-# 	user = User.objects.get(username=request.user.username)
-# 	permissions = user.get_all_permissions()
-	
-# 	if ("stage.valider_offrestage" in permissions):
-# 		form = validerOffreStageForm()
-# 		con ={'form': form, 'actionAFaire' : 'Valider'}
-# 		con.update(csrf(request))
-# 		if len(request.POST) > 0:
-# 			form =validerOffreStageForm(request.POST)
-# 			con = {'form': form}
-# 			if form.is_valid():   
-# 				form.save()
-# 				return HttpResponseRedirect("/stage/offrestage")
-# 		else:
-# 			return render(request,'offrestage/forms.html', con)
-
-# 	else:
-# 		return HttpResponseRedirect('/oups')
 
 def validerOffreStage(request):
 	# Vérification des permissions de l'utilisateur
@@ -420,8 +416,21 @@ def detailsValiderOffreStage(request, pk):
 	)
 
 
-def validerEnBase(request, pk):
+def validerOffreStageEnBase(request, pk):
 	offre = OffreStage.objects.get(pk=pk)
 	offre.valider()
 	return HttpResponse(True, mimetype="application/json")
-	
+
+
+def detailsValiderStage(request, pk):
+	return render(
+		request,
+		"stage/details_valider_stage.html",
+		{"stage": Stage.objects.get(pk=pk)}
+	)
+
+
+def validerStageEnBase(request, pk):
+	stage = Stage.objects.get(pk=pk)
+	stage.valider()
+	return HttpResponse(True, mimetype="application/json")
