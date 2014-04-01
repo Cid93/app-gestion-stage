@@ -1,0 +1,35 @@
+<span class="details_etu">
+	<h1 class="page-heading">{{ stage.intitule }}
+		<small>{{ stage.etudiant }}</small>
+	</h1> 
+</span>
+
+<br/>
+
+<table class="table table-striped col-xs-12 col-lg-12">
+
+	<tr><td><b>Promotion :</b></td><td> {{ stage.etudiant.promotion }}</td></tr> 
+	<tr><td><b>Intitulé :</b></td><td> {{ stage.intitule }}</td></tr> 
+	<tr><td><b>Sujet :</b></td><td> {{ stage.sujet }}</td></tr>
+	<tr><td><b>Logiciel :</b></td>
+		<td><ul>
+		{% for log in stage.nomLogiciels.all %}
+			<li>{{ log }}</li>
+		{% endfor %}
+		</ul></td>
+	</tr>
+	<tr><td><b>date de début :</b></td><td> {{ stage.dateDebut }}</td></tr> 
+	<tr><td><b>date de fin :</b></td><td> {{ stage.dateFin }}</td></tr>
+	<tr><td><b>Etudiant :</b></td><td> {{ stage.etudiant }}</td></tr> 
+	<tr><td><b>Entreprise :</b></td><td> {{ stage.entreprise.nom }}</td></tr> 
+	<tr><td><b>Adresse :</b></td><td> {{ stage.entreprise.adresse }}</td></tr> 
+	<tr><td><b>Code postal :</b></td><td> {{ stage.entreprise.codePostal }}</td></tr> 
+	<tr><td><b>Ville :</b></td><td> {{ stage.entreprise.ville }}</td></tr> 
+	<tr><td><b>Tel :</b></td><td> {{ stage.entreprise.telephone }}</td></tr> 
+	<tr><td><b>Fax :</b></td><td> {{ stage.entreprise.fax }}</td></tr> 
+	<tr><td><b>Maitre de stage :</b></td><td> {{ stage.maitreStage.prenom }} {{ stage.maitreStage.nom }}</td></tr> 
+	<tr><td><b>Gestion de la convention :</b></td><td> {{ stage.persConvention.prenom }} {{ stage.persConvention.nom }}</td></tr> 
+	<tr><td><b>Enseignant tuteur :</b></td><td> {{ stage.enseignantTuteur.prenom }} {{ stage.enseignantTuteur.nom }}</td></tr>
+	
+
+</table>

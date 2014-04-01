@@ -183,12 +183,12 @@ class OffreStage(models.Model):
 
     def valider(self):
         setattr(self, 'valideOffreStage', True)
-        self.save();
+        self.save()
         return True
 
     def reserver(self):
         setattr(self, 'valideOffreStage', None)
-        self.save();
+        self.save()
         return True
 
 
@@ -238,6 +238,10 @@ class Stage(OffreStage):
         html='<tr><td><a href="/stage/'+str(self.idStage)+'">'+self.intitule+'</td><td>'+str(self.etudiant)+'</td><td>'+str(self.enseignantTuteur)+'</td><td><a href="/entreprise/'+str(idEnt)+'">'+str(self.entreprise)+'</a></td></tr>'
         return "%s" % (html)
 
+    def valider(self):
+        setattr(self, 'valideStage', True)
+        self.save()
+        return True
 
 
 class EnseignantResp(models.Model):
