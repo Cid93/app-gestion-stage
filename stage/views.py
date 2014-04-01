@@ -35,7 +35,8 @@ def addStage(request):
 			if request.method == 'POST': # Si une requête POST a été passée en paramètre
 				form = StageFormEtu(request.POST) # On récupère les données
 				if form.is_valid(): # Si les données reçues sont valides
-					form.save()
+					obj = form.save()
+					obj.reserver()
 					return HttpResponseRedirect('/stage/ok')
 				else: # Si les données reçues sont invalides
 					con = { 'actionAFaire' : 'Ajouter', 'form' : form,'nomEtu': etu.prenom+' '+etu.nom}
@@ -52,7 +53,8 @@ def addStage(request):
 				form = StageForm(request.POST) # On récupère les données
 				
 				if form.is_valid(): # Si les données reçues sont valides
-					form.save()
+					obj = form.save()
+					obj.reserver()
 					return HttpResponseRedirect('/stage/ok')
 				else: # Si les données reçues sont invalides
 					con = { 'actionAFaire' : 'Ajouter', 'form' : form}
@@ -133,7 +135,7 @@ def delStage(request):
 		        supprimestageform.save()
 		        return HttpResponseRedirect("/stage/")
 		else:
-		    return render(request,'stage/forms.html', con)
+		    return render(request,'stage/stage_form.html', con)
 	else:
 		con = {}
 		return HttpResponseRedirect('/oups/')
