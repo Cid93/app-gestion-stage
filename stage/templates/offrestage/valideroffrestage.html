@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} | Offres de stages {% endblock %}
 {% block main %}
-	<h1>Validation des offres de stage</h1>
+	<h1>Offres de stage non validées</h1>
 	<br/>
 
 	<div class="menu col-xs-12 col-sm-2 col-lg-2">
@@ -23,8 +23,7 @@
 	</ul>
 
 	<div id="dialog" >
-		<title>Valider l'offre de stage</title>
-		Test
+		<div id="content"></div>
 	</div>
 	
 
@@ -34,6 +33,7 @@
 {% block libraries %}{{ block.super }}
 	<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-1.10.4.custom.min.css" media="screen">
 	<script type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script type="text/javascript" src="/static/js/utils.js"></script>
 {% endblock %}
 
 {% block js %}
@@ -41,29 +41,47 @@
 	$(document).ready( function(){
 		active_tab="#tab-stage"
 
-		$("#dialog").dialog({
-			autoOpen: false,
-			title: 'Valider l\'offre de stage',
-			buttons: {
-				"Valider cette offre": function() {
-					/*
-					$.ajax({
-						#ajax call for delete
-						#with url pointing to your delete function
-					});
-					*/
-					$(this).dialog("close");
-				},
-				"Fermer": function() {
-					$(this).dialog("close");
+		$("#offres_stage a").click(function(){
+			var idoffre = $(this).attr("value");
+			$.ajax({
+				url: "./detailsvalider/"+idoffre,
+				data: {},
+				type: 'GET',
+				dataType: 'html'
+			}).done(function(data, textStatus, jqXHR){
+				var html = data;
+				$("#dialog #content").html(html);
+		
+				function validerOffreStage() {
+					if (confirm("Êtes-vous sûr de vouloir valider cette offre ?")) {
+						$.ajax({
+							url: "./validerenbase/"+idoffre,
+							data: {},
+							type: 'GET',
+							dataType: 'html'
+						}).done(function(data, textStatus, jqXHR){
+							location.reload();
+						}).fail(function(jqXHR, textStatus, errorThrown){
+							console.log("ajax failed");
+							alert(errorThrown);
+						});
+					}
 				}
-			}
+
+				$("body").append($('<button id="open_dialog" style="display:none;"></button>'));
+				genDialogForm($("#dialog"), $("#open_dialog"), 700, 600, validerOffreStage);
+				$("#open_dialog").click();
+			}).fail(function(jqXHR, textStatus, errorThrown){
+				console.log("ajax failed");
+				alert(errorThrown);
+			});
+			$("#dialog").dialog('open');
 		});
+
 	});
+
+
 	
-	$("#offres_stage a").click(function(){
-		$("#dialog").dialog('open');
-	});
 
 {% endblock %}
 

@@ -401,9 +401,25 @@ def offreStage_operationEffectuee(request):
 		{}
 	)
 
+
 def stage_operationEffectuee(request):
 	return render(
 		request,
 		"stage/operation_effectuee.html",
 		{}
 	)
+
+
+def detailsValiderOffreStage(request, pk):
+	return render(
+		request,
+		"offrestage/details_valider_offrestage.html",
+		{"offrestage": OffreStage.objects.get(pk=pk)}
+	)
+
+
+def validerEnBase(request, pk):
+	offre = OffreStage.objects.get(pk=pk)
+	offre.valider()
+	return HttpResponse(True, mimetype="application/json")
+	

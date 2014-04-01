@@ -182,10 +182,14 @@ class OffreStage(models.Model):
         return "%s" % (html)
 
     def valider(self):
-        return setattr(self, 'valideOffreStage', True)
+        setattr(self, 'valideOffreStage', True)
+        self.save();
+        return True
 
     def reserver(self):
-        return setattr(self, 'valideOffreStage', None)
+        setattr(self, 'valideOffreStage', None)
+        self.save();
+        return True
 
 
 

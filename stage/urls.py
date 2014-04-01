@@ -27,5 +27,6 @@ urlpatterns = patterns('',
     url(r'^offrestage/supprimer/?$',"stage.views.delOffreStage", name="delOffreStage"),
     url(r'^offrestage/ok/?$',"stage.views.offreStage_operationEffectuee", name="offreStageOperationEffectuee"),
     url(r'^offrestage/valider/?$',"stage.views.validerOffreStage", name="validerOffreStage"),
-    
+    url(r'^offrestage/detailsvalider/(?P<pk>\d+)$',"stage.views.detailsValiderOffreStage", name="detailsValiderOffreStage"),
+    url(r'^offrestage/validerenbase/(?P<pk>\d+)$',"stage.views.validerEnBase", name="validerEnBase"),
 )
