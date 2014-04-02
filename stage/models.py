@@ -101,8 +101,6 @@ class Enseignant(PersonneInterne):
     #numEns = models.IntegerField(primary_key=True)
     #grade = models.CharField(max_length=50)
 
-    
-
     class Meta:
         permissions = (
             ("rechercherconsulter_enseignant", "Peut rechercher et consulter les fiches d'enseignants"),

@@ -6,19 +6,26 @@ from django.template import RequestContext
 from gestionStage.shortcuts import render
 from django.db.models import get_model
 from entreprise.models import Entreprise
+from stage.models import Stage, OffreStage
 from stage.models import *
 
 def show_main(request):
 	return render(
 		request,
 		"gestionStage/main.html",
-		{})
+		{
+			"nbOffresValides": OffreStage.objects.filter(valideOffreStage=True).count(),
+			"nbOffresInvalides": OffreStage.objects.filter(valideOffreStage=False).count(),
+			"nbStagesInvalides": Stage.objects.filter(valideStage=False).count(),
+		}
+	)
 
 def oups(request):
 	return render(
 		request,
 		"oups.html",
-		{})
+		{}
+	)
 
 def search(request):
 	if request.method == 'POST':

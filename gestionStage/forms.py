@@ -26,7 +26,7 @@ def login_page(request):
                 context["errmsg"] = "Echec d'authentification"
             elif user.is_active:
                 login(request, user)
-                return render(request, "gestionStage/main.html", context)
+                return HttpResponseRedirect("/")
             else:
                 context["errmsg"] = "Compte désactivé"
         else:
