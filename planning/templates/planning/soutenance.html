@@ -6,7 +6,7 @@
 	<a href="{% url 'editSoutenance' pk=soutenance.idSoutenance %}" class="btn btn-primary">Modifier</a><br />
 	{% endif %}
 	{% if "planning.delete_soutenance" in user.get_all_permissions %}
-	<button id="delSoutenance" class="btn btn-danger">Supprimer</a>
+	<a id="delSoutenance" href="#" class="btn btn-danger">Supprimer</a>
 	{% endif %}
 </div>
 <h1>Soutenance au {{ soutenance.datePassage }}</h1>
