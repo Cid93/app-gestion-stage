@@ -266,7 +266,17 @@ def postuler(request, pk):
 	if ("stage.postuler_offrestage" in permissions):
 		Etudiant.objects.get(username=user).postulant.add(
 			OffreStage.objects.get(pk=pk))
-		return HttpResponseRedirect('../')
+		return HttpResponseRedirect('../ok')
+	else:
+		return HttpResponseRedirect('/oups')
+
+def prendreOffre(request, pk):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+
+	if ("stage.recuperer_offrestage" in permissions):
+		return HttpResponseRedirect('../ok')
 	else:
 		return HttpResponseRedirect('/oups')
 

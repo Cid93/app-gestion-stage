@@ -132,6 +132,7 @@ class OffreStage(models.Model):
         permissions = (
             ("valider_offrestage", "Peut valider une offre de stage"),
             ("postuler_offrestage", "Peut postuler à une offre de stage"),
+            ("recuperer_offrestage", "Permet à un étudiant de créer son stage à partir d'une offre de stage"),
         )
 
     def natural_key(self):
@@ -176,7 +177,6 @@ class Etudiant(PersonneInterne):
     class Meta:
         permissions = (
             ("rechercherconsulter_etudiant", "Peut rechercher et consulter les fiches d'étudiants"),
-            ("postuler_offrestage", "Permet à un étudiant de postuler à une offre de stage"),
         )
 
     def search_result_header():
