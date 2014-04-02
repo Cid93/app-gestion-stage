@@ -118,7 +118,6 @@ def modifStage(request, pk):
 	else:
 		return HttpResponseRedirect('/oups/')
 
-
 def delStage(request):
 	# Vérification des permissions de l'utilisateur
 	user = User.objects.get(username=request.user.username)
@@ -256,6 +255,18 @@ def modifOffreStage(request, pk):
 
 		return render(request,'offrestage/forms.html', { 'actionAFaire' : 'Modifier', 'form' : form})
 
+	else:
+		return HttpResponseRedirect('/oups')
+
+def postuler(request, pk):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+
+	if ("stage.postuler_offrestage" in permissions):
+		Etudiant.objects.get(username=user).postulant.add(
+			OffreStage.objects.get(pk=pk))
+		return HttpResponseRedirect('../')
 	else:
 		return HttpResponseRedirect('/oups')
 

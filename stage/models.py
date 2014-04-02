@@ -63,36 +63,6 @@ class PersonneInterne(Personne):
             'telephone' : self.telephone}
 
 
-class Etudiant(PersonneInterne):
-    numEtu = models.IntegerField(primary_key=True)
-    dateNaissance = models.DateField(verbose_name="Date de naissance")
-    emailEtu = models.EmailField(max_length=80)
-    adresse = models.CharField(max_length=100)
-    cp = models.IntegerField(max_length=5)
-    ville = models.CharField(max_length=50)
-    promotion = models.ForeignKey(Promotion)
-    class Meta:
-        permissions = (
-            ("rechercherconsulter_etudiant", "Peut rechercher et consulter les fiches d'étudiants"),
-        )
-
-    def search_result_header():
-        html="<thead><tr><th>Promotion</th><th>Numéro</th><th>Nom</th><th>Prénom</th><th>E-mail</th></tr></thead>"
-        return "%s" % (html)
-
-    def search_result(self):
-        html="<tr class=\"trLien\" onclick=\"document.location='/etudiant/"+str(self.numEtu)+"'\"><td>"+str(self.promotion)+"</td><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
-        return "%s" % (html)
-
-    def natural_key(self):
-        return {'numEtu' : self.numEtu,
-            'nom' : self.nom,
-            'prenom' : self.prenom,
-            'telephone' : self.telephone
-            }
-
-
-
 
 class Enseignant(PersonneInterne):
     idEnseignant = models.AutoField(primary_key=True)
@@ -192,6 +162,37 @@ class OffreStage(models.Model):
         self.save()
         return True
 
+
+class Etudiant(PersonneInterne):
+    numEtu = models.IntegerField(primary_key=True)
+    dateNaissance = models.DateField(verbose_name="Date de naissance")
+    emailEtu = models.EmailField(max_length=80)
+    adresse = models.CharField(max_length=100)
+    cp = models.IntegerField(max_length=5)
+    ville = models.CharField(max_length=50)
+    promotion = models.ForeignKey(Promotion)
+    postulant = models.ManyToManyField(OffreStage)
+
+    class Meta:
+        permissions = (
+            ("rechercherconsulter_etudiant", "Peut rechercher et consulter les fiches d'étudiants"),
+            ("postuler_offrestage", "Permet à un étudiant de postuler à une offre de stage"),
+        )
+
+    def search_result_header():
+        html="<thead><tr><th>Promotion</th><th>Numéro</th><th>Nom</th><th>Prénom</th><th>E-mail</th></tr></thead>"
+        return "%s" % (html)
+
+    def search_result(self):
+        html="<tr class=\"trLien\" onclick=\"document.location='/etudiant/"+str(self.numEtu)+"'\"><td>"+str(self.promotion)+"</td><td>"+str(self.numEtu)+"</td><td>"+self.nom+"</td><td>"+self.prenom+"</td><td>"+self.emailEtu+"</td></tr>"
+        return "%s" % (html)
+
+    def natural_key(self):
+        return {'numEtu' : self.numEtu,
+            'nom' : self.nom,
+            'prenom' : self.prenom,
+            'telephone' : self.telephone
+            }
 
 
 class Stage(OffreStage):
