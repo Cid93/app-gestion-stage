@@ -37,9 +37,6 @@
 							{% if "entreprise.valider_entreprise" in user.get_all_permissions or "entreprise.delete_entreprise" in user.get_all_permissions %}
 								<li class="divider"></li>
 								<li class="dropdown-header">Administration</li>
-								{% if "entreprise.valider_entreprise" in user.get_all_permissions %}
-									<li><a href="#"><span class="glyphicon glyphicon-ok"></span> Entreprises en attente de validation</a></li>
-								{% endif %}
 								{% if "entreprise.delete_entreprise" in user.get_all_permissions %}
 									<li><a href="{% url 'entreprise.views.delEnt' %}"><span class="glyphicon glyphicon-remove"></span> Suppression d'entreprises</a></li>
 								{% endif %}

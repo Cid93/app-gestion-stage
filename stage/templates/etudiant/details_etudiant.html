@@ -21,19 +21,22 @@
 		<td><b>Numéro :</b></td>
 		<td> {{ etudiant.numEtu }}</td>
 	</tr>
+	{% if perms.stage.rechercherconsulter_etudiant %} 
 	<tr>
 		<td><b>Date de Naissance :</b></td>
 		<td> {{ etudiant.dateNaissance }}</td>
-	</tr> 
-	 
+	</tr>
+	
 	<tr>
 		<td><b>E-Mail :</b></td>
 		<td> {{ etudiant.emailPerso }}</td>
-	</tr> 
+	</tr>
+	{% endif %}  
 	<tr>
 		<td><b>E-Mail Etudiant :</b></td>
 		<td> {{ etudiant.emailEtu }}</td>
-	</tr> 
+	</tr>
+	{% if perms.stage.rechercherconsulter_etudiant %} 
 	<tr>
 		<td><b>Téléphone :</b></td>
 		<td> {{ etudiant.telephone }}</td>
@@ -50,6 +53,7 @@
 		<td><b>Ville :</b></td>
 		<td> {{ etudiant.ville }}</td>
 	</tr> 
+	{% endif %} 
 	 
 	 
 	
