@@ -24,8 +24,11 @@ def show_detail_stage(request, pk):
 		)
 
 def addStage(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	
 	if ("stage.add_stage" in user.get_all_permissions()):
 
@@ -71,8 +74,11 @@ def addStage(request):
 	
 
 def modifStage(request, pk):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	stg = Stage.objects.get(pk=pk)
@@ -119,8 +125,11 @@ def modifStage(request, pk):
 		return HttpResponseRedirect('/oups/')
 
 def delStage(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("stage.delete_stage" in permissions):
@@ -165,8 +174,11 @@ def monStage(request):
 
 
 def validerStage(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("stage.valider_stage" in permissions):
@@ -211,8 +223,11 @@ def detailsOffreStage(request, pk):
 	)
 
 def addOffreStage(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("stage.add_offrestage" in permissions):
@@ -237,8 +252,11 @@ def addOffreStage(request):
 
 
 def modifOffreStage(request, pk):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("stage.change_offrestage" in permissions):
@@ -259,8 +277,11 @@ def modifOffreStage(request, pk):
 		return HttpResponseRedirect('/oups')
 
 def postuler(request, pk):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 
 	if ("stage.postuler_offrestage" in permissions):
@@ -271,8 +292,11 @@ def postuler(request, pk):
 		return HttpResponseRedirect('/oups')
 
 def prendreOffre(request, pk):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 
 	if ("stage.recuperer_offrestage" in permissions):
@@ -282,8 +306,11 @@ def prendreOffre(request, pk):
 
 
 def delOffreStage(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("stage.delete_offrestage" in permissions):
@@ -305,8 +332,11 @@ def delOffreStage(request):
 
 
 def validerOffreStage(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("stage.valider_offrestage" in permissions):
@@ -328,8 +358,11 @@ def detailsEtudiant(request, pk):
 	)
 
 def modifEtudiant(request, pk):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	etudiant = Etudiant.objects.get(pk=pk)
 
@@ -359,8 +392,11 @@ def detailsEnseignant(request, pk):
 	)
 
 def modifEnseignant(request, pk):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	enseignant = Enseignant.objects.get(pk=pk)
 

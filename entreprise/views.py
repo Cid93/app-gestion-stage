@@ -32,8 +32,11 @@ def show_visiter(request):
 
 # Manipulation Entreprise
 def addEnt(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("entreprise.add_entreprise" in permissions):
@@ -58,8 +61,11 @@ def addEnt(request):
 
 
 def modifEnt(request, pk):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("entreprise.change_entreprise" in permissions):
@@ -80,8 +86,11 @@ def modifEnt(request, pk):
 		return HttpResponseRedirect('/oups')
 
 def delEnt(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("entreprise.delete_entreprise" in permissions):

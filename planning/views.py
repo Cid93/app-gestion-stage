@@ -28,8 +28,11 @@ def show_soutenance(request, pk):
 		{'soutenance' : Soutenance.objects.get(idSoutenance=pk)})
 
 def addSoutenance(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("planning.add_soutenance" in permissions):
@@ -66,8 +69,11 @@ def addSoutenance(request):
 
 
 def addSalle(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("planning.add_salle" in permissions):
@@ -97,8 +103,11 @@ def addSalle(request):
 		return HttpResponseRedirect('/oups/')
 
 def editSoutenance(request, pk):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 	
 	if ("planning.change_soutenance" in permissions):
@@ -119,8 +128,11 @@ def editSoutenance(request, pk):
 		return HttpResponseRedirect('/oups/')
 
 def delSoutenance(request):
-	# Vérification des permissions de l'utilisateur
-	user = User.objects.get(username=request.user.username)
+	try:
+		# Vérification des permissions de l'utilisateur
+		user = User.objects.get(username=request.user.username)
+	except:
+		return HttpResponseRedirect('/oups/')
 	permissions = user.get_all_permissions()
 
 	if ("planning.delete_soutenance" in permissions):
