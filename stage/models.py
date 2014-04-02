@@ -225,7 +225,9 @@ class Stage(OffreStage):
 
     def search_result(self):
         idEnt = Entreprise.objects.get(nom=str(self.entreprise)).idEntreprise
-        html='<tr><td><a href="/stage/'+str(self.idStage)+'">'+self.intitule+'</td><td>'+str(self.etudiant)+'</td><td>'+str(self.enseignantTuteur)+'</td><td><a href="/entreprise/'+str(idEnt)+'">'+str(self.entreprise)+'</a></td></tr>'
+        idEns = Enseignant.objects.get(nom=str(self.enseignantTuteur.nom)).idEnseignant
+        idEtu = Etudiant.objects.get(nom=str(self.etudiant.nom)).numEtu
+        html='<tr><td><a href="/stage/'+str(self.idStage)+'">'+self.intitule+'</td><td><a href="/etudiant/'+str(idEtu)+'">'+str(self.etudiant)+'</a></td><td><a href="/enseignant/'+str(idEns)+'">'+str(self.enseignantTuteur)+'</a></td><td><a href="/entreprise/'+str(idEnt)+'">'+str(self.entreprise)+'</a></td></tr>'
         return "%s" % (html)
 
 

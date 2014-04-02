@@ -34,21 +34,48 @@ def search(request):
 		champ = request.POST.get('search_text')
 		
 
-		if (model=="Stage" or model=="OffreStage") and attribut=="entreprise":
+		if (model=="Stage" ) and attribut=="entreprise":
 			
 			listeEntreprises = Entreprise.objects.filter(nom__contains=champ)
 			res = []
 			for i in listeEntreprises:
 				res += Stage.objects.filter(entreprise=i.idEntreprise)
 			model = get_model('stage', model)
-		elif (model=="Stage" or model=="OffreStage") and attribut=="nomLogiciels":
+
+		elif (model=="OffreStage") and attribut=="entreprise":
+			
+			listeEntreprises = Entreprise.objects.filter(nom__contains=champ)
+			res = []
+			for i in listeEntreprises:
+				res += OffreStage.objects.filter(entreprise=i.idEntreprise)
+			model = get_model('stage', model)
+
+		elif (model=="Stage") and attribut=="nomLogiciels":
 			listeNomLog = Logiciel.objects.filter(nomLog__contains=champ)
+			print("list:");
 			print(listeNomLog)
 			res = []
 			for i in listeNomLog:
-				print(i)
+				print("i:");
+				print(i.nomLog)
 				res += Stage.objects.filter(nomLogiciels=i.nomLog)
+			print("res:");
+			print(res)
 			model = get_model('stage', model)
+
+		elif (model=="OffreStage") and attribut=="nomLogiciels":
+			listeNomLog = Logiciel.objects.filter(nomLog__contains=champ)
+			print("list:");
+			print(listeNomLog)
+			res = []
+			for i in listeNomLog:
+				print("i:");
+				print(i.nomLog)
+				res += OffreStage.objects.filter(nomLogiciels=i.nomLog)
+			print("res:");
+			print(res)
+			model = get_model('stage', model)
+
 		elif (model=="Stage") and attribut=="etudiant":
 			listeEtudiant = Etudiant.objects.filter(nom__contains=champ)
 			res = []
