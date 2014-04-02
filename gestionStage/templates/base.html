@@ -91,7 +91,7 @@
 								<li class="divider"></li>
 								<li class="dropdown-header">Administration</li>
 								{% if "planning.delete_soutenance" in user.get_all_permissions %}
-									<li><a href="#"><span class="glyphicon glyphicon-remove"></span> Suppression de soutenances</a></li>
+									<li><a href="{% url 'delSoutenance' %}"><span class="glyphicon glyphicon-remove"></span> Suppression de soutenances</a></li>
 								{% endif %}
 							{% endif %}
 						</ul>

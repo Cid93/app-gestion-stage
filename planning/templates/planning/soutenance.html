@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} | Soutenance {% endblock %}
 {% block main %}
-{% if "planning.change_soutenance" in user.get_all_permissions %}
-<a href="{% url 'editSoutenance' pk=soutenance.idSoutenance %}" class="pull-right btn btn-primary">Modifier</a>
-{% endif %}
+<div class="menu col-xs-12 col-sm-2 col-lg-2 pull-right">
+	{% if "planning.change_soutenance" in user.get_all_permissions %}
+	<a href="{% url 'editSoutenance' pk=soutenance.idSoutenance %}" class="btn btn-primary">Modifier</a><br />
+	{% endif %}
+	{% if "planning.delete_soutenance" in user.get_all_permissions %}
+	<button id="delSoutenance" class="btn btn-danger">Supprimer</a>
+	{% endif %}
+</div>
 <h1>Soutenance au {{ soutenance.datePassage }}</h1>
 <br/>
 <table class="table table-striped col-xs-12 col-lg-12">
@@ -23,5 +28,22 @@
 </table>
 {% endblock %}
 {% block js %}
+	{% if "planning.delete_soutenance" in user.get_all_permissions %}
+	$('#delSoutenance').click(function(e){
+		if (confirm("Êtes-vous sûr de vouloir supprimer cette soutenance ?")){
+			 $.ajax({
+            url: urlTraitement,
+            data: datas,
+            type: 'POST'
+	        }).done(function(data, textStatus, jqXHR){
+	            fonctionOK(data);
+	        }).fail(function(jqXHR, textStatus, errorThrown){
+	            console.log("ajax failed");
+	            alert(errorThrown);
+	        });
+		}
+	})
+	{% endif %}
+
 	active_tab="#tab-planning"
 {% endblock %}
