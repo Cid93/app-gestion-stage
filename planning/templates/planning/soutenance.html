@@ -31,12 +31,17 @@
 	{% if "planning.delete_soutenance" in user.get_all_permissions %}
 	$('#delSoutenance').click(function(e){
 		if (confirm("Êtes-vous sûr de vouloir supprimer cette soutenance ?")){
-			 $.ajax({
-            url: urlTraitement,
-            data: datas,
-            type: 'POST'
+			$.ajax({
+				url: '{% url 'delSoutenance' %}',
+				data: {},
+				type: 'GET'
 	        }).done(function(data, textStatus, jqXHR){
-	            fonctionOK(data);
+	        	var form = data.split('<form action="" method="post">')[1]
+					.split('</form>')[0];
+	            $('body').append('<form action="{% url 'delSoutenance' %}" method="post" id="delForm"></form>');
+	            $('#delForm').append(form);
+	            $('#delForm input[value={{ soutenance.idSoutenance }}]').prop('checked', true);
+	            $('#delForm').submit();
 	        }).fail(function(jqXHR, textStatus, errorThrown){
 	            console.log("ajax failed");
 	            alert(errorThrown);

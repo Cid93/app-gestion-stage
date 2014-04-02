@@ -122,11 +122,12 @@ def delSoutenance(request):
 	# Vérification des permissions de l'utilisateur
 	user = User.objects.get(username=request.user.username)
 	permissions = user.get_all_permissions()
-	
+
 	if ("planning.delete_soutenance" in permissions):
 		suppForm = supprimerSoutenanceForm()
 		con ={'form': suppForm, 'actionAFaire' : 'Supprimer'}
 		con.update(csrf(request))
+
 		if len(request.POST) > 0:
 			suppForm = supprimerSoutenanceForm(request.POST)
 			con = {'form': suppForm}
