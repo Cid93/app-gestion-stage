@@ -178,7 +178,8 @@ class OffreStage(models.Model):
         return "%s" % (html)
 
     def search_result(self):
-        html="<tr><td>"+self.intitule+"</td><td>"+str(self.entreprise)+"</td></tr>"
+        idEnt = Entreprise.objects.get(nom=str(self.entreprise)).idEntreprise
+        html='<tr><td><a href="/stage/offrestage/'+str(self.pk)+'">'+str(self.intitule)+'</a></td><td><a href="/entreprise/'+str(idEnt)+'">'+str(self.entreprise)+'</a></td></tr>'
         return "%s" % (html)
 
     def valider(self):
