@@ -16,7 +16,7 @@ class Soutenance(models.Model):
 	salle = models.ForeignKey(Salle, unique_for_date="datePassage")
 
 	def __str__(self):
-		return "%s" % ("Soutenance")
+		return "%s" % (self.stage.intitule)
 
 	def natural_key(self):
 		return (self.idSoutenance, datePassage) + (self.stage.natural_key(),)
