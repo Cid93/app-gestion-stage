@@ -19,6 +19,9 @@ urlpatterns = patterns('',
     url(r'^supprimer/?$',"stage.views.delStage", name="delStage"),
     url(r'^personne-ext/$',"stage.views.addPersonneExt",name="addPersonneExt"),
     url(r'^ok/?$',"stage.views.stage_operationEffectuee", name="stageOperationEffectuee"),
+    url(r'^valider/?$',"stage.views.validerStage", name="validerStage"),
+    url(r'^detailsvalider/(?P<pk>\d+)$',"stage.views.detailsValiderStage", name="detailsValiderStage"),
+    url(r'^validerenbase/(?P<pk>\d+)$',"stage.views.validerStageEnBase", name="validerStageEnBase"),
 
     url(r'^offrestage/?$',"stage.views.showOffres", name="showOffres"),
     url(r'^offrestage/(?P<pk>\d+)$',"stage.views.detailsOffreStage", name="detailsOffreStage"),
@@ -26,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^offrestage/ajouter/?$',"stage.views.addOffreStage", name="addOffreStage"),
     url(r'^offrestage/supprimer/?$',"stage.views.delOffreStage", name="delOffreStage"),
     url(r'^offrestage/ok/?$',"stage.views.offreStage_operationEffectuee", name="offreStageOperationEffectuee"),
-
-    
+    url(r'^offrestage/valider/?$',"stage.views.validerOffreStage", name="validerOffreStage"),
+    url(r'^offrestage/detailsvalider/(?P<pk>\d+)$',"stage.views.detailsValiderOffreStage", name="detailsValiderOffreStage"),
+    url(r'^offrestage/validerenbase/(?P<pk>\d+)$',"stage.views.validerOffreStageEnBase", name="validerOffreStageEnBase"),
 )

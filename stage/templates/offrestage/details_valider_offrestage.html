@@ -1,0 +1,27 @@
+<span class="details_etu">
+	<h1 class="page-heading">{{ offrestage.intitule }}
+		<small>{{ offrestage.entreprise }}</small>
+	</h1> 
+</span>
+
+<br/>
+
+<table class="table table-striped col-xs-12 col-lg-12">
+
+	<tr><td><b>Intitulé :</b></td><td> {{ offrestage.intitule }}</td></tr> 
+	<tr><td><b>Sujet :</b></td><td> {{ offrestage.sujet }}</td></tr>
+	<tr><td><b>Logiciel :</b></td>
+		<td><ul>
+		{% for log in offrestage.nomLogiciels.all %}
+			<li>{{ log }}</li>
+		{% endfor %}
+		</ul></td>
+	</tr>
+	<tr><td><b>Entreprise :</b></td><td> {{ offrestage.entreprise.nom }}</td></tr> 
+	<tr><td><b>Adresse :</b></td><td> {{ offrestage.entreprise.adresse }}</td></tr> 
+	<tr><td><b>Code postal :</b></td><td> {{ offrestage.entreprise.codePostal }}</td></tr> 
+	<tr><td><b>Ville :</b></td><td> {{ offrestage.entreprise.ville }}</td></tr> 
+	<tr><td><b>Tel :</b></td><td> {{ offrestage.entreprise.telephone }}</td></tr> 
+	<tr><td><b>Fax :</b></td><td> {{ offrestage.entreprise.fax }}</td></tr> 
+	
+</table>

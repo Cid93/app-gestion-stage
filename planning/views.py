@@ -101,7 +101,6 @@ def editSoutenance(request, pk):
 	permissions = user.get_all_permissions()
 	
 	if ("planning.change_soutenance" in permissions):
-
 		if request.method == 'POST':  # S'il s'agit d'une requête POST
 			form = SoutenanceForm(request.POST, instance=Soutenance.objects.get(pk=pk))
 			if form.is_valid(): # Nous vérifions que les données envoyées sont valides

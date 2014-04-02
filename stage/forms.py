@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
 from django import forms
+from django.forms.extras.widgets import SelectDateWidget
 from stage.models import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
@@ -9,6 +10,8 @@ from django.contrib.auth.models import User
 class StageFormEtu(ModelForm):
     etudiant = forms.ModelChoiceField(queryset=Etudiant.objects.all(),
             widget=forms.HiddenInput())
+    dateDebut = forms.DateField(widget=SelectDateWidget())
+    dateFin = forms.DateField(widget=SelectDateWidget())
 
     class Meta:
         model = Stage
@@ -16,6 +19,9 @@ class StageFormEtu(ModelForm):
 
 
 class StageForm(ModelForm):
+    dateDebut = forms.DateField(widget=SelectDateWidget())
+    dateFin = forms.DateField(widget=SelectDateWidget())
+
     class Meta:
         model = Stage
         exclude = ['valideOffreStage', 'valideStage']
@@ -77,6 +83,7 @@ class supprimeOffreStageForm(forms.Form):
 class EtudiantForm(ModelForm):
     class Meta:
         model = Etudiant
+
 
 class EnseignantForm(ModelForm):
     class Meta:
