@@ -15,19 +15,22 @@
 
 	
 	
-	 
+	{% if perms.stage.rechercherconsulter_enseignant %}  
 	<tr>
 		<td><b>E-Mail :</b></td>
 		<td> {{ enseignant.emailPerso }}</td>
-	</tr> 
+	</tr>
+	{% endif %}  
 	<tr>
 		<td><b>E-Mail enseignant :</b></td>
 		<td> {{ enseignant.emailEns }}</td>
-	</tr> 
+	</tr>
+	{% if perms.stage.rechercherconsulter_etudiant %}  
 	<tr>
 		<td><b>Téléphone :</b></td>
 		<td> {{ enseignant.telephone }}</td>
 	</tr>
+	{% endif %}
 	
 	 
 	 

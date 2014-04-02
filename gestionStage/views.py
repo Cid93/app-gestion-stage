@@ -30,7 +30,7 @@ def search(request):
 			listeEntreprises = Entreprise.objects.filter(nom__contains=champ)
 			res = []
 			for i in listeEntreprises:
-				res += Stage.objects.filter(entreprise=i.idEntreprise)
+				res += Stage.objects.filter(entreprise=i.idEntreprise, valideStage = True)
 			model = get_model('stage', model)
 
 		elif (model=="OffreStage") and attribut=="entreprise":
@@ -44,7 +44,7 @@ def search(request):
 			listeNomLog = Logiciel.objects.filter(nomLog__contains=champ)
 			res = []
 			for i in listeNomLog:
-				res += Stage.objects.filter(nomLogiciels=i.nomLog)
+				res += Stage.objects.filter(nomLogiciels=i.nomLog , valideStage = True)
 			model = get_model('stage', model)
 
 		elif (model=="OffreStage") and attribut=="nomLogiciels":
@@ -55,25 +55,31 @@ def search(request):
 			model = get_model('stage', model)
 
 		elif (model=="OffreStage") and attribut=="intitule":
-			listOffreValid = OffreStage.objects.filter(valideOffreStage=True)
-			res = []
-			for i in listOffreValid:
-				res += OffreStage.objects.filter(intitule=i.intitule , valideOffreStage=True)
+			res= []
+			res = OffreStage.objects.filter(intitule__contains=champ,valideOffreStage=True)
 			model = get_model('stage', model)
+
+			
+		elif (model=="Stage") and attribut=="intitule":
+			res= []
+			res = Stage.objects.filter(intitule__contains=champ,valideStage=True)
+			model = get_model('stage', model)
+
 
 		elif (model=="Stage") and attribut=="etudiant":
 			listeEtudiant = Etudiant.objects.filter(nom__contains=champ)
 			res = []
 			for i in listeEtudiant:
-				res += Stage.objects.filter(etudiant=i.numEtu)
+				res += Stage.objects.filter(etudiant=i.numEtu , valideStage = True)
 			model = get_model('stage', model)
 		
 		elif (model=="Stage") and attribut=="enseignantTuteur":
 			listeEnseignants = Enseignant.objects.filter(nom__contains=champ)
 			res = []
 			for i in listeEnseignants:
-				res += Stage.objects.filter(enseignantTuteur=i.idEnseignant)
+				res += Stage.objects.filter(enseignantTuteur=i.idEnseignant , valideStage = True)
 			model = get_model('stage', model)
+
 		elif (model=="Stage") and attribut=="promotion":
 			listePromo = Promotion.objects.filter(intitule__contains=champ)
 			res = []
@@ -81,7 +87,7 @@ def search(request):
 			for i in listePromo:
 				etu += Etudiant.objects.filter(promotion=i.idPromotion)
 			for i in etu:
-				res += Stage.objects.filter(etudiant=i.numEtu)
+				res += Stage.objects.filter(etudiant=i.numEtu , valideStage = True)
 			model = get_model('stage', model)
 		
 		elif (model=="Etudiant") and attribut=="promotion":

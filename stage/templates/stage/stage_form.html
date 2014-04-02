@@ -19,6 +19,7 @@
 {% block js %}
 
 	$( document ).ready( function() {
+		publierBoutonAjouter('#id_nomLogiciels', '/stage/logiciel');
 		publierBoutonAjouter('#id_persConvention', '/stage/personne-ext');
 		publierBoutonAjouter('#id_maitreStage', '/stage/personne-ext');
 	});

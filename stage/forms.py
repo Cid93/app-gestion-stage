@@ -51,6 +51,10 @@ class supprimeStageForm(forms.Form):
 class PersonneExtForm(ModelForm):
     class Meta:
         model = PersonneExterieure
+
+class LogicielForm(ModelForm):
+    class Meta:
+        model = Logiciel   
         
 
 class OffreStageForm(ModelForm):
