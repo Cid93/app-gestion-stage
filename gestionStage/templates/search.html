@@ -2,6 +2,7 @@
 {% block title %}{{ block.super }} | Recherche {% endblock %}
 {% block heading %}Recherche :({% endblock %}
 {% block main %}
+		
 	<div class="jumbotron">
 	<h1>Recherche :</h1>
 	<div <div class="btn-group open">
@@ -128,8 +129,14 @@
  							donnees.push(data[val].pk);
  						}
  						else if ((model=="Etudiant" || model=="Stage") && attribut=="promotion"){
- 							alert(data[val].fields.promotion.intitule);
+
  							donnees.push(data[val].fields.promotion.intitule);
+ 						}
+ 						else if (model=="OffreStage" && attribut=="intitule"){
+ 							if(data[val].fields.valideOffreStage == true){
+ 								alert(donnees.push(data[val].fields.intitule));
+ 								donnees.push(data[val].fields.intitule);
+ 							}
  						}
  						else if (model=="Stage" && attribut=="intitule"){
  							donnees.push(data[val].fields.offrestage_ptr.intitule);
@@ -144,7 +151,14 @@
  							donnees.push(data[val].fields.enseignantTuteur.nom);
  						}						
 						else{
-							donnees.push(data[val].fields[attribut]); 
+							if ((model=="Stage" || model=="OffreStage") && attribut=="nomLogiciels"){
+								var nomLog = data[val].fields[attribut]
+								for(var i in nomLog)
+									donnees.push(nomLog[i]); 
+								
+							}
+							else
+								donnees.push(data[val].fields[attribut]); 
 						}
 						
 						

@@ -2,13 +2,14 @@ from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.forms import ModelForm
 from django.template import RequestContext
 from django.core import serializers
+from django.core.context_processors import csrf
 
 from datetime import datetime
 
 from gestionStage.shortcuts import render
 from stage.models import Stage, Etudiant, Enseignant, PersonneExterieure
 from planning.models import Soutenance, Salle
-from planning.forms import SoutenanceSelection, SoutenanceForm, SalleForm
+from planning.forms import SoutenanceSelection, SoutenanceForm, SalleForm, supprimerSoutenanceForm
 
 from django.contrib.auth.models import User
 
@@ -117,7 +118,29 @@ def editSoutenance(request, pk):
 	else:
 		return HttpResponseRedirect('/oups/')
 
-# méthode AJAX ! ! !
+def delSoutenance(request):
+	# Vérification des permissions de l'utilisateur
+	user = User.objects.get(username=request.user.username)
+	permissions = user.get_all_permissions()
+
+	if ("planning.delete_soutenance" in permissions):
+		suppForm = supprimerSoutenanceForm()
+		con ={'form': suppForm, 'actionAFaire' : 'Supprimer'}
+		con.update(csrf(request))
+
+		if len(request.POST) > 0:
+			suppForm = supprimerSoutenanceForm(request.POST)
+			con = {'form': suppForm}
+			if suppForm.is_valid():   
+				suppForm.save()
+				return HttpResponseRedirect("/planning/")
+		else:
+			return render(request,'planning/forms.html', con)
+
+	else:
+		return HttpResponseRedirect('/oups')
+
+# méthode pour AJAX ! ! !
 def find_planning(request):
 	debutDeJournee = datetime.strptime(request.GET['dateD'], "%Y-%m-%d");
 	finDeJournee = datetime.strptime(request.GET['dateF'], "%Y-%m-%d");

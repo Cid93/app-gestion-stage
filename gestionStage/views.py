@@ -22,39 +22,52 @@ def oups(request):
 
 def search(request):
 	if request.method == 'POST':
-		# Requete :
-		# csrfmiddlewaretoken=S1conZBXfCETKe0bh2rM2HOk7h9V4CZd
-		# &search_data=Etudiant
-		# &select_champ=numEtu
-		# &search_text=atos
-
-
 		model = request.POST.get('search_data')
 		attribut = request.POST.get('select_champ')
 		champ = request.POST.get('search_text')
 		
-
-		if (model=="Stage" or model=="OffreStage") and attribut=="entreprise":
-			
+		if (model=="Stage" ) and attribut=="entreprise":
 			listeEntreprises = Entreprise.objects.filter(nom__contains=champ)
 			res = []
 			for i in listeEntreprises:
 				res += Stage.objects.filter(entreprise=i.idEntreprise)
 			model = get_model('stage', model)
-		elif (model=="Stage" or model=="OffreStage") and attribut=="nomLogiciels":
+
+		elif (model=="OffreStage") and attribut=="entreprise":
+			listeEntreprises = Entreprise.objects.filter(nom__contains=champ)
+			res = []
+			for i in listeEntreprises:
+				res += OffreStage.objects.filter(entreprise=i.idEntreprise,valideOffreStage=True)
+			model = get_model('stage', model)
+
+		elif (model=="Stage") and attribut=="nomLogiciels":
 			listeNomLog = Logiciel.objects.filter(nomLog__contains=champ)
-			print(listeNomLog)
 			res = []
 			for i in listeNomLog:
-				print(i)
 				res += Stage.objects.filter(nomLogiciels=i.nomLog)
 			model = get_model('stage', model)
+
+		elif (model=="OffreStage") and attribut=="nomLogiciels":
+			listeNomLog = Logiciel.objects.filter(nomLog__contains=champ)
+			res = []
+			for i in listeNomLog:
+				res += OffreStage.objects.filter(nomLogiciels=i.nomLog, valideOffreStage=True)
+			model = get_model('stage', model)
+
+		elif (model=="OffreStage") and attribut=="intitule":
+			listOffreValid = OffreStage.objects.filter(valideOffreStage=True)
+			res = []
+			for i in listOffreValid:
+				res += OffreStage.objects.filter(intitule=i.intitule , valideOffreStage=True)
+			model = get_model('stage', model)
+
 		elif (model=="Stage") and attribut=="etudiant":
 			listeEtudiant = Etudiant.objects.filter(nom__contains=champ)
 			res = []
 			for i in listeEtudiant:
 				res += Stage.objects.filter(etudiant=i.numEtu)
 			model = get_model('stage', model)
+		
 		elif (model=="Stage") and attribut=="enseignantTuteur":
 			listeEnseignants = Enseignant.objects.filter(nom__contains=champ)
 			res = []
@@ -70,12 +83,14 @@ def search(request):
 			for i in etu:
 				res += Stage.objects.filter(etudiant=i.numEtu)
 			model = get_model('stage', model)
+		
 		elif (model=="Etudiant") and attribut=="promotion":
 			listePromo = Promotion.objects.filter(intitule__contains=champ)
 			res = []
 			for i in listePromo:
 				res += Etudiant.objects.filter(promotion=i.idPromotion)
 			model = get_model('stage', model)
+		
 		else:
 			column = attribut+'__contains'
 			kwargs = {
