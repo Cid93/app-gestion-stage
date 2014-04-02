@@ -64,7 +64,7 @@ class supprimeOffreStageForm(forms.Form):
         self.fields['offrestagelots'].label = "Selectionnez les offres de stage à supprimer"
     # You can change the queryset in the __init__ method, but this should be a nice basis
         
-    offrestagelots = forms.ModelMultipleChoiceField(queryset=OffreStage.objects.all(), widget=forms.CheckboxSelectMultiple(),required=False)
+    offrestagelots = forms.ModelMultipleChoiceField(queryset=OffreStage.objects.filter(valideOffreStage=True) | OffreStage.objects.filter(valideOffreStage=False), widget=forms.CheckboxSelectMultiple(),required=False)
 
     def save(self):
         # make sure you do a form.is_valid() before trying to save()
