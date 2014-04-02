@@ -8,12 +8,21 @@
 	</h1>
 
 	<p class="lead">
-		Voici le nouveau site web pour l'application de gestion des stages.<br/><br/>
+		sur l'application de gestion des stages.<br/><br/>
 		{% if not user.is_authenticated %}
 		<a class="btn btn-lg btn-success" role="button" href="{% url 'login' %}">Se connecter</a>
 		{% endif %}
 	</p>
 
+	{% if user.is_authenticated %}
+		<p>Il y a actuellement <strong>{{ nbOffresValides }}</strong> offres de stages disponibles.</p>
+		{% if perms.stage.valider_offrestage %}
+			<p>Il y a actuellement <strong>{{ nbOffresInvalides }}</strong> offres de stages non validées.</p>
+		{% endif %}
+		{% if perms.stage.valider_stage %}
+			<p>Il y a actuellement <strong>{{ nbStagesInvalides }}</strong> stages non validés.</p>
+		{% endif %}
+	{% endif %}
 
 
 </div>

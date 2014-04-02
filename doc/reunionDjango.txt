@@ -71,8 +71,8 @@ Entreprise:
 	*********************************************************
 	
 	Consulter (tous les loggés)
-	Valider (responsable des stages )
-						==> orientation à la deletion
+	Valider (responsable des stages ) 
+								==> orientation à la deletion
 
 
 Etudiant:

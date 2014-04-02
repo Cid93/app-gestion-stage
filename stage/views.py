@@ -204,7 +204,21 @@ def addPersonneExt(request):
 	form = PersonneExtForm()  					# Nous créons un formulaire vide
 	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
 
-	return render(request,'stage/forms.html', con)
+	return render(request,'stage/stage_form.html', con)
+
+
+def addLogiciel(request):
+	if request.method == 'POST':  				
+		form = LogicielForm(request.POST)  	
+
+		if form.is_valid(): 					
+			form.save()
+			return HttpResponseRedirect('/stage/ajouter')
+
+	form = LogicielForm()  					
+	con = { 'actionAFaire' : 'Ajouter', 'form' : form}
+
+	return render(request,'stage/stage_form.html', con)
 
 
 

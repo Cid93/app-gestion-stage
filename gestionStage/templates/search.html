@@ -137,6 +137,13 @@
  								donnees.push(data[val].fields.intitule);
  							}
  						}
+
+ 						else if (model=="Stage" && attribut=="intitule"){
+ 							if(data[val].fields.valideStage == true){
+ 									
+ 								donnees.push(data[val].fields.offrestage_ptr.intitule);
+ 							}
+ 						}
  						else if (model=="Stage" && attribut=="intitule"){
  							donnees.push(data[val].fields.offrestage_ptr.intitule);
  						}
