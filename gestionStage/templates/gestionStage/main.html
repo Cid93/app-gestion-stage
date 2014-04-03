@@ -15,12 +15,12 @@
 	</p>
 
 	{% if user.is_authenticated %}
-		<p>Il y a actuellement <strong>{{ nbOffresValides }}</strong> offres de stages disponibles.</p>
+		<p style="font-size: 18px;">Il y a actuellement <strong>{{ nbOffresValides }}</strong> offre(s) de stages disponible(s).</p>
 		{% if perms.stage.valider_offrestage %}
-			<p>Il y a actuellement <strong>{{ nbOffresInvalides }}</strong> offres de stages non validées.</p>
+			<p style="font-size: 18px;">Il y a actuellement <strong>{{ nbOffresInvalides }}</strong> offre(s) de stages non validée(s).</p>
 		{% endif %}
 		{% if perms.stage.valider_stage %}
-			<p>Il y a actuellement <strong>{{ nbStagesInvalides }}</strong> stages non validés.</p>
+			<p style="font-size: 18px;">Il y a actuellement <strong>{{ nbStagesInvalides }}</strong> stage(s) non validé(s).</p>
 		{% endif %}
 	{% endif %}
 

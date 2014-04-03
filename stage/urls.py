@@ -33,6 +33,6 @@ urlpatterns = patterns('',
     url(r'^offrestage/valider/?$',"stage.views.validerOffreStage", name="validerOffreStage"),
     url(r'^offrestage/detailsvalider/(?P<pk>\d+)$',"stage.views.detailsValiderOffreStage", name="detailsValiderOffreStage"),
     url(r'^offrestage/validerenbase/(?P<pk>\d+)$',"stage.views.validerOffreStageEnBase", name="validerOffreStageEnBase"),
-    url(r'^offrestage/postuler/(?P<pk>\d+)$',"stage.views.postuler", name="postuler"),
+    #url(r'^offrestage/postuler/(?P<pk>\d+)$',"stage.views.postuler", name="postuler"),
     url(r'^offrestage/prendreOffre/(?P<pk>\d+)$',"stage.views.prendreOffre", name="prendreOffre"),
 )
