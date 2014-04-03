@@ -63,39 +63,6 @@ INSTALLATION :
       http://localhost:8000/admin (accessible avec le compte admin que vous avez créé avec rebuild.sh)
   
 
-UTILISATION :
-
-  1. Lancement du venv : 
-      source ./venv/bin/activate
-      
-  (2.) Si vous le souhaitez : reconstruction de la base de données 
-      ATTENTION : cela effacera les données existantes et restaurera la base de données avec le jeu d'essais initial
-      
-  3. Lancement du serveur :
-      python manage.py runserver
-  
-  4. Accès à l'application :
-      Vous pouvez maintenant ouvrir votre navigateur et accéder à l'application en tapant dans votre barre d'adresse :
-      http://localhost:8000
-      
-      Vous pouvez alors vous connecter avec le compte admin que vous avez créé avec le script rebuild.sh (toutes les permissions)
-      ou utiliser l'un des comptes créés pour effectuer des tests :
-      
-      compte étudiant : 
-        username : wroux, password : a
-        
-      compte enseignant : 
-        username : chabin, password : a
-      
-      compte secrétariat : 
-        username : bruletot, password : a
-      
-      compte responsable : 
-        username : roza, password : a
-      
-      Interface d'administration : 
-        http://localhost:8000/admin (accessible avec le compte admin que vous avez créé avec rebuild.sh)
-        
 
 
 
