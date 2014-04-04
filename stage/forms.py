@@ -87,6 +87,7 @@ class supprimeOffreStageForm(forms.Form):
 class EtudiantForm(ModelForm):
     class Meta:
         model = Etudiant
+        exclude = ['postulant']
 
 
 class EnseignantForm(ModelForm):
