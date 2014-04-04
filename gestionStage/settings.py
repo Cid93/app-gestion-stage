@@ -142,9 +142,15 @@ INSTALLED_APPS = (
     'entreprise',
     'stage',
     'planning',
+    'django_extensions',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
 
 # Ancien systeme de gestion de session
 #SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

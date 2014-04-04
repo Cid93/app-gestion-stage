@@ -6,12 +6,12 @@
 		"username":"wroux",
 		"emailPerso":"wroux@gmail.com",
 		"civilite":"M",
-		"telephone":"0666666666",
-		"dateNaissance":"1900-01-01",
+		"telephone":"0610236584",
+		"dateNaissance":"1989-01-10",
 		"emailEtu":"william.roux@etu.univ-orleans.fr",
-		"adresse":"Mars",
-		"cp":"44444",
-		"ville":"MarsCity",
+		"adresse":"5 rue de la feuille",
+		"cp":"45000",
+		"ville":"Orleans",
 		"promotion": 1
 	},
 
@@ -23,11 +23,11 @@
 		"emailPerso":"yacine.ait-maamar@gmail.com",
 		"civilite":"M",
 		"telephone":"0254334455",
-		"dateNaissance":"1988-01-01",
+		"dateNaissance":"1989-05-07",
 		"emailEtu":"yacine.ait-maamar@etu.univ-orleans.fr",
-		"adresse":"Namekseijin",
-		"cp":"55666",
-		"ville":"Namek",
+		"adresse":"12 rue du Général",
+		"cp":"45000",
+		"ville":"Orleans",
 		"promotion": 1
     },
 
@@ -39,11 +39,11 @@
 		"emailPerso":"cedric.outreville@gmail.com",
 		"civilite":"M",
 		"telephone":"0644596295",
-		"dateNaissance":"1988-05-01",
+		"dateNaissance":"1991-04-12",
 		"emailEtu":"cedric.outreville@etu.univ-orleans.fr",
-		"adresse":"zbra",
-		"cp":"98752",
-		"ville":"Pluton",
+		"adresse":"3 rue des pommes vertes",
+		"cp":"45000",
+		"ville":"Orleans",
 		"promotion": 1
 	}
 

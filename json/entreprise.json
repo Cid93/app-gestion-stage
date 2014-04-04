@@ -8,7 +8,7 @@
           "pays": "France",
           "telephone": "0173260000",
           "fax": "0124589624",
-          "contact": 3
+          "contact": 1
      },
 
      {
@@ -16,10 +16,48 @@
           "nom": "Polytech orleans",
           "adresse": "12 Rue de Blois",
           "codePostal": "45067",
-          "ville": "Orleans",
+          "ville": "Orléans",
           "pays": "France",
           "telephone": "0173260000",
           "fax": "0124589624",
-          "contact": 1
+          "contact": 2
+     },
+
+     {
+          "idEntreprise": 3,
+          "nom": "BRGM",
+          "adresse": "3 Avenue Claude Guillemin",
+          "codePostal": "45100",
+          "ville": "Orléans",
+          "pays": "France",
+          "telephone": "0238643434",
+          "fax": "0238643400",
+          "contact": 3
+     },
+
+     {
+          "idEntreprise": 4,
+          "nom": "Groupe Atlantic",
+          "adresse": "58 Avenue du G.Leclerc",
+          "codePostal": "92340",
+          "ville": "Bourg la Reine",
+          "pays": "France",
+          "telephone": "0146836000",
+          "fax": "0146836001",
+          "contact": 4
+     },
+
+     {
+          "idEntreprise": 5,
+          "nom": "Wikipixel (SAS)",
+          "adresse": "33 bd Rocheplatte",
+          "codePostal": "45000",
+          "ville": "Orléans",
+          "pays": "France",
+          "telephone": "0238615221",
+          "fax": "0238645638",
+          "contact": 5
      }
+
+
 ]

@@ -1,16 +1,16 @@
 [
 	{
-		"intitule" : "Faire des trucs",
-		"sujet" : "Dans ce stage il faut faire tout plein de trucs.",
-		"entreprise": 2,
+		"intitule" : "Stage technicien laboratoire (h/f) - St Jean de la Ruelle",
+		"sujet" : "Rattaché(e) à l’ingénieur laboratoire, vous suivez l’évolution du programme de la salle de bruit et supervisez les programmes informatiques en Labview.",
+		"entreprise": 4,
 		"valideOffreStage": true,
 		"possibiliteEmbauche": true
 	},
 
 	{
-		"intitule" : "Test offre pas validée",
-		"sujet" : "Cette offre n'est pas validée pour des raisons de test.",
-		"entreprise": 2,
+		"intitule" : "Stage H/F Développement mobile iOS / Android",
+		"sujet" : "Votre mission principale est de participer au développement et à l'évolution d'applications mobiles des spécifications au tests.",
+		"entreprise": 5,
 		"valideOffreStage": false,
 		"possibiliteEmbauche": null
 	}

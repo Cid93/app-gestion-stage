@@ -7,8 +7,8 @@
 		"emailPerso":"dussart@yahoo.com",
 		"civilite":"M",
 		"telephone":"0200220222",
-		"emailPro":"remi.dussart@gmail.com",
-		"entreprise":2
+		"emailPro":"remi.dussart@atos.fr",
+		"entreprise":1
 	},
 
 	{
@@ -18,30 +18,43 @@
 		"emailPerso":"cadorel@gmail.com",
 		"civilite":"M",
 		"telephone":"0200220202",
-		"emailPro":"j-y.cadorel@gmail.com",
+		"emailPro":"j-y.cadorel@Polytech-orleans.fr",
 		"entreprise":2
 	},
 
 	{
 		"idPersonneExt":3,
-		"nom":"Portos",
-		"prenom":"Hervé",
-		"emailPerso":"herve.portos@gmail.com",
-		"civilite":"M",
+		"nom":"Teillez",
+		"prenom":"Agnes",
+		"emailPerso":"A.Teillez@gmail.com",
+		"civilite":"Mme",
 		"telephone":"0256874563",
-		"emailPro":"herve.portos@atos.fr",
-		"entreprise":1
+		"emailPro":"A.teillez@brgm.fr",
+		"entreprise":3
 	},
 
 	{
 		"idPersonneExt":4,
-		"nom":"Aramis",
-		"prenom":"Corine",
-		"emailPerso":"caramis@gmail.com",
-		"civilite":"Mme",
-		"telephone":"0258741236",
-		"emailPro":"corine.aramis@atos.fr",
-		"entreprise":1
+		"nom":"Laurent",
+		"prenom":"Yves",
+		"emailPerso":"Y.Laurent@gmail.com",
+		"civilite":"M",
+		"telephone":"0613856712",
+		"emailPro":"Y.Laurent@groupeAtlantic.fr",
+		"entreprise":4
+	},
+
+	{
+		"idPersonneExt":5,
+		"nom":"Simpson",
+		"prenom":"Homer",
+		"emailPerso":"H.Simpson@gmail.com",
+		"civilite":"M",
+		"telephone":"0651804563",
+		"emailPro":"H.Simpson@Wikipixel.fr",
+		"entreprise":5
 	}
+
+	
 
 ]
