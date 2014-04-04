@@ -43,6 +43,8 @@ INSTALLATION :
 
     Vous pouvez maintenant ouvrir votre navigateur et accéder à l'application en tapant dans votre barre d'adresse :
     http://localhost:8000
+    ou
+    http://<IP serveur />:8000
     
     Vous pouvez alors vous logger avec le compte admin que vous avez créé avec le script rebuild.sh (toutes les permissions)
     ou utiliser l'un des comptes créés pour effectuer des tests :
